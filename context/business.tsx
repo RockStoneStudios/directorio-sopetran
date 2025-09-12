@@ -7,7 +7,8 @@ import {
      getUserBusinessFromDb,
      getBusinessFromDb,
      updateBusinessInDb,
-     togglePublishInDb
+     togglePublishInDb,
+     deleteBusinessFromDb
      } from "@/actions/business";
 import toast from "react-hot-toast";
 import { useRouter, usePathname, useParams } from "next/navigation";
@@ -52,6 +53,7 @@ interface BusinessContextType{
     openDescriptionModal : boolean;
     setOpenDescriptionModal : React.Dispatch<React.SetStateAction<boolean>>;
     togglePublished : () => void;
+    deleteBusiness : () => void;
 }
 
 const BusinessContext = createContext<BusinessContextType | undefined>(
@@ -265,6 +267,21 @@ export const BusinessProvider : React.FC<{children: ReactNode}> = ({children}) =
         }
     }
 
+ const deleteBusiness = async() => {
+    setLoading(true);
+    try{
+       await deleteBusinessFromDb(_id.toString());
+       toast.success("🎉Negocio eliminado");
+       router.push("/dashboard/admin");
+    }catch(error){
+        console.error(error);
+        toast.error("Failed to delete business");
+    }finally{
+        setLoading(false);
+    }
+ }
+ 
+ 
     return (
         <BusinessContext.Provider value={{
             business,
@@ -284,7 +301,8 @@ export const BusinessProvider : React.FC<{children: ReactNode}> = ({children}) =
             openDescriptionModal,
             setOpenDescriptionModal,
             isDashboardPage,
-            togglePublished
+            togglePublished,
+            deleteBusiness
             }}>
           {children}
         </BusinessContext.Provider>

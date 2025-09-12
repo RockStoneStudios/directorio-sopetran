@@ -6,10 +6,15 @@ import { MapPin,Phone,Mail,Globe,Clock,ShieldCheck, Loader2Icon } from "lucide-r
 import Image from "next/image";
 import { useBusiness } from "@/context/business";
 import DescriptionModal from "@/components/modals/description-modal";
+import { useUser } from "@clerk/nextjs";
+
 
 const PreviewCard= ({business}: {business : BusinessState}) => {
  
-  const {openDescriptionModal,setOpenDescriptionModal,isEditPage,loading,isDashboardPage, togglePublished} = useBusiness();
+  const {openDescriptionModal,setOpenDescriptionModal,isEditPage,loading,isDashboardPage, togglePublished,deleteBusiness} = useBusiness();
+
+  const {user} = useUser();
+  const isAdmin = user?.publicMetadata?.role === "admin";
 
   return (
     <Card className="w-full max-w-2xl mx-auto" style={{height : "354px"}}>
@@ -69,7 +74,21 @@ const PreviewCard= ({business}: {business : BusinessState}) => {
                   {loading && <Loader2Icon size={14}  className="animate-spin mr-1"/>}
                   {business?.published ? <span className="text-green-500">Publicado </span> : <span className="text-red-600"> No Publicado </span> }
              </div>
+
+             {isAdmin && (
+               <div onClick={()=> {
+                 const answer = confirm("Estas seguro que quieres borrarlo!");
+                 if(answer){
+                  deleteBusiness();
+                 }
+               }} className="flex cursor-pointer">
+
+               {loading && <Loader2Icon size={14} className="animated-spin mr-1"/>}  <span className="text-red-500">Borrar</span>
+           
+               </div>
+             )}
           </div>
+
          
        </CardContent>
          

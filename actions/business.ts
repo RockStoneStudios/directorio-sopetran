@@ -17,15 +17,25 @@ const checkOwnerShip = async (businnessId : string) => {
       const user = await currentUser();
       const userEmail = user?.emailAddresses[0]?.emailAddress;
 
+      const isAdmin = user?.privateMetadata?.role === "admin";
+
       if(!userEmail) throw new Error("User not found");
 
       //find business by id
       const business = await Business.findById(businnessId);
 
-      if(business.userEmail !== userEmail){
-        throw new Error("You are not authorized to perform this action");
+      if(!business){
+         throw new Error("Negocio no encontrado");
       }
-      return true;
+
+    //   if(business.userEmail !== userEmail){
+    //     throw new Error("You are not authorized to perform this action");
+    //   }
+    //   return true;
+     // allow access if the user is an admin or the owner of the business
+     if(isAdmin || business.userEmail === userEmail){
+        return true;
+     }
 
     }catch(error : any) {
         throw new Error(error);
@@ -196,5 +206,33 @@ export const getUniqueCategoriesAndAddresses = async() => {
 }
 
 
+export const getAllBusinessesFromDb = async(page : number, limit : number) => {
+    try{
+       await db();
+       const[businesses,totalCount] = await Promise.all([
+        Business.find()
+         .sort({createdAt : -1})
+         .skip((page-1)*limit)
+         .limit(limit),
+         Business.countDocuments()
+       ]);
+       return {businesses : JSON.parse(JSON.stringify(businesses)),totalCount}
+    }catch(error:any){
+        throw new Error(error);
+    }
+     
+}
 
 
+
+
+export const deleteBusinessFromDb = async (_id:string) =>{
+    try{ 
+      await db();
+      await checkOwnerShip(_id);
+      const business = await Business.findByIdAndDelete(_id);
+      return JSON.parse(JSON.stringify(business));
+    }catch(error:any){
+        throw new Error(error);
+    }
+}

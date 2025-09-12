@@ -15,7 +15,7 @@ from '@/components/ui/menubar';
 import ModeToggle from './mode-toggle';
 import Image from 'next/image';
 import Link from 'next/link';
-import {LayoutDashboard,Plus,LogIn,} from 'lucide-react'
+import {LayoutDashboard,Plus,LogIn,ShieldCheck} from 'lucide-react'
 import { currentUser } from '@clerk/nextjs/server';
 import { SignInButton,SignedIn,SignedOut,UserButton } from '@clerk/nextjs';
 import {Toaster} from 'react-hot-toast';
@@ -25,6 +25,8 @@ import SearchButton from '../buttons/search-buttons';
 export default async function TopNav() {
   
      const user = await currentUser();
+     const isAdmin = user?.privateMetadata?.role === "admin";
+     console.log('is Admin = '+user?.privateMetadata?.role);
      return (
         <>
         <Menubar>
@@ -63,6 +65,25 @@ export default async function TopNav() {
                     </MenubarMenu>
                         )
                 }
+
+                 
+                {isAdmin && (
+                     <MenubarMenu>
+                        <MenubarTrigger className='text-base font-normal'>
+                           <span className='flex items-center'>
+                                <ShieldCheck size={16} className='mr-2'/>
+                                <Link href="/dashboard/admin">
+                                <span>Admin</span>
+                                </Link>
+                           </span>
+                        </MenubarTrigger>
+                    
+                    </MenubarMenu>
+                        )
+                }
+
+
+
 
                     <SignedOut>
                         <span className='flex items-center'>
