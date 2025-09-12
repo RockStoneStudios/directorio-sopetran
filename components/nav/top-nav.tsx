@@ -48,7 +48,7 @@ export default async function TopNav() {
                   <MenubarMenu>
                         <MenubarTrigger className='text-base font-normal'>
                            <span className='flex items-center'>
-                                <Handshake size={16} className='mr-2'/>
+                                <Handshake size={16} className='mr-1'/>
                                 <Link href="/businesses">
                                 <span className='text-sm'>Negocios</span>
                                 </Link>
@@ -78,7 +78,7 @@ export default async function TopNav() {
                      <MenubarMenu>
                         <MenubarTrigger className='text-base font-normal'>
                            <span className='flex items-center'>
-                                <ShieldCheck size={16} className='mr-2'/>
+                                <ShieldCheck size={16} className='mr-1'/>
                                 <Link href="/dashboard/admin">
                                 <span className='text-sm'>Admin</span>
                                 </Link>
@@ -94,7 +94,7 @@ export default async function TopNav() {
 
                     <SignedOut>
                         <span className='flex items-center'>
-                        <LogIn size={16}  className='mr-2'/>
+                        <LogIn size={16}  className='mr-1'/>
                         <SignInButton/>
                         </span>
                     </SignedOut>

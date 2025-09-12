@@ -17,8 +17,8 @@ const AddBusinessButton = () => {
             <MenubarTrigger className='text-base font-normal'>
                                  
                 <span onClick={handleClick} className='flex items-center cursor-pointer' >
-                <Plus size={16} className='mr-2'/>
-                <span className='text-sm'>Agregar Negocio</span>
+                <Plus size={16} />
+                <span className='text-sm'>Agregar</span>
                 </span>
                                  
           </MenubarTrigger>
