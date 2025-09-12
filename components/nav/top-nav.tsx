@@ -26,14 +26,14 @@ export default async function TopNav() {
      return (
         <>
         <Menubar>
-            <div className='flex-none my-10'>
+            <div className='flex-none my-15 p-1'>
                 <MenubarMenu>
                  <Link href="/">
                    <Image 
-                    src="/logo.svg" 
+                    src="/images/escudo.png" 
                     alt='logo'
-                    height={55}
-                    width={50}
+                    height={37}
+                    width={37}
                     className='hover:cursor-pointer'
                     />
                  </Link>
@@ -50,7 +50,7 @@ export default async function TopNav() {
                            <span className='flex items-center'>
                                 <Handshake size={16} className='mr-2'/>
                                 <Link href="/businesses">
-                                <span>Negocios</span>
+                                <span className='text-sm'>Negocios</span>
                                 </Link>
                            </span>
                         </MenubarTrigger>
@@ -64,7 +64,7 @@ export default async function TopNav() {
                            <span className='flex items-center'>
                                 <LayoutDashboard size={16} className='mr-2'/>
                                 <Link href="/businesses">
-                                <span>Panel</span>
+                                <span className='text-sm'>Panel</span>
                                 </Link>
                            </span>
                         </MenubarTrigger>
@@ -80,7 +80,7 @@ export default async function TopNav() {
                            <span className='flex items-center'>
                                 <ShieldCheck size={16} className='mr-2'/>
                                 <Link href="/dashboard/admin">
-                                <span>Admin</span>
+                                <span className='text-sm'>Admin</span>
                                 </Link>
                            </span>
                         </MenubarTrigger>
@@ -103,7 +103,7 @@ export default async function TopNav() {
                         <UserButton/>
                     </SignedIn>
 
-                    <MenubarMenu>
+                    <MenubarMenu >
                         <ModeToggle/>
                     </MenubarMenu>
                 </div>

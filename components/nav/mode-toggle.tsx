@@ -18,8 +18,8 @@ export default function ModeToggle(){
     if(!mounted) return null;
     return (
        
-     <Button variant="link" size="icon" onClick={()=> setTheme(theme === "dark" ?  "llight" : "dark")}>
-        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18}/>}
+     <Button className='mr-2' variant="link" size="icon" onClick={()=> setTheme(theme === "dark" ?  "llight" : "dark")}>
+        {theme === 'dark' ? <Sun size={19} /> : <Moon size={19}/>}
      </Button>
    
     )
