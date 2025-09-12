@@ -2,11 +2,7 @@
 import React from 'react'
 import {
         Menubar,
-        MenubarContent,
-        MenubarItem,
         MenubarMenu,
-        MenubarSeparator,
-        MenubarShortcut,
         MenubarTrigger,
         
        } 
@@ -15,7 +11,7 @@ from '@/components/ui/menubar';
 import ModeToggle from './mode-toggle';
 import Image from 'next/image';
 import Link from 'next/link';
-import {LayoutDashboard,Plus,LogIn,ShieldCheck} from 'lucide-react'
+import {LayoutDashboard,Plus,LogIn,ShieldCheck,Handshake} from 'lucide-react'
 import { currentUser } from '@clerk/nextjs/server';
 import { SignInButton,SignedIn,SignedOut,UserButton } from '@clerk/nextjs';
 import {Toaster} from 'react-hot-toast';
@@ -49,6 +45,17 @@ export default async function TopNav() {
             </div>
 
              <div className='flex flex-grow items-center justify-end gap-1'>
+                  <MenubarMenu>
+                        <MenubarTrigger className='text-base font-normal'>
+                           <span className='flex items-center'>
+                                <Handshake size={16} className='mr-2'/>
+                                <Link href="/businesses">
+                                <span>Negocios</span>
+                                </Link>
+                           </span>
+                        </MenubarTrigger>
+                    
+                    </MenubarMenu>
                 <AddBusinessButton/>
                 
                 {user && (
@@ -56,7 +63,7 @@ export default async function TopNav() {
                         <MenubarTrigger className='text-base font-normal'>
                            <span className='flex items-center'>
                                 <LayoutDashboard size={16} className='mr-2'/>
-                                <Link href="/dashboard">
+                                <Link href="/businesses">
                                 <span>Dashboard</span>
                                 </Link>
                            </span>
