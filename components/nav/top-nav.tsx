@@ -32,8 +32,8 @@ export default async function TopNav() {
                    <Image 
                     src="/logo.svg" 
                     alt='logo'
-                    height={60}
-                    width={60}
+                    height={55}
+                    width={50}
                     className='hover:cursor-pointer'
                     />
                  </Link>
@@ -64,7 +64,7 @@ export default async function TopNav() {
                            <span className='flex items-center'>
                                 <LayoutDashboard size={16} className='mr-2'/>
                                 <Link href="/businesses">
-                                <span>Dashboard</span>
+                                <span>Panel</span>
                                 </Link>
                            </span>
                         </MenubarTrigger>
