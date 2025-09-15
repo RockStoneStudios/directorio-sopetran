@@ -11,9 +11,8 @@ export const aiGenerateBusinessDescription = async (
   business: BusinessState
 ): Promise<string> => {
   try {
-    const prompt = `Generate 200 words of SEO content in HTML format (with
-      h2, h3, ul, li, not including <doctype html> etc) not markdown,
-      for this business: ${JSON.stringify(business)}`;
+    const prompt = `Generar 180 palabras de contenido SEO en formato HTML (con h2, h3, ul, li, sin incluir <doctype html>, etc.),
+     sin Markdown, para esta empresa.: ${JSON.stringify(business)}`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash", // modelo más nuevo
