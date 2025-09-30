@@ -1,6 +1,4 @@
 
-// app/page.tsx
-// landing page
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,7 +29,7 @@ export default function LandingPage() {
 
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center px-4 w-full max-w-4xl">
-            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 mt-5">
              Descubra y promueva negocios locales con{" "}
               <span className="inline-block">
                 <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-transparent bg-clip-text animate-pulse">
