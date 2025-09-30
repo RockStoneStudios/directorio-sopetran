@@ -26,6 +26,8 @@ const initialState : BusinessState = {
     phone : "",
     email : "",
     website :"",
+    instagram : "",
+    facebook : "",
     hours : "",
     logo : "",
     slug : "",

@@ -48,6 +48,18 @@ const inputFields : InputField[] = [
      label : "Correo",
      type : "email",
   },
+   {
+      name :"facebook",
+      label : "Facebook",
+      type : "url",
+      required : false
+   },
+     {
+      name :"instagram",
+      label : "Instagram",
+      type : "url",
+      required : false
+   },
   {
      name : "website",
      label : "Website URL",

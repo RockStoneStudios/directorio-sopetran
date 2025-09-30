@@ -12,6 +12,8 @@ const BusinessSchema = new mongoose.Schema({
       website : String,
       hours : String,
       logo: String,
+      facebook: { type: String, required: false },
+      instagram: { type: String, required: false },
       slug : {type: String,required: true,lowercase : true, index: true},
       published : {type : Boolean,default : true}
 

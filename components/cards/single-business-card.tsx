@@ -3,6 +3,9 @@ import {MapPin,Phone,Mail,Globe,Clock,ShieldCheck} from 'lucide-react';
 import { DescriptionCard } from "./description-card";
 import {Card, CardContent ,CardHeader,CardTitle} from '@/components/ui/card';
 import Image from 'next/image';
+import { IoLogoInstagram } from "react-icons/io5";
+import { FaFacebookSquare } from "react-icons/fa";
+
 
 export default function SingleBusinessPage ({business} : {business:BusinessState}){
   return (
@@ -30,6 +33,28 @@ export default function SingleBusinessPage ({business} : {business:BusinessState
         </CardHeader>
         <CardContent>
            <DescriptionCard description={business?.description} />
+             <div className="flex justify-end space-x-3 mt-2">
+                       {business?.instagram && (
+                         <a
+                           href={business.instagram}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className="hover:text-pink-600 text-2xl"
+                         >
+                           <IoLogoInstagram />
+                         </a>
+                       )}
+                       {business?.facebook && (
+                         <a
+                           href={business.facebook}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className=" hover:text-blue-700 text-2xl"
+                         >
+                           <FaFacebookSquare />
+                         </a>
+                       )}
+                     </div>
         </CardContent>
     </Card>
   )

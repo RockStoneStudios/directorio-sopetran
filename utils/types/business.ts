@@ -9,6 +9,8 @@ export interface BusinessState{
     phone : string;
     email : string;
     website :string;
+    instagram: string;
+    facebook : string;
     hours : string;
     logo : string;
 
