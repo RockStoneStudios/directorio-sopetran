@@ -69,7 +69,7 @@ export default function LandingPage() {
     <Link href="/business/add">
       <Button
         size="lg"
-        className="text-lg px-6 py-3 w-full md:w-auto rounded-xl shadow-lg hover:scale-105 transition"
+        className="text-lg mt-1 px-6 py-3 w-full md:w-auto rounded-xl shadow-lg hover:scale-105 transition"
       >
         Agrega tu negocio <ArrowRight className="ml-2" />
       </Button>
