@@ -40,10 +40,30 @@ export default function LandingPage() {
               </span>
             </h1>
 
+           <section>
+             <h2> ✨ Descubre Sopetrán como nunca antes ✨</h2>
+           </section>
             <p className="text-white mb-5 mx-auto">
-             Nuestro Directorio de Negocios Locales te ayuda a encontrar y apoyar negocios cercanos.
-              Registrar tu negocio es gratis y descubrir joyas locales es fácil. ¡Conéctate con tu comunidad hoy mismo!
+            
+       En nuestro Directorio de Negocios Locales encuentras todo lo que buscas: tiendas, restaurantes, servicios y mucho más… ¡a un solo clic! 📲
+
+      </p>
+
+      <ul className="my-2">
+         <li>
+          🚀 Si tienes un negocio: regístralo y crea tu marca digital..</li>
+          <li>💎 Si eres usuario: descubre joyas locales, apoya a tu gente y conecta con tu comunidad</li>
+      </ul>
+      <hr />
+      <hr />
+      <hr />
+            <p>
+              Porque Sopetrán se vive mejor cuando estamos conectados 💚
+
+👉 ¡No preguntes más por ahí… encuéntralo todo en segundos!
             </p>
+<hr />
+<hr />
             <Link href="/business/add">
               <Button
                 size="lg"
@@ -81,12 +101,12 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-20 text-center">
-            <Link href="/business/add">
+            <Link href="/businesses">
               <Button
                 size="lg"
                 className="text-lg px-4 md:px-8 py-2 md:py-4 w-full md:w-auto"
               >
-                Start Browsing <ArrowRight className="ml-2" />
+                Empezar a navegar <ArrowRight className="ml-2" />
               </Button>
             </Link>
           </div>

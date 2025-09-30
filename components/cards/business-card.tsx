@@ -6,9 +6,10 @@ import { MapPin,Phone,Mail,Globe,Clock,ShieldCheck, Loader2Icon } from "lucide-r
 import Image from "next/image";
 import { useBusiness } from "@/context/business";
 import DescriptionModal from "@/components/modals/description-modal";
+import { isBusinessOpen } from "@/helper/Helper";
 
 const BusinessCard= ({business}: {business : BusinessState}) => {
- 
+  const open = isBusinessOpen(business.hours); 
   const {openDescriptionModal,setOpenDescriptionModal,isEditPage,loading,isDashboardPage, togglePublished} = useBusiness();
 
   return (
@@ -39,6 +40,14 @@ const BusinessCard= ({business}: {business : BusinessState}) => {
                 {business?.category || "Categoria"} 
             </p>
           </div>
+             <span
+                        className={`font-semibold ${
+                          open ? "text-green-600" : "text-red-600"
+                        }`}
+                      >
+                        {open ? "Abierto" : "Cerrado"}
+              </span>
+
        </CardHeader>
        <CardContent>
 
@@ -54,6 +63,7 @@ const BusinessCard= ({business}: {business : BusinessState}) => {
         </div>
         
          <div className="space-y-2">
+            
             <InfoItem icon={MapPin} text={business?.address || "Direccion"} />
             <InfoItem icon={Phone} text={business?.phone || "Numero telefonico"}/>
             <InfoItem icon={Mail} text={business?.email || "Email"} />
