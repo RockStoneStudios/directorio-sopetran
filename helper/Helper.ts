@@ -1,18 +1,22 @@
-// utils/isBusinessOpen.ts
-function parseHour(hourStr: string): number {
-  // Convierte "5pm" -> 17*60, "3:30am" -> 210
-  const match = hourStr.match(/(\d+)(?::(\d+))?\s*(am|pm)/i);
-  if (!match) return -1;
+function parseHour(hourStr?: string): number {
+    if (!hourStr || typeof hourStr !== "string") {
+        return -1; // o lanza un error si quieres que sea obligatorio
+    }
 
-  let hour = parseInt(match[1], 10);
-  const minutes = match[2] ? parseInt(match[2], 10) : 0;
-  const period = match[3].toLowerCase();
+    const match = hourStr.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/i);
 
-  if (period === "pm" && hour !== 12) hour += 12;
-  if (period === "am" && hour === 12) hour = 0;
+    if (!match) return -1;
 
-  return hour * 60 + minutes; // total en minutos
+    let hour = parseInt(match[1], 10);
+    const minute = match[2] ? parseInt(match[2], 10) : 0;
+    const meridian = match[3]?.toLowerCase();
+
+    if (meridian === "pm" && hour < 12) hour += 12;
+    if (meridian === "am" && hour === 12) hour = 0;
+
+    return hour * 60 + minute; // devuelve en minutos, por ejemplo
 }
+
 
 function dayToIndex(day: string): number {
   const days = ["lun", "mar", "mie", "jue", "vie", "sab", "dom"];

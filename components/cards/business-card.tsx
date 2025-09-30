@@ -11,7 +11,8 @@ import { IoLogoInstagram } from "react-icons/io5";
 import { FaFacebookSquare } from "react-icons/fa";
 
 const BusinessCard = ({ business }: { business: BusinessState }) => {
-  const open = isBusinessOpen(business.hours);
+ const open = business?.hours ? isBusinessOpen(business.hours) : false;
+
   const { openDescriptionModal, setOpenDescriptionModal, isEditPage, loading, isDashboardPage, togglePublished } = useBusiness();
 
   return (
