@@ -30,15 +30,15 @@ export default function LandingPage() {
        <div className="relative z-10 flex items-center justify-center h-full mb-8">
   <div className="text-center px-4 w-full max-w-3xl space-y-2">
     {/* Título principal */}
-    <h1 className="text-white text-3xl md:text-5xl font-extrabold leading-tight mt-4">
-     Agrega y Busca Negocios locales con{" "}
+    <h1 className="text-white text-4xl md:text-5xl font-extrabold leading-tight mt-3 mb-3">
+     Agrega y Busca Negocios locales con{"  "}
       <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-transparent bg-clip-text animate-pulse">
         IA
       </span>
     </h1>
 
     {/* Subtítulo */}
-    <h2 className="text-xl text-white font-medium ">
+    <h2 className="text-xl text-white font-medium mt-2 ">
       ✨ Sopetrán como nunca antes ✨
     </h2>
 
