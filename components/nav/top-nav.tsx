@@ -64,7 +64,7 @@ export default async function TopNav() {
                            <span className='flex items-center'>
                                 <LayoutDashboard size={16} className='mr-2'/>
                                 <Link href="/businesses">
-                                <span className='text-sm'>Panel</span>
+                                <span className='text-xs'>Panel</span>
                                 </Link>
                            </span>
                         </MenubarTrigger>
@@ -80,7 +80,7 @@ export default async function TopNav() {
                            <span className='flex items-center'>
                                 <ShieldCheck size={16} className='mr-1'/>
                                 <Link href="/dashboard/admin">
-                                <span className='text-sm'>Admin</span>
+                                <span className='text-sm md:hidden'>Admin</span>
                                 </Link>
                            </span>
                         </MenubarTrigger>

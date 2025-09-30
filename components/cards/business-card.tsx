@@ -18,7 +18,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
   return (
     <Card className="w-full max-w-2xl mx-auto" style={{ height: "354px" }}>
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
-        <div className="w-16 h-16 relative overflow-hidden rounded-md">
+        <div className="w-16 h-16 relative overflow-hidden rounded-xl">
           {
             business?.logo ? (
               <Image
@@ -26,6 +26,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
                 alt={business?.name}
                 layout="fill"
                 objectFit="cover"
+                className="rounded-xl"
               />
             ) :
               (
@@ -44,7 +45,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
           </p>
         </div>
         <span
-          className={`font-semibold ${open ? "text-green-600" : "text-red-600"
+          className={`font-semibold text-xs ${open ? "text-green-600" : "text-red-600"
             }`}
         >
           {open ? "Abierto" : "Cerrado"}
