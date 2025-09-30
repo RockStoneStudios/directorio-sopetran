@@ -27,9 +27,9 @@ export default function LandingPage() {
         {/* bg-gradient-to-b from-transparent to-[#010818] z-0 */}
         <div className="absolute inset-0 bg-black/80 z-0 "></div>
 
-        <div className="relative z-10 flex items-center justify-center h-full">
+        <div className="relative z-10 flex items-center justify-center h-full mb-10">
           <div className="text-center px-4 w-full max-w-4xl">
-            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 mt-5">
+            <h1 className="text-white text-5xl md:text-4xl font-bold mb-6 md:mt-12">
              Descubra y promueva negocios locales con{" "}
               <span className="inline-block">
                 <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-transparent bg-clip-text animate-pulse">
@@ -39,7 +39,7 @@ export default function LandingPage() {
             </h1>
 
            <section>
-             <h2> ✨ Descubre Sopetrán como nunca antes ✨</h2>
+             <h2 className="text-white"> ✨ Descubre Sopetrán como nunca antes ✨</h2>
            </section>
             <p className="text-white mb-5 mx-auto">
             
@@ -48,14 +48,14 @@ export default function LandingPage() {
       </p>
 
       <ul className="my-2">
-         <li>
+         <li className="text-white">
           🚀 Si tienes un negocio: regístralo y crea tu marca digital..</li>
-          <li>💎 Si eres usuario: descubre joyas locales, apoya a tu gente y conecta con tu comunidad</li>
+          <li className="text-white">💎 Si eres usuario: descubre joyas locales, apoya a tu gente y conecta con tu comunidad</li>
       </ul>
       <hr />
       <hr />
       <hr />
-            <p>
+            <p className="text-white">
               Porque Sopetrán se vive mejor cuando estamos conectados 💚
 
 👉 ¡No preguntes más por ahí… encuéntralo todo en segundos!
@@ -65,7 +65,7 @@ export default function LandingPage() {
             <Link href="/business/add">
               <Button
                 size="lg"
-                className="text-lg px-4 md:px-8 py-2 md:py-4 w-full md:w-auto"
+                className="text-lg my-3 px-4 md:px-8 py-2 md:py-4 w-full md:w-auto"
               >
                 Agrega tu negocio <ArrowRight className="ml-2" />
               </Button>
