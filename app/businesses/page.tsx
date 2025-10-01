@@ -24,11 +24,11 @@ export default async function Home({ searchParams }: BusinessesPageProps) {
         </h1>
       </div>
       
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 ml-1">
         {businesses.map((business: BusinessState) => (
           // 🔥 Agregar key y mover las clases al div interno
           <Link 
-            key={business.id}
+            key={business._id}
             href={`/business/${business.slug}`}
             className="block" // Solo clases necesarias para el link
           >
