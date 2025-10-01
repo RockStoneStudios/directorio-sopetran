@@ -16,7 +16,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
   const { openDescriptionModal, setOpenDescriptionModal, isEditPage, loading, isDashboardPage, togglePublished } = useBusiness();
 
   return (
-    <Card className="w-full max-w-2xl mx-auto" style={{ height: "354px" }}>
+    <Card className="w-full max-w-2xl mx-auto " style={{ height: "356px" }}>
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
         <div className="w-16 h-16 relative overflow-hidden rounded-xl">
           {
@@ -65,8 +65,8 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
           )}
         </div>
 
-        <div className="flex flex-col justify-between">
-          <div className="space-y-2">
+        <div className="flex flex-col justify-between h-full">
+          <div className="space-y-2 flex-1">
 
             <InfoItem icon={MapPin} text={business?.address || "Direccion"} />
             <InfoItem icon={Phone} text={business?.phone || "Numero telefonico"} />
@@ -75,7 +75,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
             <InfoItem icon={Clock} text={business?.hours || "Abierto - Cerrado"} />
 
           </div >
-          <div className="flex justify-end space-x-3 mt-2">
+          <div className="flex justify-end mb-5 space-x-3 -mt-7 ">
             {business?.instagram && (
               <a
                 href={business.instagram}
