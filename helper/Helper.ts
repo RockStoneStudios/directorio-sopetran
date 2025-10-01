@@ -1,77 +1,121 @@
-function parseHour(hourStr?: string): number {
-    if (!hourStr || typeof hourStr !== "string") {
-        return -1; // o lanza un error si quieres que sea obligatorio
-    }
+function parseHour(hourStr: string): number {
+    if (!hourStr) return -1;
 
     const match = hourStr.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/i);
-
     if (!match) return -1;
 
     let hour = parseInt(match[1], 10);
     const minute = match[2] ? parseInt(match[2], 10) : 0;
     const meridian = match[3]?.toLowerCase();
 
+    // Conversión a formato 24h
     if (meridian === "pm" && hour < 12) hour += 12;
     if (meridian === "am" && hour === 12) hour = 0;
+    if (hour === 24) hour = 0;
 
-    return hour * 60 + minute; // devuelve en minutos, por ejemplo
+    return hour * 60 + minute;
 }
 
-
 function dayToIndex(day: string): number {
-  const days = ["lun", "mar", "mie", "jue", "vie", "sab", "dom"];
-  return days.indexOf(day.toLowerCase());
+    const days: { [key: string]: number } = {
+        'lun': 1, 'mar': 2, 'mie': 3, 'jue': 4, 'vie': 5, 'sab': 6, 'dom': 0,
+        'lunes': 1, 'martes': 2, 'miercoles': 3, 'jueves': 4, 'viernes': 5, 'sabado': 6, 'domingo': 0
+    };
+    return days[day.toLowerCase().substring(0, 3)] ?? -1;
 }
 
 export function isBusinessOpen(hours: string): boolean {
-  const now = new Date();
-  const currentDay = now.getDay(); // 0=Dom, 1=Lun...
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-  // 🔥 Aquí separamos cada bloque de horario por coma
-  const entries = hours.split(",").map(e => e.trim());
-
-  for (const entry of entries) {
-    if (/cerrado/i.test(entry)) continue;
-
-    // Dividir en parte de días y horas (ej: "lun-sab 8am-6pm")
-    const [daysPart, hoursPart] = entry.split(" ").map(e => e.trim());
-    if (!daysPart || !hoursPart) continue;
-
-    const [startDay, endDay] = daysPart.split("-").map(d => d.trim());
-    const [openStr, closeStr] = hoursPart.split("-").map(h => h.trim());
-
-    const openMinutes = parseHour(openStr);
-    const closeMinutes = parseHour(closeStr);
-
-    const startIndex = dayToIndex(startDay);
-    const endIndex = endDay ? dayToIndex(endDay) : startIndex;
-
-    // Ajustar índice de getDay() para que coincida
-    // (JS getDay: 0=Dom, 1=Lun → nuestro array: 0=Lun, ..., 6=Dom)
-    const currentIndex = (currentDay + 6) % 7;
-
-    const inDayRange =
-      (startIndex <= endIndex &&
-        currentIndex >= startIndex &&
-        currentIndex <= endIndex) ||
-      (startIndex > endIndex &&
-        (currentIndex >= startIndex || currentIndex <= endIndex));
-
-    if (!inDayRange) continue;
-
-    // Caso normal (ej: 9am-6pm)
-    if (openMinutes < closeMinutes) {
-      if (currentMinutes >= openMinutes && currentMinutes <= closeMinutes) {
-        return true;
-      }
-    } else {
-      // Caso nocturno (ej: 8pm-2am)
-      if (currentMinutes >= openMinutes || currentMinutes <= closeMinutes) {
-        return true;
-      }
+    // 🔥 PRIMERO: Si el horario contiene "cerrado", retornar false inmediatamente
+    if (!hours || /cerrado|closed/i.test(hours)) {
+        console.log('❌ NEGOCIO CERRADO - Horario indica "cerrado"');
+        return false;
     }
-  }
 
-  return false;
+    const now = new Date();
+    const currentDay = now.getDay(); // 0=Dom, 1=Lun, 2=Mar...
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+    console.log('=== DEBUG HORARIOS ===');
+    console.log('Hora actual:', now.toLocaleString('es-CO')); // Formato colombiano
+    console.log('Día actual (JS):', currentDay, ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'][currentDay]);
+    console.log('Minutos desde medianoche:', currentMinutes);
+    console.log('Horario a evaluar:', hours);
+
+    const entries = hours.split(",").map(e => e.trim());
+
+    for (const entry of entries) {
+        // 🔥 Manejar "Lun-Lun" como todos los días
+        if (entry.toLowerCase().includes('lun-lun')) {
+            const timeMatch = entry.match(/(\d+)(am|pm)?\s*-\s*(\d+)(am|pm)?/i);
+            if (timeMatch) {
+                const openMinutes = parseHour(timeMatch[1] + (timeMatch[2] || ''));
+                const closeMinutes = parseHour(timeMatch[3] + (timeMatch[4] || ''));
+                
+                console.log('Lun-Lun detectado - Horario:', { openMinutes, closeMinutes });
+                
+                if (currentMinutes >= openMinutes && currentMinutes <= closeMinutes) {
+                    console.log('✅ NEGOCIO ABIERTO - Lun-Lun');
+                    return true;
+                }
+            }
+            continue;
+        }
+
+        if (/cerrado/i.test(entry)) continue;
+
+        const parts = entry.split(" ").filter(p => p.trim() !== '');
+        if (parts.length < 2) continue;
+
+        const daysPart = parts[0];
+        const hoursPart = parts[parts.length - 1];
+        
+        const [startDay, endDay] = daysPart.split("-").map(d => d.trim());
+        const [openStr, closeStr] = hoursPart.split("-").map(h => h.trim());
+
+        console.log('Procesando:', { startDay, endDay, openStr, closeStr });
+
+        const openMinutes = parseHour(openStr);
+        const closeMinutes = parseHour(closeStr);
+        
+        const startIndex = dayToIndex(startDay);
+        const endIndex = endDay ? dayToIndex(endDay) : startIndex;
+
+        console.log('Índices:', { 
+            startIndex, 
+            endIndex, 
+            openMinutes, 
+            closeMinutes,
+            openTime: `${Math.floor(openMinutes/60)}:${openMinutes%60}`,
+            closeTime: `${Math.floor(closeMinutes/60)}:${closeMinutes%60}`
+        });
+
+        // Verificar rango de días
+        let inDayRange = false;
+        
+        if (startIndex <= endIndex) {
+            inDayRange = currentDay >= startIndex && currentDay <= endIndex;
+        } else {
+            inDayRange = currentDay >= startIndex || currentDay <= endIndex;
+        }
+
+        console.log('¿Está en rango de días?', inDayRange);
+
+        if (!inDayRange) continue;
+
+        // Verificar horario
+        if (openMinutes <= closeMinutes) {
+            if (currentMinutes >= openMinutes && currentMinutes <= closeMinutes) {
+                console.log('✅ NEGOCIO ABIERTO - Horario normal');
+                return true;
+            }
+        } else {
+            if (currentMinutes >= openMinutes || currentMinutes <= closeMinutes) {
+                console.log('✅ NEGOCIO ABIERTO - Horario cruzado');
+                return true;
+            }
+        }
+    }
+
+    console.log('❌ NEGOCIO CERRADO - No coincide con ningún horario');
+    return false;
 }

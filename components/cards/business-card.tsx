@@ -16,7 +16,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
   const { openDescriptionModal, setOpenDescriptionModal, isEditPage, loading, isDashboardPage, togglePublished } = useBusiness();
 
   return (
-    <Card className="w-full max-w-2xl mx-auto " style={{ height: "356px" }}>
+    <Card className="w-full max-w-2xl mx-auto " style={{ height: "326px" }}>
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
         <div className="w-16 h-16 relative overflow-hidden rounded-xl">
           {
@@ -59,14 +59,14 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
 
         <div
 
-          className="text-sm mb-4 line-clamp-3">
+          className="text-sm mb-4 line-clamp-1">
           {business?.description && (
-            <div dangerouslySetInnerHTML={{ __html: business.description }} />
+            <div className="text-sm" dangerouslySetInnerHTML={{ __html: business.description }} />
           )}
         </div>
 
         <div className="flex flex-col justify-between h-full">
-          <div className="space-y-2 flex-1">
+          <div className="space-y-3 flex-1">
 
             <InfoItem icon={MapPin} text={business?.address || "Direccion"} />
             <InfoItem icon={Phone} text={business?.phone || "Numero telefonico"} />

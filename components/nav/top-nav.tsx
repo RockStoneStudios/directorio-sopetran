@@ -1,13 +1,5 @@
-
 import React from 'react'
-import {
-        Menubar,
-        MenubarMenu,
-        MenubarTrigger,
-        
-       } 
-
-from '@/components/ui/menubar';
+import { Menubar,MenubarMenu,MenubarTrigger} from '@/components/ui/menubar';
 import ModeToggle from './mode-toggle';
 import Image from 'next/image';
 import Link from 'next/link';
