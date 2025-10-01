@@ -36,7 +36,7 @@ export function isBusinessOpen(hours: string): boolean {
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
     console.log('=== DEBUG HORARIOS ===');
-    console.log('Hora actual:', now.toLocaleString('es-CO')); // Formato colombiano
+    console.log('Hora actual:', now.toLocaleString('es-CO')); 
     console.log('Día actual (JS):', currentDay, ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'][currentDay]);
     console.log('Minutos desde medianoche:', currentMinutes);
     console.log('Horario a evaluar:', hours);
@@ -44,18 +44,25 @@ export function isBusinessOpen(hours: string): boolean {
     const entries = hours.split(",").map(e => e.trim());
 
     for (const entry of entries) {
-        // 🔥 Manejar "Lun-Lun" como todos los días
+        // 🔥 Manejar "Lun-Lun" como todos los días de la semana
         if (entry.toLowerCase().includes('lun-lun')) {
-            const timeMatch = entry.match(/(\d+)(am|pm)?\s*-\s*(\d+)(am|pm)?/i);
+            const timeMatch = entry.match(/(\d+)(?::(\d{2}))?\s*(am|pm)?\s*-\s*(\d+)(?::(\d{2}))?\s*(am|pm)?/i);
             if (timeMatch) {
-                const openMinutes = parseHour(timeMatch[1] + (timeMatch[2] || ''));
-                const closeMinutes = parseHour(timeMatch[3] + (timeMatch[4] || ''));
+                const openMinutes = parseHour((timeMatch[1] || '') + (timeMatch[3] || ''));
+                const closeMinutes = parseHour((timeMatch[4] || '') + (timeMatch[6] || ''));
                 
-                console.log('Lun-Lun detectado - Horario:', { openMinutes, closeMinutes });
+                console.log('🌀 Lun-Lun detectado - Horario:', { openMinutes, closeMinutes });
                 
-                if (currentMinutes >= openMinutes && currentMinutes <= closeMinutes) {
-                    console.log('✅ NEGOCIO ABIERTO - Lun-Lun');
-                    return true;
+                if (openMinutes <= closeMinutes) {
+                    if (currentMinutes >= openMinutes && currentMinutes <= closeMinutes) {
+                        console.log('✅ NEGOCIO ABIERTO - Lun-Lun horario normal');
+                        return true;
+                    }
+                } else {
+                    if (currentMinutes >= openMinutes || currentMinutes <= closeMinutes) {
+                        console.log('✅ NEGOCIO ABIERTO - Lun-Lun horario cruzado');
+                        return true;
+                    }
                 }
             }
             continue;
@@ -67,8 +74,8 @@ export function isBusinessOpen(hours: string): boolean {
         if (parts.length < 2) continue;
 
         const daysPart = parts[0];
-        const hoursPart = parts[parts.length - 1];
-        
+        const hoursPart = parts.slice(1).join(" "); // ✅ tomar todo el string restante, no solo la última palabra
+
         const [startDay, endDay] = daysPart.split("-").map(d => d.trim());
         const [openStr, closeStr] = hoursPart.split("-").map(h => h.trim());
 
