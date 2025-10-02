@@ -32,7 +32,7 @@ export default async function Home({ searchParams }: BusinessesPageProps) {
             href={`/business/${business.slug}`}
             className="block" // Solo clases necesarias para el link
           >
-            <div className="transform transition duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="transform transition duration-300 hover:scale-105 hover:shadow-lg ml-1">
               <BusinessCard business={business} />
             </div>
           </Link>
