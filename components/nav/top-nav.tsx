@@ -72,7 +72,7 @@ export default async function TopNav() {
                            <span className='flex items-center'>
                                 <ShieldCheck size={16} className='mr-1'/>
                                 <Link href="/dashboard/admin">
-                                <span className='text-xs md:text-sm'>Admin</span>
+                                <span className='text-[11px] md:text-sm'>Admin</span>
                                 </Link>
                            </span>
                         </MenubarTrigger>
