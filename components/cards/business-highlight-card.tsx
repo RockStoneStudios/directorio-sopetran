@@ -17,48 +17,88 @@ export default function BusinessHighlightCard({
   const [pulsingIcon, setPulsingIcon] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Datos de ejemplo basados en la información proporcionada
-  const businessData = {
-    phone: "3133398095",
-    address: "Sopetrán - Parque Principal", 
-    hours: "Lunes a Domingo: 10:00 AM - 9:00 PM",
-    website: "",
-    email: ""
-  };
-
   const handleCopy = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
     toast.success(`${field} copiado al portapapeles`);
   };
 
   const handleHoursClick = () => {
-    if (businessData.hours) {
-      toast.success(`Horario: ${businessData.hours}`, {
+    if (business.hours) {
+      toast.success(`Horario: ${business.hours}`, {
         duration: 4000,
         icon: '🕐',
       });
     }
   };
 
-  // Mapeo de colores para evitar clases dinámicas
+  // Función para manejar clicks que evita la propagación
+  const handleIconClick = (e: React.MouseEvent, action: () => void) => {
+    e.preventDefault();
+    e.stopPropagation();
+    action();
+  };
+
+  // Mapeo de íconos usando datos reales de la base de datos
   const iconConfig = [
     { 
       type: 'phone', 
       color: 'green',
       icon: Phone,
-      data: businessData.phone 
+      data: business.phone,
+      action: () => {
+        if (business.phone) {
+          handleCopy(business.phone, "Teléfono");
+          window.open(`https://wa.me/57${business.phone}`, "_blank");
+        }
+      }
     },
     { 
       type: 'address', 
       color: 'cyan',
       icon: MapPin,
-      data: businessData.address 
+      data: business.address,
+      action: () => {
+        if (business.address) {
+          window.open(
+            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(business.address)}`,
+            "_blank"
+          );
+        }
+      }
     },
     { 
       type: 'hours', 
       color: 'yellow',
       icon: Clock,
-      data: businessData.hours 
+      data: business.hours,
+      action: handleHoursClick
+    },
+    { 
+      type: 'email', 
+      color: 'red',
+      icon: Mail,
+      data: business.email,
+      action: () => {
+        if (business.email) {
+          handleCopy(business.email, "Email");
+          window.open(`mailto:${business.email}`, "_blank");
+        }
+      }
+    },
+    { 
+      type: 'website', 
+      color: 'blue',
+      icon: Globe,
+      data: business.website,
+      action: () => {
+        if (business.website) {
+          handleCopy(business.website, "Sitio web");
+          const websiteUrl = business.website.startsWith('http') 
+            ? business.website 
+            : `https://${business.website}`;
+          window.open(websiteUrl, "_blank");
+        }
+      }
     },
   ];
 
@@ -102,6 +142,30 @@ export default function BusinessHighlightCard({
             ? 'text-yellow-200 hover:text-yellow-300' 
             : 'text-yellow-400 hover:text-yellow-300'
         } hover:bg-yellow-500/20`
+      },
+      red: {
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+          isPulsing 
+            ? 'border-red-500/80 bg-red-500/30 shadow-[0_0_20px_#FF4444] scale-125' 
+            : 'border-red-500/40 bg-red-500/10 shadow-[0_0_8px_#FF4444]'
+        } hover:shadow-[0_0_25px_#FF4444] hover:scale-110 hover:border-red-500/60`,
+        button: `rounded-full w-10 h-10 bg-transparent ${
+          isPulsing 
+            ? 'text-red-200 hover:text-red-300' 
+            : 'text-red-400 hover:text-red-300'
+        } hover:bg-red-500/20`
+      },
+      blue: {
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+          isPulsing 
+            ? 'border-blue-500/80 bg-blue-500/30 shadow-[0_0_20px_#4444FF] scale-125' 
+            : 'border-blue-500/40 bg-blue-500/10 shadow-[0_0_8px_#4444FF]'
+        } hover:shadow-[0_0_25px_#4444FF] hover:scale-110 hover:border-blue-500/60`,
+        button: `rounded-full w-10 h-10 bg-transparent ${
+          isPulsing 
+            ? 'text-blue-200 hover:text-blue-300' 
+            : 'text-blue-400 hover:text-blue-300'
+        } hover:bg-blue-500/20`
       }
     };
 
@@ -117,7 +181,6 @@ export default function BusinessHighlightCard({
       const visibleIcons = iconsRef.current.filter(icon => icon !== null);
       
       if (visibleIcons.length > 0) {
-        // Animación de entrada simplificada
         gsap.from(visibleIcons, {
           y: 50,
           opacity: 0,
@@ -127,7 +190,6 @@ export default function BusinessHighlightCard({
           delay: 0.3
         });
 
-        // Solo una animación de flotación para evitar conflictos
         gsap.to(visibleIcons, {
           y: -8,
           duration: 2,
@@ -142,7 +204,6 @@ export default function BusinessHighlightCard({
     return () => ctx.revert();
   }, []);
 
-  // Efecto de pulso simplificado
   useLayoutEffect(() => {
     if (!isMounted) return;
 
@@ -168,7 +229,7 @@ export default function BusinessHighlightCard({
         setPulsingIcon(null);
       }, 800);
 
-    }, 4000); // Reducido a 4 segundos
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [isMounted]);
@@ -177,8 +238,8 @@ export default function BusinessHighlightCard({
     iconsRef.current[index] = el;
   };
 
-  // Filtrar íconos que tienen datos
-  const visibleIcons = iconConfig.filter(icon => icon.data);
+  // Filtrar íconos que tienen datos en la base de datos
+  const visibleIcons = iconConfig.filter(icon => icon.data && icon.data.trim() !== '');
 
   if (!isMounted) {
     return (
@@ -190,68 +251,46 @@ export default function BusinessHighlightCard({
     );
   }
 
+  if (visibleIcons.length === 0) {
+    return null;
+  }
+
   return (
-    <div className="fixed right-2 top-1/2 -translate-y-1/2 z-[10000] flex flex-col gap-2">
-      
-      {/* Teléfono / WhatsApp */}
-      {businessData.phone && (
-        <div 
-          ref={el => addToRefs(el, 0)}
-          className={getPredefinedStyles(0, 'green').container}
-        >
-          <Button
-            size="icon"
-            variant="ghost"
-            className={getPredefinedStyles(0, 'green').button}
-            onClick={() => {
-              handleCopy(businessData.phone, "Teléfono");
-              window.open(`https://wa.me/57${businessData.phone}`, "_blank");
-            }}
+    <div 
+      className="fixed right-2 top-1/2 -translate-y-1/2 z-[10000] flex flex-col gap-2"
+      // Prevenir eventos de click en el contenedor principal
+      onClick={(e) => e.stopPropagation()}
+    >
+      {visibleIcons.map((icon, index) => {
+        const IconComponent = icon.icon;
+        const styles = getPredefinedStyles(index, icon.color);
+        
+        return (
+          <div 
+            key={icon.type}
+            ref={el => addToRefs(el, index)}
+            className={styles.container}
+            // Prevenir eventos de click en cada ícono
+            onClick={(e) => e.stopPropagation()}
           >
-            <Phone className="size-4" />
-          </Button>
-        </div>
-      )}
-
-      {/* Dirección */}
-      {businessData.address && (
-        <div 
-          ref={el => addToRefs(el, 1)}
-          className={getPredefinedStyles(1, 'cyan').container}
-        >
-          <Button
-            size="icon"
-            variant="ghost"
-            className={getPredefinedStyles(1, 'cyan').button}
-            onClick={() =>
-              window.open(
-                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(businessData.address)}`,
-                "_blank"
-              )
-            }
-          >
-            <MapPin className="size-4" />
-          </Button>
-        </div>
-      )}
-
-      {/* Horario */}
-      {businessData.hours && (
-        <div 
-          ref={el => addToRefs(el, 2)}
-          className={getPredefinedStyles(2, 'yellow').container}
-        >
-          <Button
-            size="icon"
-            variant="ghost"
-            className={getPredefinedStyles(2, 'yellow').button}
-            onClick={handleHoursClick}
-          >
-            <Clock className="size-4" />
-          </Button>
-        </div>
-      )}
-
+            <Button
+              size="icon"
+              variant="ghost"
+              className={styles.button}
+              onClick={(e) => handleIconClick(e, icon.action)}
+              title={icon.type === 'phone' ? `Llamar o escribir por WhatsApp: ${business.phone}` : 
+                     icon.type === 'address' ? `Ver ubicación en Google Maps: ${business.address}` :
+                     icon.type === 'hours' ? `Horario: ${business.hours}` :
+                     icon.type === 'email' ? `Enviar email: ${business.email}` :
+                     `Visitar sitio web: ${business.website}`}
+              // Importante: type="button" para evitar submit en formularios
+              type="button"
+            >
+              <IconComponent className="size-4" />
+            </Button>
+          </div>
+        );
+      })}
     </div>
   );
 }
