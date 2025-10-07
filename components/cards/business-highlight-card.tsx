@@ -102,70 +102,70 @@ export default function BusinessHighlightCard({
     },
   ];
 
-  // Clases predefinidas para cada color
+  // Clases predefinidas para cada color - MEJORADO con contenedor oscuro y colores más fuertes
   const getPredefinedStyles = (index: number, colorType: string) => {
     const isPulsing = pulsingIcon === index;
     
     const baseStyles = {
       green: {
-        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
-            ? 'border-green-500/80 bg-green-500/30 shadow-[0_0_20px_#00FF66] scale-125' 
-            : 'border-green-500/40 bg-green-500/10 shadow-[0_0_8px_#00FF66]'
-        } hover:shadow-[0_0_25px_#00FF66] hover:scale-110 hover:border-green-500/60`,
+            ? 'border-green-600 dark:border-green-500/80 bg-green-500/40 dark:bg-green-500/30 dark:shadow-[0_0_20px_#00FF66] shadow-[0_0_8px_#00FF66] scale-125' 
+            : 'border-green-500 dark:border-green-500/40 bg-green-500/20 dark:bg-green-500/10 dark:shadow-[0_0_8px_#00FF66] shadow-[0_0_4px_#00FF66]'
+        } hover:shadow-[0_0_12px_#00FF66] dark:hover:shadow-[0_0_25px_#00FF66] hover:scale-110 hover:border-green-600 dark:hover:border-green-500/60`,
         button: `rounded-full w-10 h-10 bg-transparent ${
           isPulsing 
-            ? 'text-green-200 hover:text-green-300' 
-            : 'text-green-400 hover:text-green-300'
-        } hover:bg-green-500/20`
+            ? 'text-green-500 dark:text-green-200 hover:text-green-600 dark:hover:text-green-300' 
+            : 'text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300'
+        } hover:bg-green-500/30 dark:hover:bg-green-500/20`
       },
       cyan: {
-        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
-            ? 'border-cyan-500/80 bg-cyan-500/30 shadow-[0_0_20px_#00FFFF] scale-125' 
-            : 'border-cyan-500/40 bg-cyan-500/10 shadow-[0_0_8px_#00FFFF]'
-        } hover:shadow-[0_0_25px_#00FFFF] hover:scale-110 hover:border-cyan-500/60`,
+            ? 'border-cyan-600 dark:border-cyan-500/80 bg-cyan-500/40 dark:bg-cyan-500/30 dark:shadow-[0_0_20px_#00FFFF] shadow-[0_0_8px_#00FFFF] scale-125' 
+            : 'border-cyan-500 dark:border-cyan-500/40 bg-cyan-500/20 dark:bg-cyan-500/10 dark:shadow-[0_0_8px_#00FFFF] shadow-[0_0_4px_#00FFFF]'
+        } hover:shadow-[0_0_12px_#00FFFF] dark:hover:shadow-[0_0_25px_#00FFFF] hover:scale-110 hover:border-cyan-600 dark:hover:border-cyan-500/60`,
         button: `rounded-full w-10 h-10 bg-transparent ${
           isPulsing 
-            ? 'text-cyan-200 hover:text-cyan-300' 
-            : 'text-cyan-400 hover:text-cyan-300'
-        } hover:bg-cyan-500/20`
+            ? 'text-cyan-500 dark:text-cyan-200 hover:text-cyan-600 dark:hover:text-cyan-300' 
+            : 'text-cyan-500 dark:text-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-300'
+        } hover:bg-cyan-500/30 dark:hover:bg-cyan-500/20`
       },
       yellow: {
-        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
-            ? 'border-yellow-500/80 bg-yellow-500/30 shadow-[0_0_20px_#FFD700] scale-125' 
-            : 'border-yellow-500/40 bg-yellow-500/10 shadow-[0_0_8px_#FFD700]'
-        } hover:shadow-[0_0_25px_#FFD700] hover:scale-110 hover:border-yellow-500/60`,
+            ? 'border-yellow-600 dark:border-yellow-500/80 bg-yellow-500/40 dark:bg-yellow-500/30 dark:shadow-[0_0_20px_#FFD700] shadow-[0_0_8px_#FFD700] scale-125' 
+            : 'border-yellow-500 dark:border-yellow-500/40 bg-yellow-500/20 dark:bg-yellow-500/10 dark:shadow-[0_0_8px_#FFD700] shadow-[0_0_4px_#FFD700]'
+        } hover:shadow-[0_0_12px_#FFD700] dark:hover:shadow-[0_0_25px_#FFD700] hover:scale-110 hover:border-yellow-600 dark:hover:border-yellow-500/60`,
         button: `rounded-full w-10 h-10 bg-transparent ${
           isPulsing 
-            ? 'text-yellow-200 hover:text-yellow-300' 
-            : 'text-yellow-400 hover:text-yellow-300'
-        } hover:bg-yellow-500/20`
+            ? 'text-yellow-500 dark:text-yellow-200 hover:text-yellow-600 dark:hover:text-yellow-300' 
+            : 'text-yellow-500 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300'
+        } hover:bg-yellow-500/30 dark:hover:bg-yellow-500/20`
       },
       red: {
-        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
-            ? 'border-red-500/80 bg-red-500/30 shadow-[0_0_20px_#FF4444] scale-125' 
-            : 'border-red-500/40 bg-red-500/10 shadow-[0_0_8px_#FF4444]'
-        } hover:shadow-[0_0_25px_#FF4444] hover:scale-110 hover:border-red-500/60`,
+            ? 'border-red-600 dark:border-red-500/80 bg-red-500/40 dark:bg-red-500/30 dark:shadow-[0_0_20px_#FF4444] shadow-[0_0_8px_#FF4444] scale-125' 
+            : 'border-red-500 dark:border-red-500/40 bg-red-500/20 dark:bg-red-500/10 dark:shadow-[0_0_8px_#FF4444] shadow-[0_0_4px_#FF4444]'
+        } hover:shadow-[0_0_12px_#FF4444] dark:hover:shadow-[0_0_25px_#FF4444] hover:scale-110 hover:border-red-600 dark:hover:border-red-500/60`,
         button: `rounded-full w-10 h-10 bg-transparent ${
           isPulsing 
-            ? 'text-red-200 hover:text-red-300' 
-            : 'text-red-400 hover:text-red-300'
-        } hover:bg-red-500/20`
+            ? 'text-red-500 dark:text-red-200 hover:text-red-600 dark:hover:text-red-300' 
+            : 'text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300'
+        } hover:bg-red-500/30 dark:hover:bg-red-500/20`
       },
       blue: {
-        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
-            ? 'border-blue-500/80 bg-blue-500/30 shadow-[0_0_20px_#4444FF] scale-125' 
-            : 'border-blue-500/40 bg-blue-500/10 shadow-[0_0_8px_#4444FF]'
-        } hover:shadow-[0_0_25px_#4444FF] hover:scale-110 hover:border-blue-500/60`,
+            ? 'border-blue-600 dark:border-blue-500/80 bg-blue-500/40 dark:bg-blue-500/30 dark:shadow-[0_0_20px_#4444FF] shadow-[0_0_8px_#4444FF] scale-125' 
+            : 'border-blue-500 dark:border-blue-500/40 bg-blue-500/20 dark:bg-blue-500/10 dark:shadow-[0_0_8px_#4444FF] shadow-[0_0_4px_#4444FF]'
+        } hover:shadow-[0_0_12px_#4444FF] dark:hover:shadow-[0_0_25px_#4444FF] hover:scale-110 hover:border-blue-600 dark:hover:border-blue-500/60`,
         button: `rounded-full w-10 h-10 bg-transparent ${
           isPulsing 
-            ? 'text-blue-200 hover:text-blue-300' 
-            : 'text-blue-400 hover:text-blue-300'
-        } hover:bg-blue-500/20`
+            ? 'text-blue-500 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300' 
+            : 'text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300'
+        } hover:bg-blue-500/30 dark:hover:bg-blue-500/20`
       }
     };
 
