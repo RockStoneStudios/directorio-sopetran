@@ -90,53 +90,7 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
         <DescriptionCard description={business?.description} />
 
         {/* Información de contacto */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          {business?.address && (
-            <div className="flex items-center space-x-2 text-sm">
-              <MapPin className="w-4 h-4 text-muted-foreground" />
-              <span>{business.address}</span>
-            </div>
-          )}
-          
-          {business?.phone && (
-            <div className="flex items-center space-x-2 text-sm">
-              <Phone className="w-4 h-4 text-muted-foreground" />
-              <a 
-                href={`tel:${business.phone}`}
-                className="hover:text-primary transition-colors"
-              >
-                {business.phone}
-              </a>
-            </div>
-          )}
-          
-          {business?.email && (
-            <div className="flex items-center space-x-2 text-sm">
-              <Mail className="w-4 h-4 text-muted-foreground" />
-              <a 
-                href={`mailto:${business.email}`}
-                className="hover:text-primary transition-colors"
-              >
-                {business.email}
-              </a>
-            </div>
-          )}
-          
-          {business?.website && (
-            <div className="flex items-center space-x-2 text-sm">
-              <Globe className="w-4 h-4 text-muted-foreground" />
-              <a 
-                href={business.website.startsWith('http') ? business.website : `https://${business.website}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-              >
-                Sitio web
-              </a>
-            </div>
-          )}
-        </div>
-
+       
         {/* Redes sociales */}
         <div className="flex justify-end space-x-3 mt-4">
           {business?.instagram && (
