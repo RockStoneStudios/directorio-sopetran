@@ -1,86 +1,41 @@
-import { getAllBusinessesFromDb } from "@/actions/business";
-import { BusinessState } from "@/utils/types/business";
-import Link from "next/link";
+"use client";
+export const dynamic = "force-dynamic";
+
+import { useBusiness } from "@/context/business";
 import PreviewCard from "@/components/nav/business/preview/preview-card";
-import BusinessCard from "@/components/cards/business-card";
-import Pagination from "@/components/nav/pagination";
-import  CategoryAddressCard  from "@/components/cards/category-address-card";
-import Image from "next/image";
-import { Settings } from "lucide-react";
+import Link from "next/link";
+import SkeletonCard from "@/components/cards/skeleton-card";
 
+const Dashboard = () => {
+  const { businesses } = useBusiness();
 
-interface BusinessesPageProps {
-   searchParams : {page?:number}
-}
-
-
-
-export default async  function AdminDashboard({searchParams} :BusinessesPageProps) {
-  const page = searchParams?.page ? parseInt(searchParams.page as unknown as string,10) : 1;
-  
-   const limit = 3;
-   const {businesses,totalCount} = await getAllBusinessesFromDb(page,limit);
-   const totalPages = Math.ceil(totalCount/limit);
+  if (!businesses?.length) {
+    return (
+      <div>
+        <p className="text-center my-5">Loading ...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-5 px-5">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+      </div>
+    );
+  }
 
   return (
-     <div>
-     
-        <div className="p-5">
-          <h1 className="text-2xl font-bold mb-3 text-center">
-            Negocios
-          </h1>
-        </div>
-       
-       {/**Display business */}
-
-      <div className="overflow-x-auto">
-         
-      <table className="min-w-full table-auto border-collapse border
-border-gray-300">
-        <thead className="bg-gray-100 dark:bg-gray-900">
-          <tr>
-            <th className="border px-4 py-2">Logo</th>
-            <th className="border px-4 py-2">Categoria</th>
-            <th className="border px-4 py-2">Titulo</th>
-            <th className="border px-4 py-2">Slug</th>
-            <th className="border px-4 py-2">Editar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {businesses.map((business: BusinessState) => (
-            <tr key={business._id} className="hover:bg-gray-100 dark:hover:bg-gray-900">
-              <td className="border px-4 py-2">
-                <Image
-                  src={business.logo || "/placeholder-logo.png"}
-                  alt={business.name}
-                  width={50}
-                  height={50}
-                />
-              </td>
-              <td className="border px-4 py-2">{business.category}</td>
-              <td className="border px-4 py-2">{business.name}</td>
-              <td className="border px-4 py-2">{business.slug}</td>
-              <td className="border px-4 py-2">
-                <Link href={`/dashboard/business/edit/${business._id}`}>
-                  <Settings />
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-        
-      </table>
+    <div className="p-10">
+      <h1 className="text-2xl font-bold mb-5 text-center">Dashboard</h1>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {businesses.map((business, index) => (
+          <Link key={index} href={`/dashboard/business/edit/${business._id}`}>
+            <div className="transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+              <PreviewCard business={business} />
+            </div>
+          </Link>
+        ))}
       </div>
-    
-
-    {/** Pagination */}
-     <Pagination page={page} totalPages={totalPages}/>
-
-      <div className="mt-8">
-        <CategoryAddressCard/>
-      </div>
-     </div>
-   
-  
+    </div>
   );
-}
+};
+
+export default Dashboard;
