@@ -31,24 +31,39 @@ export default function BusinessHighlightCard({
     }
   };
 
-  // Función para manejar clicks que evita la propagación
-  const handleIconClick = (e: React.MouseEvent, action: () => void) => {
+  // Función para manejar clicks que SOLO copia al portapapeles
+  const handleCopyClick = (e: React.MouseEvent, text: string, field: string) => {
     e.preventDefault();
     e.stopPropagation();
-    action();
+    handleCopy(text, field);
   };
 
-  // Mapeo de íconos usando datos reales de la base de datos
+  // Función para abrir WhatsApp que NO previene el comportamiento por defecto
+  const openWhatsApp = (phone: string) => {
+    handleCopy(phone, "Teléfono");
+    // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
+    setTimeout(() => {
+      window.open(`https://wa.me/57${phone}`, "_blank");
+    }, 100);
+  };
+
+  // Función para abrir enlaces externos
+  const openExternalLink = (url: string) => {
+    window.open(url, "_blank");
+  };
+
+  // Mapeo de íconos usando datos reales de la base de datos - CORREGIDO
   const iconConfig = [
     { 
       type: 'phone', 
       color: 'green',
       icon: Phone,
       data: business.phone,
-      action: () => {
+      action: (e: React.MouseEvent) => {
         if (business.phone) {
-          handleCopy(business.phone, "Teléfono");
-          window.open(`https://wa.me/57${business.phone}`, "_blank");
+          // Solo copiar, no prevenir el comportamiento completo
+          handleCopyClick(e, business.phone, "Teléfono");
+          openWhatsApp(business.phone);
         }
       }
     },
@@ -57,11 +72,11 @@ export default function BusinessHighlightCard({
       color: 'cyan',
       icon: MapPin,
       data: business.address,
-      action: () => {
+      action: (e: React.MouseEvent) => {
         if (business.address) {
-          window.open(
-            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(business.address)}`,
-            "_blank"
+          handleCopyClick(e, business.address, "Dirección");
+          openExternalLink(
+            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(business.address)}`
           );
         }
       }
@@ -71,17 +86,21 @@ export default function BusinessHighlightCard({
       color: 'yellow',
       icon: Clock,
       data: business.hours,
-      action: handleHoursClick
+      action: (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleHoursClick();
+      }
     },
     { 
       type: 'email', 
       color: 'red',
       icon: Mail,
       data: business.email,
-      action: () => {
+      action: (e: React.MouseEvent) => {
         if (business.email) {
-          handleCopy(business.email, "Email");
-          window.open(`mailto:${business.email}`, "_blank");
+          handleCopyClick(e, business.email, "Email");
+          openExternalLink(`mailto:${business.email}`);
         }
       }
     },
@@ -90,13 +109,13 @@ export default function BusinessHighlightCard({
       color: 'blue',
       icon: Globe,
       data: business.website,
-      action: () => {
+      action: (e: React.MouseEvent) => {
         if (business.website) {
-          handleCopy(business.website, "Sitio web");
+          handleCopyClick(e, business.website, "Sitio web");
           const websiteUrl = business.website.startsWith('http') 
             ? business.website 
             : `https://${business.website}`;
-          window.open(websiteUrl, "_blank");
+          openExternalLink(websiteUrl);
         }
       }
     },
@@ -277,7 +296,7 @@ export default function BusinessHighlightCard({
               size="icon"
               variant="ghost"
               className={styles.button}
-              onClick={(e) => handleIconClick(e, icon.action)}
+              onClick={icon.action}
               title={icon.type === 'phone' ? `Llamar o escribir por WhatsApp: ${business.phone}` : 
                      icon.type === 'address' ? `Ver ubicación en Google Maps: ${business.address}` :
                      icon.type === 'hours' ? `Horario: ${business.hours}` :
