@@ -1,7 +1,12 @@
 function parseHour(hourStr: string): number {
     if (!hourStr) return -1;
 
-    const match = hourStr.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/i);
+    // 🔥 NUEVO: Detectar "12m" como mediodía (12:00)
+    if (hourStr.trim().toLowerCase() === '12m') {
+        return 12 * 60; // 12:00 en minutos (720 minutos)
+    }
+
+    const match = hourStr.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm|m)?$/i);
     if (!match) return -1;
 
     let hour = parseInt(match[1], 10);
@@ -11,6 +16,7 @@ function parseHour(hourStr: string): number {
     // Conversión a formato 24h
     if (meridian === "pm" && hour < 12) hour += 12;
     if (meridian === "am" && hour === 12) hour = 0;
+    if (meridian === "m" && hour === 12) hour = 12; // 🔥 NUEVO: 12m = 12:00 (mediodía)
     if (hour === 24) hour = 0;
 
     return hour * 60 + minute;
@@ -46,7 +52,7 @@ export function isBusinessOpen(hours: string): boolean {
     for (const entry of entries) {
         // 🔥 Manejar "Lun-Lun" como todos los días de la semana
         if (entry.toLowerCase().includes('lun-lun')) {
-            const timeMatch = entry.match(/(\d+)(?::(\d{2}))?\s*(am|pm)?\s*-\s*(\d+)(?::(\d{2}))?\s*(am|pm)?/i);
+            const timeMatch = entry.match(/(\d+(?:m)?)(?::(\d{2}))?\s*(am|pm|m)?\s*-\s*(\d+(?:m)?)(?::(\d{2}))?\s*(am|pm|m)?/i);
             if (timeMatch) {
                 const openMinutes = parseHour((timeMatch[1] || '') + (timeMatch[3] || ''));
                 const closeMinutes = parseHour((timeMatch[4] || '') + (timeMatch[6] || ''));
@@ -74,7 +80,7 @@ export function isBusinessOpen(hours: string): boolean {
         if (parts.length < 2) continue;
 
         const daysPart = parts[0];
-        const hoursPart = parts.slice(1).join(" "); // ✅ tomar todo el string restante, no solo la última palabra
+        const hoursPart = parts.slice(1).join(" ");
 
         const [startDay, endDay] = daysPart.split("-").map(d => d.trim());
         const [openStr, closeStr] = hoursPart.split("-").map(h => h.trim());
