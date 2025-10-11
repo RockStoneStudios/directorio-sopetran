@@ -45,7 +45,7 @@ export default function LandingPage() {
     {/* Descripción */}
     <p className="text-white text-base md:text-lg leading-relaxed">
       En nuestro <span className="font-semibold">Directorio de Negocios Locales </span> 
-      encuentras todo lo que buscas: <br /> tiendas, restaurantes, servicios y mucho más…  
+      encuentras todo lo que buscas: <br /> tiendas, restaurantes, servicios ,actividades locales y mucho más…  
       ¡a un solo clic! 📲
     </p>
 
@@ -66,12 +66,12 @@ export default function LandingPage() {
     </p>
 
     {/* Botón */}
-    <Link href="/business/add">
+   <Link href={`https://wa.me/573206209817`} target="_blank" rel="noopener noreferrer">
       <Button
         size="lg"
         className="text-lg mt-1 px-6 py-3 w-full md:w-auto rounded-xl shadow-lg hover:scale-105 transition"
       >
-        Agrega tu negocio <ArrowRight className="ml-2" />
+        Escríbenos por WhatsApp <ArrowRight className="ml-2" />
       </Button>
     </Link>
   </div>
