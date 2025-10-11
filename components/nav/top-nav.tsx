@@ -48,7 +48,8 @@ export default async function TopNav() {
                         </MenubarTrigger>
                     
                     </MenubarMenu>
-                <AddBusinessButton/>
+               {isAdmin && <AddBusinessButton />}
+
                 
                 {user && (
                      <MenubarMenu>
