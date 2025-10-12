@@ -174,7 +174,7 @@ export default function LandingPage() {
                 Explore los Negocios Sopetraneros  <ArrowRight className="ml-2" />
               </Button>
             </Link>
-            <Link href="/business/add" className="w-full md:w-auto">
+            <Link href="/" className="w-full md:w-auto">
               <Button
                 size="lg"
                 className="text-lg px-4 md:px-8 py-2 md:py-4 w-full"
