@@ -22,7 +22,7 @@ export default async function TopNav() {
                 <MenubarMenu>
                  <Link href="/">
                    <Image 
-                    src="/images/icono.png" 
+                    src="/images/escudo.png" 
                     alt='logo'
                     height={37}
                     width={37}
