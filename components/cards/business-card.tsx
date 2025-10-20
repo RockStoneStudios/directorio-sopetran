@@ -100,7 +100,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
                 href={business.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-pink-600 text-2xl"
+                className="text-pink-600 text-xl"
               >
                 <IoLogoInstagram />
               </a>
@@ -110,7 +110,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
                 href={business.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-700 text-2xl"
+                className="text-blue-600 text-xl"
               >
                 <FaFacebookSquare />
               </a>

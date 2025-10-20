@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
 import { IoLogoInstagram } from "react-icons/io5";
 import { FaFacebookSquare } from "react-icons/fa";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
 export default function SingleBusinessPage({ business }: { business: BusinessState }) {
@@ -46,6 +46,19 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
 
     return () => ctx.revert();
   }, [business?.hours]);
+
+
+// Dentro de tu componente
+useEffect(() => {
+  // Animación de respiración para el texto "Sígueme"
+  gsap.to("#sigueme-text", {
+    scale: 1.2,
+    duration: 1.5,
+    repeat: -1, // Repetir infinitamente
+    yoyo: true, // Ir y volver
+    ease: "power1.inOut"
+  });
+}, []);
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
@@ -92,28 +105,34 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
         {/* Información de contacto */}
        
         {/* Redes sociales */}
-        <div className="flex justify-end space-x-3 mt-4">
-          {business?.instagram && (
-            <a
-              href={business.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-pink-600 text-2xl transition-transform duration-200 hover:scale-110"
-            >
-              <IoLogoInstagram />
-            </a>
-          )}
-          {business?.facebook && (
-            <a
-              href={business.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-700 text-2xl transition-transform duration-200 hover:scale-110"
-            >
-              <FaFacebookSquare />
-            </a>
-          )}
-        </div>
+       <div className="flex flex-col items-end mt-4">
+  {/* Texto "Sígueme" */}
+  <span className="text-sm font-medium text-gray-700 mb-2"  id="sigueme-text">Sígueme</span>
+  
+  {/* Iconos de redes sociales */}
+  <div className="flex space-x-3">
+    {business?.instagram && (
+      <a
+        href={business.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-pink-600 text-2xl transition-transform duration-200 hover:scale-110"
+      >
+        <IoLogoInstagram />
+      </a>
+    )}
+    {business?.facebook && (
+      <a
+        href={business.facebook}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-700 text-2xl transition-transform duration-200 hover:scale-110"
+      >
+        <FaFacebookSquare />
+      </a>
+    )}
+  </div>
+</div>
       </CardContent>
     </Card>
   );
