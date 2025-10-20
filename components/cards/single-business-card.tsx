@@ -63,13 +63,16 @@ useEffect(() => {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
-        <div className="w-16 h-16 relative overflow-hidden rounded-md">
+        <div className="w-26 h-26 relative overflow-hidden rounded-md">
           {business?.logo ? (
             <Image 
               src={business?.logo}
               alt={`${business?.name}`}
-              layout="fill"
-              objectFit="cover"
+              width={150}
+              height={170}
+              className="rounded-xl object-contain max-w-full max-h-full"
+              
+
             />
           ) : (
             <div className="w-full h-full bg-gray-300 flex items-center justify-center">
@@ -79,7 +82,7 @@ useEffect(() => {
         </div>
 
         <div className="flex-1 min-w-0">
-          <CardTitle className="text-lg line-clamp-1">{business?.name || "Nombre de Negocio"} </CardTitle>
+          <CardTitle className="text-xl line-clamp-1">{business?.name || "Nombre de Negocio"} </CardTitle>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-1">
             <p className="text-sm text-muted-foreground line-clamp-1">{business?.category || "Categoria"}</p>
             
@@ -104,35 +107,39 @@ useEffect(() => {
 
         {/* Información de contacto */}
        
-        {/* Redes sociales */}
-       <div className="flex flex-col items-end mt-4">
-  {/* Texto "Sígueme" */}
-  <span className="text-sm font-medium text-gray-700 mb-2"  id="sigueme-text">Sígueme</span>
-  
-  {/* Iconos de redes sociales */}
-  <div className="flex space-x-3">
-    {business?.instagram && (
-      <a
-        href={business.instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-pink-600 text-2xl transition-transform duration-200 hover:scale-110"
-      >
-        <IoLogoInstagram />
-      </a>
-    )}
-    {business?.facebook && (
-      <a
-        href={business.facebook}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-blue-700 text-2xl transition-transform duration-200 hover:scale-110"
-      >
-        <FaFacebookSquare />
-      </a>
-    )}
+{/* Redes sociales */}
+{(business?.instagram || business?.facebook) && (
+  <div className="flex flex-col items-end mt-4">
+    {/* Texto "Sígueme" - solo aparece si hay redes sociales */}
+    <span className="text-sm font-medium text-gray-700 mb-2" id="sigueme-text">
+      Sígueme
+    </span>
+    
+    {/* Iconos de redes sociales */}
+    <div className="flex space-x-3">
+      {business?.instagram && (
+        <a
+          href={business.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-pink-600 text-2xl transition-transform duration-200 hover:scale-110"
+        >
+          <IoLogoInstagram />
+        </a>
+      )}
+      {business?.facebook && (
+        <a
+          href={business.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-700 text-2xl transition-transform duration-200 hover:scale-110"
+        >
+          <FaFacebookSquare />
+        </a>
+      )}
+    </div>
   </div>
-</div>
+)}
       </CardContent>
     </Card>
   );

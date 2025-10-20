@@ -24,21 +24,21 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
   return (
     <Card className="w-full max-w-2xl mx-auto" style={{ height: "326px" }}>
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
-        <div className="w-16 h-16 relative overflow-hidden rounded-xl">
-          {business?.logo ? (
-            <Image
-              src={business?.logo}
-              alt={business?.name}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-xl"
-            />
-          ) : (
-            <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-              <span className="text-gray-500 text-xs">No logo</span>
-            </div>
-          )}
-        </div>
+    <div className="rounded-xl overflow-hidden">
+  {business?.logo ? (
+    <Image
+      src={business?.logo}
+      alt={business?.name}
+      width={96}
+      height={96}
+      className="rounded-xl object-contain"
+    />
+  ) : (
+    <div className="w-24 h-24 bg-gray-300 flex items-center justify-center rounded-xl">
+      <span className="text-gray-500 text-xs">No logo</span>
+    </div>
+  )}
+</div>
         <div className="flex-1 min-w-0">
           <CardTitle className="text-lg line-clamp-1">
             {business?.name || "Nombre Negocio"}
