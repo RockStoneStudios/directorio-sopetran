@@ -18,44 +18,72 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Directorio Sopetran",
-  description: "Directorio para el comercio unido de sopetran, que ofrece sopetran para los turistas",
+  title: "Directorio Sopetrán - Comercio Local",
+  description: "Directorio digital para el comercio unido de Sopetrán. Encuentra negocios locales, servicios y promociones en tu municipio.",
+  keywords: "Sopetrán, comercio local, negocios, directorio, Antioquia, turismo",
+  robots: "index, follow",
+  metadataBase: new URL('https://www.directoriosopetran.com'), // ✅ AGREGA ESTA LÍNEA
+  openGraph: {
+    title: "Directorio Sopetrán - Comercio Local",
+    description: "Encuentra los mejores negocios y servicios en Sopetrán",
+    type: "website",
+    locale: "es_ES",
+    url: 'https://www.directoriosopetran.com',
+    siteName: 'Directorio Sopetrán',
+  },
 };
+import Script from "next/script";
 
-
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <ThemeProvider 
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+      <html lang="es" suppressHydrationWarning>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
+            {/* Fondo */}
+            <div
+              style={{ backgroundImage: 'url("/images/ia.jpg")' }}
+              className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat opacity-20 transition-opacity duration-300"
+            />
 
-           <div 
-           style={{backgroundImage: 'url("/images/ia.jpg")'}}
-           className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat opacity-20 transition-opacity duration-300"/>
-          
-
-           <BusinessProvider>
-              <header className= "fixed top-0 left-0 right-0 z-50 opacity-90">
-                 <TopNav/>
+            <BusinessProvider>
+              <header className="fixed top-0 left-0 right-0 z-50 opacity-90">
+                <TopNav />
               </header>
-              <main className="mt-20 md:mt-10 relative"> {children}</main> 
-           </BusinessProvider>
+              <main className="mt-20 md:mt-10 relative">{children}</main>
+            </BusinessProvider>
+
+            {/* ✅ Script SEO JSON-LD */}
+            <Script
+              id="structured-data"
+              type="application/ld+json"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "LocalBusiness",
+                  "name": "Directorio Sopetrán",
+                  "image": "https://www.directoriosopetran.com/images/preview.jpg",
+                  "description":
+                    "Directorio digital para el comercio unido de Sopetrán, Antioquia.",
+                  "url": "https://www.directoriosopetran.com",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Sopetrán",
+                    "addressRegion": "Antioquia",
+                    "addressCountry": "Colombia",
+                  },
+                }),
+              }}
+            />
           </ThemeProvider>
         </body>
-    </html>
+      </html>
     </ClerkProvider>
   );
 }
