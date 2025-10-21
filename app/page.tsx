@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,9 +20,28 @@ import {
 
 export default function LandingPage() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // URL del stream de radio - necesitamos la URL directa del stream
+  // Esta es una URL de ejemplo, necesitarás la URL real del stream
+  const radioStreamUrl = "https://stream.url.del/radio/stream"; // Reemplaza con la URL real
 
   const toggleRadio = () => {
-    setIsPlaying(!isPlaying);
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(error => {
+          console.error("Error al reproducir la radio:", error);
+        });
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  // Alternativa: Abrir en nueva pestaña
+  const openRadioInNewTab = () => {
+    window.open("https://onlineradiobox.com/co/sopetranestereo/?cs=co.sopetranestereo&played=1", "_blank");
   };
 
   return (
@@ -30,32 +49,24 @@ export default function LandingPage() {
       {/* Botón flotante de la emisora */}
       <div className="fixed bottom-6 right-6 z-50">
         <Button
-          onClick={toggleRadio}
-          className="bg-red-600 hover:bg-red-700 text-white rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
-          title={isPlaying ? "Pausar emisora" : "Escuchar Sopetrán Estéreo"}
+          onClick={openRadioInNewTab} // Cambié a abrir en nueva pestaña
+          className="bg-red-600 hover:bg-red-700 text-white rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center group"
+          title="Escuchar Sopetrán Estéreo"
         >
-          {isPlaying ? (
-            <Pause className="w-6 h-6" />
-          ) : (
-            <Radio className="w-6 h-6" />
-          )}
+          <Radio className="w-6 h-6" />
+          <span className="absolute -top-2 -right-2 w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
         </Button>
         
-        {/* Reproductor oculto */}
-        {isPlaying && (
-          <iframe
-            src="https://onlineradiobox.com/co/sopetranestereo/?cs=co.sopetranestereo&played=1"
-            width="0"
-            height="0"
-            frameBorder="0"
-            allow="autoplay"
-            className="hidden"
-            title="Sopetrán Estéreo"
-          />
-        )}
+        {/* Elemento de audio oculto (si tienes la URL del stream) */}
+        <audio
+          ref={audioRef}
+          src={radioStreamUrl}
+          preload="none"
+          className="hidden"
+        />
       </div>
 
-      {/* Hero Section */}
+      {/* Resto del código igual... */}
       <div
         className="relative bg-cover bg-center"
         style={{
