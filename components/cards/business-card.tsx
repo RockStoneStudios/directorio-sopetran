@@ -50,8 +50,8 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
             <Image
               src={business?.logo}
               alt={business?.name}
-              width={80}
-              height={80}
+              width={75}
+              height={75}
               className="rounded-xl object-contain"
             />
           ) : (

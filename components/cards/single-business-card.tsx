@@ -62,14 +62,14 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
       {/* Header SOLO con logo, título, categoría y horario */}
       <CardHeader className="flex flex-col lg:flex-row items-start gap-6 pb-6 px-6 pt-6">
         {/* Logo */}
-        <div className="w-full lg:w-64 h-48 lg:h-40 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 border">
+        <div className="w-60 lg:w-64 h-25 lg:h-30 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 border">
           {business?.logo ? (
             <Image
               src={business.logo}
               alt={business.name || "Logo del negocio"}
               width={286}
-              height={180}
-              className="w-full h-full object-cover"
+              height={200}
+              className=" object-contain"
               priority={true}
             />
           ) : (
