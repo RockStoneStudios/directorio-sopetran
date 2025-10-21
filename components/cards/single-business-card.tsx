@@ -57,15 +57,18 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
 
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg">
-      <CardHeader className="flex flex-row items-start space-x-4 pb-4">
-        <div className="w-15 h-20 mt-2 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 border">
+      {/* Header completamente responsive */}
+      <CardHeader className="flex flex-col sm:flex-row items-center sm:items-start gap-4 pb-4 px-4 sm:px-6 pt-4">
+        {/* Logo - tamaño responsive */}
+        <div className="w-22 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 border">
           {business?.logo ? (
             <Image 
               src={business.logo}
               alt={business.name || "Logo del negocio"}
-              width={200}
-              height={120}
-              className= " h-full object-cover rounded-lg"
+              width={150}
+              height={100}
+              className="w-full h-full object-cover"
+              priority={true}
             />
           ) : (
             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -74,22 +77,24 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
           )}
         </div>
 
-        <div className="flex-1 min-w-0 flex flex-col justify-center">
-          <CardTitle className="text-2xl font-semibold line-clamp-1 mb-1">
+        {/* Contenido textual - layout vertical en móvil */}
+        <div className="flex-1 min-w-0 w-full text-center sm:text-left">
+          <CardTitle className="text-xl sm:text-2xl font-bold line-clamp-2 mb-2">
             {business?.name || "Nombre de Negocio"}
           </CardTitle>
           
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <p className="text-sm text-muted-foreground line-clamp-1">
+          <div className="flex flex-col gap-2">
+            <p className="text-sm sm:text-base text-muted-foreground font-medium">
               {business?.category || "Categoria"}
             </p>
             
+            {/* Horario - centrado en móvil, a la derecha en desktop */}
             {business?.hours && (
-              <div className="flex items-center space-x-1  px-2 py-1 rounded-md">
-                <Clock className="w-4 h-4 text-blue-600" />
+              <div className="flex justify-center sm:justify-start items-center space-x-2  px-3 py-2 rounded-lg mx-auto sm:mx-0 max-w-xs">
+                <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                 <p
                   ref={hoursRef}
-                  className="text-xs text-blue-700 font-medium"
+                  className="text-xs sm:text-sm text-blue-700 font-medium text-center sm:text-left"
                 >
                   {business.hours}
                 </p>
@@ -99,20 +104,60 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
         </div>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="px-4 sm:px-6 pb-6 space-y-4">
         <DescriptionCard description={business?.description} />
 
-      
-       
+        {/* Información de contacto - lista simple en móvil */}
+        <div className="space-y-3">
+          {business?.address && (
+            <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
+              <MapPin className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+              <span className="text-sm text-gray-700 flex-1">{business.address}</span>
+            </div>
+          )}
+          
+          {business?.phone && (
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <Phone className="w-4 h-4 text-gray-500 flex-shrink-0" />
+              <span className="text-sm text-gray-700">{business.phone}</span>
+            </div>
+          )}
+          
+          {business?.email && (
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <Mail className="w-4 h-4 text-gray-500 flex-shrink-0" />
+              <a 
+                href={`mailto:${business.email}`}
+                className="text-sm text-blue-600 hover:text-blue-800 hover:underline flex-1"
+              >
+                {business.email}
+              </a>
+            </div>
+          )}
+          
+          {business?.website && (
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <Globe className="w-4 h-4 text-gray-500 flex-shrink-0" />
+              <a 
+                href={business.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 hover:text-blue-800 hover:underline flex-1 line-clamp-1"
+              >
+                {business.website.replace(/^https?:\/\//, '')}
+              </a>
+            </div>
+          )}
+        </div>
 
-        {/* Redes sociales */}
+        {/* Redes sociales - centradas en móvil */}
         {(business?.instagram || business?.facebook) && (
-          <div className="flex flex-col items-end pt-2">
-            <span className="text-sm font-medium text-gray-700 mb-2" id="sigueme-text">
+          <div className="flex flex-col items-center pt-4 border-t">
+            <span className="text-sm font-medium text-gray-700 mb-3" id="sigueme-text">
               Síguenos
             </span>
             
-            <div className="flex space-x-3">
+            <div className="flex space-x-4">
               {business?.instagram && (
                 <a
                   href={business.instagram}
