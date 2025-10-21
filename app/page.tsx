@@ -1,6 +1,3 @@
-'use client';
-
-import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,60 +10,12 @@ import {
   Share2,
   Link as LinkIcon,
   Cpu,
-  Play,
-  Pause,
-  Radio,
 } from "lucide-react";
 
 export default function LandingPage() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  // URL del stream de radio - necesitamos la URL directa del stream
-  // Esta es una URL de ejemplo, necesitarás la URL real del stream
-  const radioStreamUrl = "https://stream.url.del/radio/stream"; // Reemplaza con la URL real
-
-  const toggleRadio = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(error => {
-          console.error("Error al reproducir la radio:", error);
-        });
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  // Alternativa: Abrir en nueva pestaña
-  const openRadioInNewTab = () => {
-    window.open("https://onlineradiobox.com/co/sopetranestereo/?cs=co.sopetranestereo&played=1", "_blank");
-  };
-
   return (
     <div className="relative mt-5 min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      {/* Botón flotante de la emisora */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <Button
-          onClick={openRadioInNewTab} // Cambié a abrir en nueva pestaña
-          className="bg-red-600 hover:bg-red-700 text-white rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center group"
-          title="Escuchar Sopetrán Estéreo"
-        >
-          <Radio className="w-6 h-6" />
-          <span className="absolute -top-2 -right-2 w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
-        </Button>
-        
-        {/* Elemento de audio oculto (si tienes la URL del stream) */}
-        <audio
-          ref={audioRef}
-          src={radioStreamUrl}
-          preload="none"
-          className="hidden"
-        />
-      </div>
-
-      {/* Resto del código igual... */}
+      {/* Hero Section */}
       <div
         className="relative bg-cover bg-center"
         style={{
@@ -117,6 +66,23 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+       {/* 🎧 Radio en Vivo Section */}
+<section className="bg-black text-white py-10 px-4 text-center">
+  <h2 className="text-3xl font-bold text-blue-400 mb-4">🎧 Radio en Vivo</h2>
+  <p className="text-gray-300 mb-6">
+    Sintoniza la emisora local y disfruta la programación en tiempo real.
+  </p>
+
+      <div className="flex justify-center">
+        <audio
+          controls
+          className="w-full max-w-md rounded-lg shadow-lg bg-gray-900"
+          src="https://radio5.virtualtronics.com:20029/stream"
+        >
+          Tu navegador no soporta el reproductor de audio.
+        </audio>
+      </div>
+    </section>
 
       {/* Sección de Noticias - FUERA del Hero Section */}
       <section
