@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,11 +13,48 @@ import {
   Share2,
   Link as LinkIcon,
   Cpu,
+  Play,
+  Pause,
+  Radio,
 } from "lucide-react";
 
 export default function LandingPage() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleRadio = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className="relative mt-5 min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      {/* Botón flotante de la emisora */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          onClick={toggleRadio}
+          className="bg-red-600 hover:bg-red-700 text-white rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
+          title={isPlaying ? "Pausar emisora" : "Escuchar Sopetrán Estéreo"}
+        >
+          {isPlaying ? (
+            <Pause className="w-6 h-6" />
+          ) : (
+            <Radio className="w-6 h-6" />
+          )}
+        </Button>
+        
+        {/* Reproductor oculto */}
+        {isPlaying && (
+          <iframe
+            src="https://onlineradiobox.com/co/sopetranestereo/?cs=co.sopetranestereo&played=1"
+            width="0"
+            height="0"
+            frameBorder="0"
+            allow="autoplay"
+            className="hidden"
+            title="Sopetrán Estéreo"
+          />
+        )}
+      </div>
+
       {/* Hero Section */}
       <div
         className="relative bg-cover bg-center"
