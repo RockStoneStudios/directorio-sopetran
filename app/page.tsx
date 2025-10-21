@@ -67,22 +67,7 @@ export default function LandingPage() {
         </div>
       </div>
        {/* 🎧 Radio en Vivo Section */}
-<section className="bg-black text-white py-10 px-4 text-center">
-  <h2 className="text-3xl font-bold text-blue-400 mb-4">🎧 Radio en Vivo</h2>
-  <p className="text-gray-300 mb-6">
-    Sintoniza la emisora local y disfruta la programación en tiempo real.
-  </p>
 
-      <div className="flex justify-center">
-        <audio
-          controls
-          className="w-full max-w-md rounded-lg shadow-lg bg-gray-900"
-          src="https://radio5.virtualtronics.com:20029/stream"
-        >
-          Tu navegador no soporta el reproductor de audio.
-        </audio>
-      </div>
-    </section>
 
       {/* Sección de Noticias - FUERA del Hero Section */}
       <section
