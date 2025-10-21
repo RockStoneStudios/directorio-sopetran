@@ -68,8 +68,8 @@ useEffect(() => {
             <Image 
               src={business?.logo}
               alt={`${business?.name}`}
-              width={150}
-              height={170}
+              width={152}
+              height={172}
               className="rounded-xl object-contain max-w-full max-h-full"
               
 
