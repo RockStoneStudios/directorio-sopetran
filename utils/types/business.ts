@@ -13,8 +13,9 @@ export interface BusinessState{
     facebook : string;
     hours : string;
     logo : string;
-
     slug : string;
+    nequi : string;
+    bancolombia : string;
     published? : boolean;
     createdAt? : string;
     updatedAt?: string;

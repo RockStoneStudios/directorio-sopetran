@@ -60,6 +60,18 @@ const inputFields : InputField[] = [
       type : "url",
       required : false
    },
+    {
+      name :"nequi",
+      label : "Nequi",
+      type : "text",
+      required : false
+    },
+     {
+      name :"bancolombia",
+      label : "Bancolombia",
+      type : "text",
+      required : false
+    },
   {
      name : "website",
      label : "Website URL",

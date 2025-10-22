@@ -7,6 +7,41 @@ import toast from "react-hot-toast";
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
+// Componentes personalizados para los íconos
+const NequiIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    className={`w-full h-full ${className}`}
+  >
+    {/* Fondo transparente */}
+    <rect width="100" height="100" fill="none" />
+
+    {/* Punto rosado arriba a la izquierda */}
+    <rect x="-75" y="18" width="100" height="24" rx="2" fill="#ff007a" />
+
+    {/* Letra N */}
+    <text
+      x="62%"
+      y="67%"
+      textAnchor="middle"
+      dominantBaseline="middle"
+      fontSize="89"
+      fontWeight="bold"
+      fill="#ffffff"
+      fontFamily="sans-serif"
+    >
+      N
+    </text>
+  </svg>
+);
+
+
+const BancolombiaIcon = ({ className }: { className?: string }) => (
+  <div className={`font-bold text-lg flex items-center justify-center w-full h-full ${className}`}>ß</div>
+);
+
+
 export default function BusinessHighlightCard({
   business,
 }: {
@@ -52,7 +87,7 @@ export default function BusinessHighlightCard({
     window.open(url, "_blank");
   };
 
-  // Mapeo de íconos usando datos reales de la base de datos - CORREGIDO
+  // Mapeo de íconos usando datos reales de la base de datos - ACTUALIZADO
   const iconConfig = [
     { 
       type: 'phone', 
@@ -119,9 +154,32 @@ export default function BusinessHighlightCard({
         }
       }
     },
+    // NUEVOS CAMPOS CON ÍCONOS PERSONALIZADOS
+    { 
+      type: 'nequi', 
+      color: 'purple',
+      icon: NequiIcon, // Ícono personalizado "N"
+      data: business.nequi,
+      action: (e: React.MouseEvent) => {
+        if (business.nequi) {
+          handleCopyClick(e, business.nequi, "Número de Nequi");
+        }
+      }
+    },
+    { 
+      type: 'bancolombia', 
+      color: 'yellow',
+      icon: BancolombiaIcon, // Ícono personalizado "B"
+      data: business.bancolombia,
+      action: (e: React.MouseEvent) => {
+        if (business.bancolombia) {
+          handleCopyClick(e, business.bancolombia, "Cuenta de Bancolombia");
+        }
+      }
+    },
   ];
 
-  // Clases predefinidas para cada color - MEJORADO con contenedor oscuro y colores más fuertes
+  // Clases predefinidas para cada color - ACTUALIZADO con nuevos colores
   const getPredefinedStyles = (index: number, colorType: string) => {
     const isPulsing = pulsingIcon === index;
     
@@ -185,6 +243,19 @@ export default function BusinessHighlightCard({
             ? 'text-blue-500 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300' 
             : 'text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300'
         } hover:bg-blue-500/30 dark:hover:bg-blue-500/20`
+      },
+      // NUEVOS ESTILOS PARA LOS CAMPOS AGREGADOS
+      purple: {
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
+          isPulsing 
+            ? 'border-purple-600 dark:border-purple-500/80 bg-purple-500/40 dark:bg-purple-500/30 dark:shadow-[0_0_20px_#A855F7] shadow-[0_0_8px_#A855F7] scale-125' 
+            : 'border-purple-500 dark:border-purple-500/40 bg-purple-500/20 dark:bg-purple-500/10 dark:shadow-[0_0_8px_#A855F7] shadow-[0_0_4px_#A855F7]'
+        } hover:shadow-[0_0_12px_#A855F7] dark:hover:shadow-[0_0_25px_#A855F7] hover:scale-110 hover:border-purple-600 dark:hover:border-purple-500/60`,
+        button: `rounded-full w-10 h-10 bg-transparent ${
+          isPulsing 
+            ? 'text-purple-500 dark:text-purple-200 hover:text-purple-600 dark:hover:text-purple-300' 
+            : 'text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300'
+        } hover:bg-purple-500/30 dark:hover:bg-purple-500/20`
       }
     };
 
@@ -301,7 +372,9 @@ export default function BusinessHighlightCard({
                      icon.type === 'address' ? `Ver ubicación en Google Maps: ${business.address}` :
                      icon.type === 'hours' ? `Horario: ${business.hours}` :
                      icon.type === 'email' ? `Enviar email: ${business.email}` :
-                     `Visitar sitio web: ${business.website}`}
+                     icon.type === 'website' ? `Visitar sitio web: ${business.website}` :
+                     icon.type === 'nequi' ? `Número de Nequi: ${business.nequi}` :
+                     `Cuenta de Bancolombia: ${business.bancolombia}`}
               // Importante: type="button" para evitar submit en formularios
               type="button"
             >

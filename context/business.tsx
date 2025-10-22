@@ -31,6 +31,8 @@ const initialState : BusinessState = {
     hours : "",
     logo : "",
     slug : "",
+    nequi : "",
+    bancolombia: "",
     createdAt : "",
     updatedAt : "",
     __v : 0,
