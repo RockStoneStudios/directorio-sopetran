@@ -38,8 +38,50 @@ const NequiIcon = ({ className }: { className?: string }) => (
 
 
 const BancolombiaIcon = ({ className }: { className?: string }) => (
-  <div className={`font-bold text-lg flex items-center justify-center w-full h-full ${className}`}>ß</div>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 120 120"
+    className={`w-full h-full ${className}`}
+  >
+    {/* Fondo transparente */}
+    <rect width="120" height="120" fill="none" />
+
+    {/* Franja azul */}
+    <rect
+      x="20"
+      y="25"
+      width="120"
+      height="20"
+      rx="4"
+      fill="#0033A0"
+      transform="rotate(-8 20 25)"
+    />
+
+    {/* Franja amarilla */}
+    <rect
+      x="20"
+      y="58"
+      width="305"
+      height="20"
+      rx="4"
+      fill="#FFD100"
+      transform="rotate(-6 20 50)"
+    />
+
+    {/* Franja roja */}
+    <rect
+      x="25"
+      y="83"
+      width="120"
+      height="20"
+      rx="4"
+      fill="#D50032"
+      transform="rotate(-4 25 75)"
+    />
+  </svg>
 );
+
+
 
 
 export default function BusinessHighlightCard({
@@ -168,7 +210,7 @@ export default function BusinessHighlightCard({
     },
     { 
       type: 'bancolombia', 
-      color: 'yellow',
+      color: 'white',
       icon: BancolombiaIcon, // Ícono personalizado "B"
       data: business.bancolombia,
       action: (e: React.MouseEvent) => {
@@ -209,17 +251,31 @@ export default function BusinessHighlightCard({
         } hover:bg-cyan-500/30 dark:hover:bg-cyan-500/20`
       },
       yellow: {
-        container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
-          isPulsing 
-            ? 'border-yellow-600 dark:border-yellow-500/80 bg-yellow-500/40 dark:bg-yellow-500/30 dark:shadow-[0_0_20px_#FFD700] shadow-[0_0_8px_#FFD700] scale-125' 
-            : 'border-yellow-500 dark:border-yellow-500/40 bg-yellow-500/20 dark:bg-yellow-500/10 dark:shadow-[0_0_8px_#FFD700] shadow-[0_0_4px_#FFD700]'
-        } hover:shadow-[0_0_12px_#FFD700] dark:hover:shadow-[0_0_25px_#FFD700] hover:scale-110 hover:border-yellow-600 dark:hover:border-yellow-500/60`,
-        button: `rounded-full w-10 h-10 bg-transparent ${
-          isPulsing 
-            ? 'text-yellow-500 dark:text-yellow-200 hover:text-yellow-600 dark:hover:text-yellow-300' 
-            : 'text-yellow-500 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300'
-        } hover:bg-yellow-500/30 dark:hover:bg-yellow-500/20`
-      },
+  container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+    isPulsing
+      ? 'border-yellow-500 dark:border-yellow-400/80 bg-yellow-100 dark:bg-yellow-900/40 shadow-[0_0_20px_#FACC15] scale-125'
+      : 'border-yellow-400 dark:border-yellow-500/50 bg-yellow-50 dark:bg-yellow-900/30 shadow-[0_0_8px_#FACC15]'
+  } hover:shadow-[0_0_12px_#FACC15] dark:hover:shadow-[0_0_25px_#FACC15] hover:scale-110 hover:border-yellow-500 dark:hover:border-yellow-400/60`,
+  button: `rounded-full w-10 h-10 bg-transparent ${
+    isPulsing
+      ? 'text-yellow-600 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300'
+      : 'text-yellow-500 dark:text-yellow-300 hover:text-yellow-600 dark:hover:text-yellow-200'
+  } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
+},
+
+      white: {
+  container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+    isPulsing
+      ? 'border-yellow-600 dark:border-yellow-500/80 bg-white dark:bg-white/90 shadow-[0_0_20px_#FFD700] scale-125'
+      : 'border-yellow-400 dark:border-yellow-400/50 bg-white dark:bg-white/80 shadow-[0_0_8px_#FFD700]'
+  } hover:shadow-[0_0_12px_#FFD700] dark:hover:shadow-[0_0_25px_#FFD700] hover:scale-110 hover:border-yellow-600 dark:hover:border-yellow-500/60`,
+  button: `rounded-full w-10 h-10 bg-transparent ${
+    isPulsing
+      ? 'text-yellow-600 dark:text-yellow-500 hover:text-yellow-700 dark:hover:text-yellow-400'
+      : 'text-yellow-500 dark:text-yellow-600 hover:text-yellow-600 dark:hover:text-yellow-400'
+  } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
+},
+
       red: {
         container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
