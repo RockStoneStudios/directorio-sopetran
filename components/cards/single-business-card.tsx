@@ -83,7 +83,7 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
         <div className="flex-1 min-w-0 w-full space-y-4">
           {/* Nombre y categoría */}
           <div>
-            <CardTitle className="text-2xl lg:text-3xl font-bold text-gray-200 line-clamp-2">
+            <CardTitle className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-gray-200 line-clamp-2">
               {business?.name || "Nombre de Negocio"}
             </CardTitle>
             <p className="text-lg text-blue-600 font-semibold mt-2">
@@ -94,10 +94,10 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
           {/* Horario con animación GSAP */}
           {business?.hours && (
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-white-600" />
+              <Clock className="w-4 h-4 text-gray-600 dark:text-white-600" />
               <p
                 ref={hoursRef}
-                className="text-sm text-gray-300 font-semibold inline-block" // inline-block para que la animación funcione mejor
+                className="text-sm text-gray-700 dark:text-gray-300 font-semibold inline-block" // inline-block para que la animación funcione mejor
               >
                 {business.hours}
               </p>
@@ -114,7 +114,7 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
         {/* Redes sociales */}
         {(business?.instagram || business?.facebook) && (
           <div className="flex flex-col items-center pt-4 border-t">
-            <span className="text-sm font-medium text-gray-700 mb-3" id="sigueme-text">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3" id="sigueme-text">
               Síguenos
             </span>
             

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { BusinessState } from "@/utils/types/business";
 import { Clock, Globe, Mail, Phone, MapPin } from "lucide-react";
@@ -35,7 +35,6 @@ const NequiIcon = ({ className }: { className?: string }) => (
     </text>
   </svg>
 );
-
 
 const BancolombiaIcon = ({ className }: { className?: string }) => (
   <svg
@@ -81,9 +80,6 @@ const BancolombiaIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-
-
-
 export default function BusinessHighlightCard({
   business,
 }: {
@@ -115,7 +111,7 @@ export default function BusinessHighlightCard({
     handleCopy(text, field);
   };
 
-  // Función para abrir WhatsApp que NO previene el comportamiento por defecto
+  // Función para abrir WhatsApp
   const openWhatsApp = (phone: string) => {
     handleCopy(phone, "Teléfono");
     // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
@@ -124,10 +120,22 @@ export default function BusinessHighlightCard({
     }, 100);
   };
 
+  // Función para realizar llamada telefónica
+  const makePhoneCall = (phone: string) => {
+    handleCopy(phone, "Teléfono");
+    // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
+    setTimeout(() => {
+      window.open(`tel:+57${phone}`, "_self");
+    }, 100);
+  };
+
   // Función para abrir enlaces externos
   const openExternalLink = (url: string) => {
     window.open(url, "_blank");
   };
+
+  // Verificar si la categoría es "basicos" (case insensitive)
+  const isBasicosCategory = business?.category?.toLowerCase() === 'basicos';
 
   // Mapeo de íconos usando datos reales de la base de datos - ACTUALIZADO
   const iconConfig = [
@@ -140,7 +148,13 @@ export default function BusinessHighlightCard({
         if (business.phone) {
           // Solo copiar, no prevenir el comportamiento completo
           handleCopyClick(e, business.phone, "Teléfono");
-          openWhatsApp(business.phone);
+          
+          // Si es categoría "basicos", hacer llamada, sino abrir WhatsApp
+          if (isBasicosCategory) {
+            makePhoneCall(business.phone);
+          } else {
+            openWhatsApp(business.phone);
+          }
         }
       }
     },
@@ -411,6 +425,21 @@ export default function BusinessHighlightCard({
         const IconComponent = icon.icon;
         const styles = getPredefinedStyles(index, icon.color);
         
+        // Determinar el título según la categoría para el botón de teléfono
+        const getTitle = () => {
+          if (icon.type === 'phone') {
+            return isBasicosCategory 
+              ? `Llamar: ${business.phone}`
+              : `Llamar o escribir por WhatsApp: ${business.phone}`;
+          }
+          return icon.type === 'address' ? `Ver ubicación en Google Maps: ${business.address}` :
+                 icon.type === 'hours' ? `Horario: ${business.hours}` :
+                 icon.type === 'email' ? `Enviar email: ${business.email}` :
+                 icon.type === 'website' ? `Visitar sitio web: ${business.website}` :
+                 icon.type === 'nequi' ? `Número de Nequi: ${business.nequi}` :
+                 `Cuenta de Bancolombia: ${business.bancolombia}`;
+        };
+
         return (
           <div 
             key={icon.type}
@@ -424,13 +453,7 @@ export default function BusinessHighlightCard({
               variant="ghost"
               className={styles.button}
               onClick={icon.action}
-              title={icon.type === 'phone' ? `Llamar o escribir por WhatsApp: ${business.phone}` : 
-                     icon.type === 'address' ? `Ver ubicación en Google Maps: ${business.address}` :
-                     icon.type === 'hours' ? `Horario: ${business.hours}` :
-                     icon.type === 'email' ? `Enviar email: ${business.email}` :
-                     icon.type === 'website' ? `Visitar sitio web: ${business.website}` :
-                     icon.type === 'nequi' ? `Número de Nequi: ${business.nequi}` :
-                     `Cuenta de Bancolombia: ${business.bancolombia}`}
+              title={getTitle()}
               // Importante: type="button" para evitar submit en formularios
               type="button"
             >
