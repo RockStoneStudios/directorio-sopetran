@@ -113,7 +113,6 @@ export default function BusinessHighlightCard({
 
   // Función para abrir WhatsApp
   const openWhatsApp = (phone: string) => {
-    handleCopy(phone, "Teléfono");
     // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
     setTimeout(() => {
       window.open(`https://wa.me/57${phone}`, "_blank");
@@ -122,7 +121,6 @@ export default function BusinessHighlightCard({
 
   // Función para realizar llamada telefónica
   const makePhoneCall = (phone: string) => {
-    handleCopy(phone, "Teléfono");
     // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
     setTimeout(() => {
       window.open(`tel:+57${phone}`, "_self");
@@ -146,7 +144,7 @@ export default function BusinessHighlightCard({
       data: business.phone,
       action: (e: React.MouseEvent) => {
         if (business.phone) {
-          // Solo copiar, no prevenir el comportamiento completo
+          // Solo copiar una vez
           handleCopyClick(e, business.phone, "Teléfono");
           
           // Si es categoría "basicos", hacer llamada, sino abrir WhatsApp
