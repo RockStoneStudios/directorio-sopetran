@@ -8,9 +8,11 @@ import DescriptionModal from "@/components/modals/description-modal";
 import { isBusinessOpen } from "@/helper/Helper";
 import { IoLogoInstagram } from "react-icons/io5";
 import { FaFacebookSquare } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const BusinessCard = ({ business }: { business: BusinessState }) => {
   const open = business?.hours ? isBusinessOpen(business.hours) : false;
+  const router = useRouter();
 
   const {
     openDescriptionModal,
@@ -20,6 +22,11 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
     isDashboardPage,
     togglePublished,
   } = useBusiness();
+
+  // Función para manejar el click en la card
+  const handleCardClick = () => {
+    router.push(`/business/${business.slug}`);
+  };
 
   // Función para limpiar HTML y extraer solo texto
   const cleanDescription = (html: string) => {
@@ -41,8 +48,16 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
     return cleanUrl;
   };
 
+  // Función para evitar que el click en enlaces propague al contenedor
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <Card className="w-full max-w-2xl mx-auto h-[340px] flex flex-col">
+    <Card 
+      className="w-full max-w-2xl mx-auto h-[340px] flex flex-col cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-lg"
+      onClick={handleCardClick}
+    >
       {/* Header más grande y prominente */}
       <CardHeader className="flex flex-row items-center space-x-4 pb-3 flex-shrink-0">
         <div className="rounded-xl overflow-hidden">
@@ -94,7 +109,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
           <InfoItem icon={Mail} text={business?.email || "Email"} />
           
           {business?.website ? (
-            <div className="flex items-center text-sm">
+            <div className="flex items-center text-sm" onClick={handleLinkClick}>
               <Globe className="mr-2 h-4 w-4 text-muted-foreground flex-shrink-0" />
               <a
                 href={business.website}
@@ -114,7 +129,7 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
         </div>
 
         {/* Redes sociales SIEMPRE en la parte inferior - posición fija */}
-        <div className="flex justify-end space-x-4 pt-3 mt-auto border-t">
+        <div className="flex justify-end space-x-4 pt-3 mt-auto border-t" onClick={handleLinkClick}>
           {business?.instagram && (
             <a
               href={business.instagram}

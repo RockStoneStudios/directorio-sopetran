@@ -2,6 +2,7 @@ import React from 'react'
 import { getUniqueCategoriesAndAddresses } from '@/actions/business'
 import FilteredList from '../search/filtered-list';
 import { LayoutList,MapPin,MapPinHouse } from 'lucide-react';
+import FilteredListCategorie from '../search/filtered-categorie-list';
 
 export default async function CategoryAddressCard () {
  const {uniqueCategories,uniqueAddresses} = await getUniqueCategoriesAndAddresses();
@@ -13,7 +14,7 @@ export default async function CategoryAddressCard () {
     <div>
        <aside className='pb-10 mt-5 relative'>
          <div className='m-5 space-y-6'>
-          <FilteredList 
+          <FilteredListCategorie 
             data={categories} 
             title="Categorias"
             icon={<LayoutList/>}

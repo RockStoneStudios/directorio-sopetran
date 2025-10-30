@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "https://directoriosopetran.com/(.*)",
+      "destination": "https://www.directoriosopetran.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "http://directoriosopetran.com/(.*)",
+      "destination": "https://www.directoriosopetran.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "http://www.directoriosopetran.com/(.*)",
+      "destination": "https://www.directoriosopetran.com/$1",
+      "permanent": true
+    }
+  ]
+}

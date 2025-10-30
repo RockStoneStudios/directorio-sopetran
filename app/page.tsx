@@ -30,7 +30,7 @@ export default function LandingPage() {
           <div className="text-center px-4 w-full max-w-3xl space-y-2">
             {/* Título principal */}
             <h1 className="text-white text-4xl md:text-5xl font-extrabold leading-tight mt-3 mb-3">
-              Agrega y Busca Negocios locales con{"  "}
+              Busca Negocios locales con{"  "}
               <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-transparent bg-clip-text animate-pulse">
                 IA
               </span>
@@ -55,10 +55,10 @@ export default function LandingPage() {
             </p>
 
             {/* Botón */}
-            <Link href={`https://wa.me/573206209817`} target="_blank" rel="noopener noreferrer">
+            <Link href={`https://wa.me/573022762213`} target="_blank" rel="noopener noreferrer">
               <Button
                 size="lg"
-                className="text-lg mt-1 px-6 py-3 w-full md:w-auto rounded-xl shadow-lg hover:scale-105 transition"
+                className="text-lg mt-2 px-6 py-3 w-full md:w-auto rounded-xl shadow-lg hover:scale-105 transition"
               >
                 Escríbenos por WhatsApp <ArrowRight className="ml-2" />
               </Button>

@@ -18,15 +18,15 @@ export default async function TopNav() {
      return (
         <>
         <Menubar>
-            <div className='flex-none my-15 p-1'>
+            <div className='flex-none my-15 p-2'>
                 <MenubarMenu>
                  <Link href="/">
                    <Image 
-                    src="/images/escudo.png" 
+                    src="/images/logoap.png" 
                     alt='logo'
-                    height={37}
-                    width={37}
-                    className='hover:cursor-pointer'
+                    height={72}
+                    width={72}
+                    className='hover:cursor-pointer mt-7'
                     />
                  </Link>
                 </MenubarMenu>

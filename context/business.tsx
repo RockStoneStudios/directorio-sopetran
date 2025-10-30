@@ -8,7 +8,8 @@ import {
      getBusinessFromDb,
      updateBusinessInDb,
      togglePublishInDb,
-     deleteBusinessFromDb
+     deleteBusinessFromDb,
+     getUniquePublishedCategories
      } from "@/actions/business";
 import toast from "react-hot-toast";
 import { useRouter, usePathname, useParams } from "next/navigation";
@@ -58,6 +59,8 @@ interface BusinessContextType{
     setOpenDescriptionModal : React.Dispatch<React.SetStateAction<boolean>>;
     togglePublished : () => void;
     deleteBusiness : () => void;
+     uniqueCategories: string[];
+  fetchUniquePublishedCategories: () => Promise<void>;
 }
 
 const BusinessContext = createContext<BusinessContextType | undefined>(
@@ -72,6 +75,8 @@ export const BusinessProvider : React.FC<{children: ReactNode}> = ({children}) =
     const [logoUploading,setLogoUploading] = useState<boolean>(false);
     const [generateDescriptionLoading,setGenerateDescriptionLoading] = useState<boolean>(false);
     const [openDescriptionModal,setOpenDescriptionModal] = useState<boolean>(false);
+    const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
+  const [uniqueAddresses, setUniqueAddresses] = useState<string[]>([]);
     const router = useRouter();
     const pathname = usePathname();
     const {_id} = useParams();
@@ -285,6 +290,16 @@ export const BusinessProvider : React.FC<{children: ReactNode}> = ({children}) =
     }
  }
  
+ const fetchUniquePublishedCategories = async () => {
+  try {
+    const result = await getUniquePublishedCategories();
+    setUniqueCategories(result.uniqueCategories);
+  } catch (error: any) {
+    console.error(error);
+    toast.error("❌ Error al obtener categorías únicas");
+  }
+};
+
  
     return (
         <BusinessContext.Provider value={{
@@ -306,7 +321,9 @@ export const BusinessProvider : React.FC<{children: ReactNode}> = ({children}) =
             setOpenDescriptionModal,
             isDashboardPage,
             togglePublished,
-            deleteBusiness
+            deleteBusiness,
+            fetchUniquePublishedCategories,
+            uniqueCategories
             }}>
           {children}
         </BusinessContext.Provider>

@@ -124,7 +124,7 @@ export default function BusinessHighlightCard({
     // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
     setTimeout(() => {
       window.open(`tel:+57${phone}`, "_self");
-    }, 100);
+    }, 80);
   };
 
   // Función para abrir enlaces externos

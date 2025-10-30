@@ -1,9 +1,10 @@
-import { getLatestBusinessesFromDb } from "@/actions/business";
+import { getLatestBusinessesFromDb, getUniqueCategoriesAndAddresses } from "@/actions/business";
 import { BusinessState } from "@/utils/types/business";
-import Link from "next/link";
 import BusinessCard from "@/components/cards/business-card";
 import Pagination from "@/components/nav/pagination";
 import CategoryAddressCard from "@/components/cards/category-address-card";
+import FilteredListCategorie from "@/components/search/filtered-categorie-list";
+import { LayoutList } from "lucide-react";
 
 interface BusinessesPageProps {
   searchParams: { page?: number };
@@ -11,7 +12,10 @@ interface BusinessesPageProps {
 
 export default async function Home({ searchParams }: BusinessesPageProps) {
   const page = searchParams?.page ? parseInt(searchParams.page as unknown as string, 10) : 1;
-  
+   const {uniqueCategories,uniqueAddresses} = await getUniqueCategoriesAndAddresses();
+    
+     const categories = Array.isArray(uniqueCategories) ? uniqueCategories : [];
+     const addresses = Array.isArray(uniqueAddresses) ? uniqueAddresses : [];
   const limit = 6;
   const { businesses, totalCount } = await getLatestBusinessesFromDb(page, limit);
   const totalPages = Math.ceil(totalCount / limit);
@@ -23,19 +27,20 @@ export default async function Home({ searchParams }: BusinessesPageProps) {
           Agregados recientemente
         </h1>
       </div>
+      <div className="px-5 mb-8">
+        <FilteredListCategorie 
+          data={categories} 
+          title="Categorias"
+          icon={<LayoutList/>}
+        />
+      </div>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 ml-1">
         {businesses.map((business: BusinessState) => (
-          // 🔥 Agregar key y mover las clases al div interno
-          <Link 
-            key={business._id}
-            href={`/business/${business.slug}`}
-            className="block" // Solo clases necesarias para el link
-          >
-            <div className="transform transition duration-300 hover:scale-105 hover:shadow-lg ml-1">
-              <BusinessCard business={business} />
-            </div>
-          </Link>
+          // ✅ Simple y limpio - sin anidación de <a> tags
+          <div key={business._id}>
+            <BusinessCard business={business} />
+          </div>
         ))}
       </div>
 

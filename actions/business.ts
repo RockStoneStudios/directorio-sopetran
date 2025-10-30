@@ -236,3 +236,33 @@ export const deleteBusinessFromDb = async (_id:string) =>{
         throw new Error(error);
     }
 }
+
+export const getUniquePublishedCategories = async () => {
+  try {
+    await db();
+
+    const result = await Business.aggregate([
+      { $match: { published: true } }, // ✅ Solo negocios publicados
+      {
+        $group: {
+          _id: null,
+          uniqueCategories: { $addToSet: { $toLower: "$category" } },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          uniqueCategories: 1,
+        },
+      },
+    ]);
+
+    if (result.length > 0) {
+      return { uniqueCategories: result[0].uniqueCategories };
+    } else {
+      return { uniqueCategories: [] };
+    }
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
