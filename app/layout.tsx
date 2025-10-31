@@ -70,7 +70,8 @@ export default function RootLayout({
           <link rel="canonical" href="https://www.directoriosopetran.com" />
           {/* ✅ Refuerzo manual (Next.js a veces lo ignora) */}
           <meta name="robots" content="index,follow" />
-          <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+      
+          <link rel="sitemap" type="application/xml" href="https://www.directoriosopetran.com/sitemap.xml" />
           <meta name="google-site-verification" content="tu-codigo-de-verificacion" />
         </head>
 
