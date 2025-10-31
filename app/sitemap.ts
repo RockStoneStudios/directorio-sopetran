@@ -1,8 +1,8 @@
 // app/sitemap.ts
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.directoriosopetran.com';
+  const baseUrl = 'https://www.directoriosopetran.com'
 
   return [
     {
@@ -29,5 +29,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
-  ];
+  ]
 }
