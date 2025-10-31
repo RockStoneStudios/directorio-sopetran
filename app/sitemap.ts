@@ -1,33 +1,33 @@
 // app/sitemap.ts
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 
-
-// FORCE NEW BUILD - FIX SITEMAP
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://www.directoriosopetran.com';
+
   return [
     {
-      url: 'https://www.directoriosopetran.com',
+      url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
     },
     {
-      url: 'https://www.directoriosopetran.com/businesses',
+      url: `${baseUrl}/businesses`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://www.directoriosopetran.com/news',
+      url: `${baseUrl}/news`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
-      url: 'https://www.directoriosopetran.com/search',
+      url: `${baseUrl}/search`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
-  ]
+  ];
 }
