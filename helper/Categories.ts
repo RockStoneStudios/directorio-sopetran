@@ -203,12 +203,7 @@ export const categories: Category[] = [
     icon: "/categories/restaurante&rapida.png",
     color: "bg-blue-50 text-blue-700 border-blue-200"
   },
-   {
-    id: "supermecado & domicilios",
-    name: "	Supermecado & Domicilios",
-    icon: "/categories/super-domicilio.png",
-    color: "bg-blue-50 text-blue-700 border-blue-200"
-  },
+ 
   
   
   
