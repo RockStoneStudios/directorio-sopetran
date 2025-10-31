@@ -8,13 +8,13 @@ export interface Category {
 export const categories: Category[] = [
    {
     id: "basicos",
-    name: "Básicos",
+    name: "Basicos",
     icon: "/categories/basico.png",
     color: "bg-slate-50 text-slate-700 border-slate-200"
   },
   {
     id: "comidas-rapidas",
-    name: "Comidas Rápidas",
+    name: "Comidas Rapidas",
     icon: "/categories/rapida.png",
     color: "bg-orange-50 text-orange-700 border-orange-200"
   },
@@ -70,7 +70,7 @@ export const categories: Category[] = [
   },
   {
     id: "odontologia",
-    name: "Odontología",
+    name: "Odontologia",
     icon: "/categories/dentista.png",
     color: "bg-cyan-50 text-cyan-700 border-cyan-200"
   },
@@ -89,7 +89,7 @@ export const categories: Category[] = [
   
    {
   id: "sex-shop tatoos",
-  name: "Sex Shop & Tattoos",
+  name: "Sexshop & Tatoos",
   icon: "/categories/sex.png",
   color: "bg-pink-50 text-pink-700 border-pink-200"
 },
@@ -101,7 +101,7 @@ export const categories: Category[] = [
 },
 {
   id: "inmobiliarias",
-  name: "Inmobiliairias",
+  name: "Inmobiliarias",
   icon: "/categories/inmobiliaria.png",
   color: "bg-teal-50 text-teal-700 border-teal-200"
 },
@@ -113,14 +113,14 @@ export const categories: Category[] = [
 },
 {
   id: "barberia",
-  name: "Barberias",
-  icon: "/categories/barber.png",
+  name: "Barberia",
+  icon: "/categories/barberia.png",
   color: "bg-teal-50 text-teal-700 border-teal-200"
 },
 {
   id: "celulares & computadores",
   name: "Celulares & Computadores",
-  icon: "/categories/celulares.png",
+  icon: "/categories/celulares&reparacion.png",
   color: "bg-teal-50 text-teal-700 border-teal-200"
 },
 {
@@ -143,7 +143,7 @@ export const categories: Category[] = [
   },
    {
     id: "crossfitgym",
-    name: "Crossfit & Gym",
+    name: "CrossfitGym",
     icon: "/categories/fitness.png",
     color: "bg-green-50 text-green-700 border-green-200"
   },
@@ -171,12 +171,7 @@ export const categories: Category[] = [
     icon: "/categories/R&B.png",
     color: "bg-blue-50 text-blue-700 border-blue-200"
   },
-  {
-    id: "Sexshop & Tatoos",
-    name: "Sexshop & Tatoos",
-    icon: "/categories/sex.png",
-    color: "bg-blue-50 text-blue-700 border-blue-200"
-  },
+
   {
     id: "floristeria",
     name: "Floristeria",
@@ -210,7 +205,7 @@ export const categories: Category[] = [
   },
    {
     id: "supermecado & domicilios",
-    name: "Supermercado & Domicilios",
+    name: "	Supermecado & Domicilios",
     icon: "/categories/super-domicilio.png",
     color: "bg-blue-50 text-blue-700 border-blue-200"
   },
