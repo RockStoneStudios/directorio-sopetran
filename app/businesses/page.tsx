@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: BusinessesPageProps) {
     <div>
       <div className="p-5">
         <h1 className="text-2xl font-bold mb-3 text-center">
-          
+          Negocios & Categorias
         </h1>
       </div>
       <div className="px-5 mb-8">
