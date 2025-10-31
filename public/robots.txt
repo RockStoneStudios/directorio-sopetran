@@ -1,14 +1,8 @@
 User-agent: *
 Allow: /
 
-# Permitir todo el sitio
+Sitemap: https://www.directoriosopetran.com/sitemap-v2.xml
 
-# Sitemap
-Sitemap: https://www.directoriosopetran.com/sitemap.xml
-
-# Bloquear rutas sensibles (opcional, pero recomendado)
 Disallow: /api/
 Disallow: /admin/
-Disallow: /dashboard/
 Disallow: /_next/
-Disallow: /private/
