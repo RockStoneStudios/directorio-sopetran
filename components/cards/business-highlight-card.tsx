@@ -168,81 +168,15 @@ export default function BusinessHighlightCard({
     }, 100);
   };
 
- // 🆕 VERSIÓN ROBUSTA CON MÚLTIPLES DEEP LINKS
+// 🆕 Función SIMPLIFICADA - Solo copiar número de cuenta
 const openBancolombiaApp = (accountNumber: string) => {
-  handleCopy(accountNumber, "Cuenta de Mi Bancolombia");
-
-  setTimeout(() => {
-    // ✅ PROBAR MÚLTIPLES DEEP LINKS POSIBLES
-    const deepLinks = [
-      "mibancolombia://app",        // Nuevo nombre
-      "mibancolombia://",           // Nuevo nombre básico
-      "bancolombia://app",          // Por si mantienen compatibilidad
-      "bancolombia://",             // Por si mantienen compatibilidad
-      "com.bancolombia.personas://" // Package name de Android
-    ];
-
-    const androidStore = "https://play.google.com/store/apps/details?id=com.bancolombia.personas";
-    const iosStore = "https://apps.apple.com/co/app/mi-bancolombia/id1446899970";
-
-    const userAgent = navigator.userAgent || navigator.vendor;
-    const isAndroid = /android/i.test(userAgent);
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-
-    let appOpened = false;
-
-    // Intentar con todos los deep links posibles
-    deepLinks.forEach((deepLink, index) => {
-      setTimeout(() => {
-        if (!appOpened) {
-          console.log(`Intentando deep link: ${deepLink}`);
-          if (isAndroid) {
-            window.location.href = deepLink;
-          } else {
-            const iframe = document.createElement("iframe");
-            iframe.style.display = "none";
-            iframe.src = deepLink;
-            document.body.appendChild(iframe);
-            setTimeout(() => document.body.removeChild(iframe), 1000);
-          }
-        }
-      }, index * 400); // Intentar cada 400ms
-    });
-
-    // Fallback después de 2.5 segundos
-    const timeout = setTimeout(() => {
-      if (!appOpened) {
-        if (isAndroid) {
-          window.open(androidStore, "_blank");
-          toast.error("Mi Bancolombia no encontrada. Abriendo Play Store...", {
-            duration: 4000,
-            icon: "📱",
-          });
-        } else if (isIOS) {
-          window.open(iosStore, "_blank");
-          toast.error("Mi Bancolombia no encontrada. Abriendo App Store...", {
-            duration: 4000,
-            icon: "📱",
-          });
-        } else {
-          toast.success("Cuenta copiada. Abre Mi Bancolombia manualmente 💛", {
-            duration: 3000,
-            icon: "💛",
-          });
-        }
-      }
-    }, 2500);
-
-    // Detectar si la app se abrió
-    window.addEventListener("blur", () => {
-      appOpened = true;
-      clearTimeout(timeout);
-      toast.success("Abriendo Mi Bancolombia... 💛", {
-        duration: 2000
-      });
-    });
-
-  }, 150);
+  handleCopy(accountNumber, "Número de cuenta Bancolombia");
+  
+  // Opcional: Mostrar un mensaje adicional
+  toast.success("Número de cuenta copiado 💛", {
+    duration: 3000,
+    icon: "💛",
+  });
 };
 
   const isBasicosCategory = business?.category?.toLowerCase() === 'basicos';
