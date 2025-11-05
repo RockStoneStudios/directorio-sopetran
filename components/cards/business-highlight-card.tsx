@@ -170,13 +170,9 @@ export default function BusinessHighlightCard({
 
 // 🆕 Función SIMPLIFICADA - Solo copiar número de cuenta
 const openBancolombiaApp = (accountNumber: string) => {
-  handleCopy(accountNumber, "Número de cuenta Bancolombia");
+  handleCopy(accountNumber, "Número de cuenta Bancolombia 💛");
   
-  // Opcional: Mostrar un mensaje adicional
-  toast.success("Número de cuenta copiado 💛", {
-    duration: 3000,
-    icon: "💛",
-  });
+
 };
 
   const isBasicosCategory = business?.category?.toLowerCase() === 'basicos';
