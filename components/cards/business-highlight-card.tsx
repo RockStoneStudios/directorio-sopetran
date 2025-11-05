@@ -14,13 +14,8 @@ const NequiIcon = ({ className }: { className?: string }) => (
     viewBox="0 0 100 100"
     className={`w-full h-full ${className}`}
   >
-    {/* Fondo transparente */}
     <rect width="100" height="100" fill="none" />
-
-    {/* Punto rosado arriba a la izquierda */}
     <rect x="-75" y="18" width="100" height="24" rx="2" fill="#ff007a" />
-
-    {/* Letra N */}
     <text
       x="62%"
       y="67%"
@@ -42,10 +37,7 @@ const BancolombiaIcon = ({ className }: { className?: string }) => (
     viewBox="0 0 120 120"
     className={`w-full h-full ${className}`}
   >
-    {/* Fondo transparente */}
     <rect width="120" height="120" fill="none" />
-
-    {/* Franja azul */}
     <rect
       x="20"
       y="25"
@@ -55,8 +47,6 @@ const BancolombiaIcon = ({ className }: { className?: string }) => (
       fill="#0033A0"
       transform="rotate(-8 20 25)"
     />
-
-    {/* Franja amarilla */}
     <rect
       x="20"
       y="58"
@@ -66,8 +56,6 @@ const BancolombiaIcon = ({ className }: { className?: string }) => (
       fill="#FFD100"
       transform="rotate(-6 20 50)"
     />
-
-    {/* Franja roja */}
     <rect
       x="25"
       y="83"
@@ -104,38 +92,133 @@ export default function BusinessHighlightCard({
     }
   };
 
-  // Función para manejar clicks que SOLO copia al portapapeles
   const handleCopyClick = (e: React.MouseEvent, text: string, field: string) => {
     e.preventDefault();
     e.stopPropagation();
     handleCopy(text, field);
   };
 
-  // Función para abrir WhatsApp
   const openWhatsApp = (phone: string) => {
-    // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
     setTimeout(() => {
       window.open(`https://wa.me/57${phone}`, "_blank");
-    }, 100);
+    }, 80);
   };
 
-  // Función para realizar llamada telefónica
   const makePhoneCall = (phone: string) => {
-    // Usar setTimeout para asegurar que el clipboard funcione antes de redirigir
     setTimeout(() => {
       window.open(`tel:+57${phone}`, "_self");
     }, 80);
   };
 
-  // Función para abrir enlaces externos
   const openExternalLink = (url: string) => {
     window.open(url, "_blank");
   };
 
-  // Verificar si la categoría es "basicos" (case insensitive)
+  // 🆕 Función para abrir Nequi con deep linking
+  const openNequiApp = (phoneNumber: string) => {
+    // Copiar número primero
+    handleCopy(phoneNumber, "Número de Nequi");
+    
+    // Esperar un poco para que el usuario vea el toast
+    setTimeout(() => {
+      // Deep link de Nequi
+      const nequiDeepLink = `nequi://`;
+      
+      // Intentar abrir la app
+      const startTime = Date.now();
+      window.location.href = nequiDeepLink;
+      
+      // Fallback: Si la app no se abre en 2 segundos, abrir Play Store o App Store
+      setTimeout(() => {
+        const elapsed = Date.now() - startTime;
+        
+        // Si pasaron más de 2 segundos, probablemente la app no está instalada
+        if (elapsed < 2500) {
+          // Detectar sistema operativo
+          const userAgent = navigator.userAgent || navigator.vendor;
+          
+          if (/android/i.test(userAgent)) {
+            // Android - Play Store
+            window.open('https://play.google.com/store/apps/details?id=com.nequi.MobileApp', '_blank');
+            toast.error('Nequi no está instalada. Abriendo Play Store...', {
+              duration: 3000,
+              icon: '📱'
+            });
+          } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+            // iOS - App Store
+            window.open('https://apps.apple.com/co/app/nequi-colombia/id1123440641', '_blank');
+            toast.error('Nequi no está instalada. Abriendo App Store...', {
+              duration: 3000,
+              icon: '📱'
+            });
+          } else {
+            // Desktop o navegador que no detectamos
+            toast.success('Número copiado. Abre Nequi en tu dispositivo móvil.', {
+              duration: 3000,
+              icon: '💜'
+            });
+          }
+        } else {
+          // La app se abrió exitosamente
+          toast.success('Abriendo Nequi... 💜', {
+            duration: 2000
+          });
+        }
+      }, 2000);
+    }, 100);
+  };
+
+  // 🆕 Función para abrir Bancolombia con deep linking
+  const openBancolombiaApp = (accountNumber: string) => {
+    // Copiar número primero
+    handleCopy(accountNumber, "Cuenta de Bancolombia");
+    
+    setTimeout(() => {
+      // Deep links de Bancolombia
+      const bancolombiaDeepLink = `bancolombia://`;
+      
+      const startTime = Date.now();
+      window.location.href = bancolombiaDeepLink;
+      
+      setTimeout(() => {
+        const elapsed = Date.now() - startTime;
+        
+        if (elapsed < 2500) {
+          const userAgent = navigator.userAgent || navigator.vendor;
+          
+          if (/android/i.test(userAgent)) {
+            // Android - Play Store
+            window.open('https://play.google.com/store/apps/details?id=com.todo1.mobile', '_blank');
+            toast.error('Bancolombia no está instalada. Abriendo Play Store...', {
+              duration: 3000,
+              icon: '📱'
+            });
+          } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+            // iOS - App Store
+            window.open('https://apps.apple.com/co/app/bancolombia-app-personas/id446899970', '_blank');
+            toast.error('Bancolombia no está instalada. Abriendo App Store...', {
+              duration: 3000,
+              icon: '📱'
+            });
+          } else {
+            // Desktop
+            toast.success('Número copiado. Abre Bancolombia en tu dispositivo móvil.', {
+              duration: 3000,
+              icon: '💛'
+            });
+          }
+        } else {
+          toast.success('Abriendo Bancolombia... 💛', {
+            duration: 2000
+          });
+        }
+      }, 2000);
+    }, 100);
+  };
+
   const isBasicosCategory = business?.category?.toLowerCase() === 'basicos';
 
-  // Mapeo de íconos usando datos reales de la base de datos - ACTUALIZADO
+  // Mapeo de íconos - ACTUALIZADO con las nuevas funciones
   const iconConfig = [
     { 
       type: 'phone', 
@@ -144,10 +227,8 @@ export default function BusinessHighlightCard({
       data: business.phone,
       action: (e: React.MouseEvent) => {
         if (business.phone) {
-          // Solo copiar una vez
           handleCopyClick(e, business.phone, "Teléfono");
           
-          // Si es categoría "basicos", hacer llamada, sino abrir WhatsApp
           if (isBasicosCategory) {
             makePhoneCall(business.phone);
           } else {
@@ -208,32 +289,36 @@ export default function BusinessHighlightCard({
         }
       }
     },
-    // NUEVOS CAMPOS CON ÍCONOS PERSONALIZADOS
+    // 🆕 NEQUI CON DEEP LINKING
     { 
       type: 'nequi', 
       color: 'purple',
-      icon: NequiIcon, // Ícono personalizado "N"
+      icon: NequiIcon,
       data: business.nequi,
       action: (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (business.nequi) {
-          handleCopyClick(e, business.nequi, "Número de Nequi");
+          openNequiApp(business.nequi);
         }
       }
     },
+    // 🆕 BANCOLOMBIA CON DEEP LINKING
     { 
       type: 'bancolombia', 
       color: 'white',
-      icon: BancolombiaIcon, // Ícono personalizado "B"
+      icon: BancolombiaIcon,
       data: business.bancolombia,
       action: (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (business.bancolombia) {
-          handleCopyClick(e, business.bancolombia, "Cuenta de Bancolombia");
+          openBancolombiaApp(business.bancolombia);
         }
       }
     },
   ];
 
-  // Clases predefinidas para cada color - ACTUALIZADO con nuevos colores
   const getPredefinedStyles = (index: number, colorType: string) => {
     const isPulsing = pulsingIcon === index;
     
@@ -263,31 +348,29 @@ export default function BusinessHighlightCard({
         } hover:bg-cyan-500/30 dark:hover:bg-cyan-500/20`
       },
       yellow: {
-  container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
-    isPulsing
-      ? 'border-yellow-500 dark:border-yellow-400/80 bg-yellow-100 dark:bg-yellow-900/40 shadow-[0_0_20px_#FACC15] scale-125'
-      : 'border-yellow-400 dark:border-yellow-500/50 bg-yellow-50 dark:bg-yellow-900/30 shadow-[0_0_8px_#FACC15]'
-  } hover:shadow-[0_0_12px_#FACC15] dark:hover:shadow-[0_0_25px_#FACC15] hover:scale-110 hover:border-yellow-500 dark:hover:border-yellow-400/60`,
-  button: `rounded-full w-10 h-10 bg-transparent ${
-    isPulsing
-      ? 'text-yellow-600 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300'
-      : 'text-yellow-500 dark:text-yellow-300 hover:text-yellow-600 dark:hover:text-yellow-200'
-  } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
-},
-
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+          isPulsing
+            ? 'border-yellow-500 dark:border-yellow-400/80 bg-yellow-100 dark:bg-yellow-900/40 shadow-[0_0_20px_#FACC15] scale-125'
+            : 'border-yellow-400 dark:border-yellow-500/50 bg-yellow-50 dark:bg-yellow-900/30 shadow-[0_0_8px_#FACC15]'
+        } hover:shadow-[0_0_12px_#FACC15] dark:hover:shadow-[0_0_25px_#FACC15] hover:scale-110 hover:border-yellow-500 dark:hover:border-yellow-400/60`,
+        button: `rounded-full w-10 h-10 bg-transparent ${
+          isPulsing
+            ? 'text-yellow-600 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300'
+            : 'text-yellow-500 dark:text-yellow-300 hover:text-yellow-600 dark:hover:text-yellow-200'
+        } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
+      },
       white: {
-  container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
-    isPulsing
-      ? 'border-yellow-600 dark:border-yellow-500/80 bg-white dark:bg-white/90 shadow-[0_0_20px_#FFD700] scale-125'
-      : 'border-yellow-400 dark:border-yellow-400/50 bg-white dark:bg-white/80 shadow-[0_0_8px_#FFD700]'
-  } hover:shadow-[0_0_12px_#FFD700] dark:hover:shadow-[0_0_25px_#FFD700] hover:scale-110 hover:border-yellow-600 dark:hover:border-yellow-500/60`,
-  button: `rounded-full w-10 h-10 bg-transparent ${
-    isPulsing
-      ? 'text-yellow-600 dark:text-yellow-500 hover:text-yellow-700 dark:hover:text-yellow-400'
-      : 'text-yellow-500 dark:text-yellow-600 hover:text-yellow-600 dark:hover:text-yellow-400'
-  } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
-},
-
+        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+          isPulsing
+            ? 'border-yellow-600 dark:border-yellow-500/80 bg-white dark:bg-white/90 shadow-[0_0_20px_#FFD700] scale-125'
+            : 'border-yellow-400 dark:border-yellow-400/50 bg-white dark:bg-white/80 shadow-[0_0_8px_#FFD700]'
+        } hover:shadow-[0_0_12px_#FFD700] dark:hover:shadow-[0_0_25px_#FFD700] hover:scale-110 hover:border-yellow-600 dark:hover:border-yellow-500/60`,
+        button: `rounded-full w-10 h-10 bg-transparent ${
+          isPulsing
+            ? 'text-yellow-600 dark:text-yellow-500 hover:text-yellow-700 dark:hover:text-yellow-400'
+            : 'text-yellow-500 dark:text-yellow-600 hover:text-yellow-600 dark:hover:text-yellow-400'
+        } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
+      },
       red: {
         container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
@@ -312,7 +395,6 @@ export default function BusinessHighlightCard({
             : 'text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300'
         } hover:bg-blue-500/30 dark:hover:bg-blue-500/20`
       },
-      // NUEVOS ESTILOS PARA LOS CAMPOS AGREGADOS
       purple: {
         container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
@@ -396,7 +478,6 @@ export default function BusinessHighlightCard({
     iconsRef.current[index] = el;
   };
 
-  // Filtrar íconos que tienen datos en la base de datos
   const visibleIcons = iconConfig.filter(icon => icon.data && icon.data.trim() !== '');
 
   if (!isMounted) {
@@ -416,14 +497,12 @@ export default function BusinessHighlightCard({
   return (
     <div 
       className="fixed right-2 top-1/2 -translate-y-1/2 z-[10000] flex flex-col gap-2"
-      // Prevenir eventos de click en el contenedor principal
       onClick={(e) => e.stopPropagation()}
     >
       {visibleIcons.map((icon, index) => {
         const IconComponent = icon.icon;
         const styles = getPredefinedStyles(index, icon.color);
         
-        // Determinar el título según la categoría para el botón de teléfono
         const getTitle = () => {
           if (icon.type === 'phone') {
             return isBasicosCategory 
@@ -434,8 +513,8 @@ export default function BusinessHighlightCard({
                  icon.type === 'hours' ? `Horario: ${business.hours}` :
                  icon.type === 'email' ? `Enviar email: ${business.email}` :
                  icon.type === 'website' ? `Visitar sitio web: ${business.website}` :
-                 icon.type === 'nequi' ? `Número de Nequi: ${business.nequi}` :
-                 `Cuenta de Bancolombia: ${business.bancolombia}`;
+                 icon.type === 'nequi' ? `Abrir Nequi: ${business.nequi}` :
+                 `Abrir Bancolombia: ${business.bancolombia}`;
         };
 
         return (
@@ -443,7 +522,6 @@ export default function BusinessHighlightCard({
             key={icon.type}
             ref={el => addToRefs(el, index)}
             className={styles.container}
-            // Prevenir eventos de click en cada ícono
             onClick={(e) => e.stopPropagation()}
           >
             <Button
@@ -452,7 +530,6 @@ export default function BusinessHighlightCard({
               className={styles.button}
               onClick={icon.action}
               title={getTitle()}
-              // Importante: type="button" para evitar submit en formularios
               type="button"
             >
               <IconComponent className="size-4" />
