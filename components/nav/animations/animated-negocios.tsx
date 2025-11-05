@@ -51,7 +51,7 @@ export default function AnimatedNegociosLink() {
     }
 
     // Animación de recorrido neón (se activa periódicamente)
-    const neonAnimation = gsap.timeline({ repeat: -1, repeatDelay: 4 });
+    const neonAnimation = gsap.timeline({ repeat: -1, repeatDelay: 2.57 });
     
     lettersRef.current.forEach((letter, index) => {
       if (letter) {
@@ -90,7 +90,7 @@ export default function AnimatedNegociosLink() {
       if (iconRef.current) {
         gsap.to(iconRef.current, {
           scale: 1.3,
-          rotate: 12,
+          rotate: 16,
           color: "#10ff30",
           filter: "drop-shadow(0 0 15px #10ff30)",
           duration: 0.3,
