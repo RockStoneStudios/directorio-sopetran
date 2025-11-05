@@ -169,7 +169,7 @@ export default function BusinessHighlightCard({
   };
 
   // 🆕 Función para abrir Bancolombia con deep linking
-  const openBancolombiaApp = (accountNumber: string) => {
+ const openBancolombiaApp = (accountNumber: string) => {
     // Copiar número primero
     handleCopy(accountNumber, "Cuenta de Bancolombia");
     
@@ -187,15 +187,15 @@ export default function BusinessHighlightCard({
           const userAgent = navigator.userAgent || navigator.vendor;
           
           if (/android/i.test(userAgent)) {
-            // Android - Play Store
-            window.open('https://play.google.com/store/apps/details?id=com.todo1.mobile', '_blank');
+            // Android - Play Store (ID CORRECTO)
+            window.open('https://play.google.com/store/apps/details?id=com.bancolombia.personas', '_blank');
             toast.error('Bancolombia no está instalada. Abriendo Play Store...', {
               duration: 3000,
               icon: '📱'
             });
           } else if (/iPad|iPhone|iPod/.test(userAgent)) {
-            // iOS - App Store
-            window.open('https://apps.apple.com/co/app/bancolombia-app-personas/id446899970', '_blank');
+            // iOS - App Store (ID CORRECTO)
+            window.open('https://apps.apple.com/co/app/bancolombia/id1446899970', '_blank');
             toast.error('Bancolombia no está instalada. Abriendo App Store...', {
               duration: 3000,
               icon: '📱'
