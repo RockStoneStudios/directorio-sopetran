@@ -170,51 +170,46 @@ export default function BusinessHighlightCard({
 
   // 🆕 Función para abrir Bancolombia con deep linking
  const openBancolombiaApp = (accountNumber: string) => {
-    // Copiar número primero
-    handleCopy(accountNumber, "Cuenta de Bancolombia");
-    
-    setTimeout(() => {
-      // Deep links de Bancolombia
-      const bancolombiaDeepLink = `bancolombia://`;
-      
-      const startTime = Date.now();
-      window.location.href = bancolombiaDeepLink;
-      
-      setTimeout(() => {
-        const elapsed = Date.now() - startTime;
-        
-        if (elapsed < 2500) {
-          const userAgent = navigator.userAgent || navigator.vendor;
-          
-          if (/android/i.test(userAgent)) {
-            // Android - Play Store (ID CORRECTO)
-            window.open('https://play.google.com/store/apps/details?id=com.bancolombia.personas', '_blank');
-            toast.error('Bancolombia no está instalada. Abriendo Play Store...', {
-              duration: 3000,
-              icon: '📱'
-            });
-          } else if (/iPad|iPhone|iPod/.test(userAgent)) {
-            // iOS - App Store (ID CORRECTO)
-            window.open('https://apps.apple.com/co/app/bancolombia/id1446899970', '_blank');
-            toast.error('Bancolombia no está instalada. Abriendo App Store...', {
-              duration: 3000,
-              icon: '📱'
-            });
-          } else {
-            // Desktop
-            toast.success('Número copiado. Abre Bancolombia en tu dispositivo móvil.', {
-              duration: 3000,
-              icon: '💛'
-            });
-          }
-        } else {
-          toast.success('Abriendo Bancolombia... 💛', {
-            duration: 2000
-          });
-        }
-      }, 2000);
-    }, 100);
-  };
+  handleCopy(accountNumber, "Cuenta de Bancolombia");
+
+  setTimeout(() => {
+    const deepLink = "bancolombia://";
+    const androidStore = "https://play.google.com/store/apps/details?id=com.bancolombia.personas";
+    const iosStore = "https://apps.apple.com/co/app/bancolombia/id1446899970";
+
+    const userAgent = navigator.userAgent || navigator.vendor;
+    const isAndroid = /android/i.test(userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+
+    // Intentar abrir la app usando un iframe oculto (más confiable)
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = deepLink;
+    document.body.appendChild(iframe);
+
+    const timeout = setTimeout(() => {
+      document.body.removeChild(iframe);
+      if (isAndroid) {
+        window.open(androidStore, "_blank");
+        toast.error("Bancolombia no está instalada. Abriendo Play Store...", {
+          icon: "📱",
+        });
+      } else if (isIOS) {
+        window.open(iosStore, "_blank");
+        toast.error("Bancolombia no está instalada. Abriendo App Store...", {
+          icon: "📱",
+        });
+      } else {
+        toast.success("Número copiado. Abre Bancolombia en tu celular 💛", {
+          icon: "💛",
+        });
+      }
+    }, 2000);
+
+    // Si la app se abre, el navegador pierde foco y cancelamos el fallback
+    window.addEventListener("blur", () => clearTimeout(timeout));
+  }, 150);
+};
 
   const isBasicosCategory = business?.category?.toLowerCase() === 'basicos';
 
