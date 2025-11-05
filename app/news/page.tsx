@@ -116,7 +116,7 @@ export default function NewsDetailPage({ params }: PageProps) {
     category: "Inteligencia Artificial",
     date: "2025-11-05",
     author: "Omar Ortiz",
-    readTime: "6 min read"
+    readTime: "2 min tiempo de lectura"
   };
 
   return (

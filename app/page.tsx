@@ -70,50 +70,50 @@ export default function LandingPage() {
 
 
       {/* Sección de Noticias - FUERA del Hero Section */}
-      <section
-        id="noticias"
-        className="relative z-10 bg-[#010818] text-white py-20 px-4"
-      >
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-blue-400 mb-6">
-            📰 Noticias de Sopetrán
-          </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto mb-10">
-            Mantente al día con lo último que ocurre en nuestro municipio: eventos
-            culturales, desarrollos locales, comercio, turismo y comunidad.
-          </p>
+        <section
+          id="noticias"
+          className="relative z-10 bg-[#010818] text-white py-20 px-4"
+        >
+          <div className="container mx-auto text-center">
+            <h2 className="text-3xl font-bold text-blue-400 mb-6">
+              📰 Noticias de Sopetrán
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto mb-10">
+              Mantente al día con lo último que ocurre en nuestro municipio: eventos
+              culturales, desarrollos locales, comercio, turismo y comunidad.
+            </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-              <h3 className="text-xl font-semibold text-blue-300 mb-2">
-                📍 Comercio Local en Auge
-              </h3>
-              <p className="text-gray-400">
-                Empresarios sopetraneros reportan aumento en ventas del 15 % tras la
-                nueva campaña de promoción digital comunitaria.
-              </p>
-            </div>
+        <div className="grid md:grid-cols-3 gap-8">
+    <div className="bg-gray-800 p-6 rounded-xl shadow-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold text-blue-300 mb-2">
+        💰 Presupuesto Municipal 2025
+      </h3>
+      <p className="text-gray-400">
+        Sopetrán cuenta con <strong>$45.504 millones</strong> para inversión pública, 
+        de los cuales aproximadamente <strong>$500 millones</strong> están destinados al Concejo Municipal.
+      </p>
+    </div>
 
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-              <h3 className="text-xl font-semibold text-green-300 mb-2">
-                🌿 Turismo & Naturaleza
-              </h3>
-              <p className="text-gray-400">
-                Más de 2 000 visitantes llegaron al mirador de Peñitas este fin de
-                semana, impulsados por la ruta ecológica promocionada.
-              </p>
-            </div>
+    <div className="bg-gray-800 p-6 rounded-xl shadow-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold text-green-300 mb-2">
+        🌐 Récord de Visitas
+      </h3>
+      <p className="text-gray-400">
+        <strong>3.472 personas</strong> visitaron simultáneamente Directorio Sopetrán 
+        el domingo en hora pico, estableciendo nuevo récord de conexiones locales.
+      </p>
+    </div>
 
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-              <h3 className="text-xl font-semibold text-purple-300 mb-2">
-                🤖 Innovación y Comunidad
-              </h3>
-              <p className="text-gray-400">
-                Nuestro directorio digital con IA para negocios locales ya registró
-                50 nuevos comercios en su primera semana.
-              </p>
-            </div>
-          </div>
+    <div className="bg-gray-800 p-6 rounded-xl shadow-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold text-purple-300 mb-2">
+        📈 Comercio Digital
+      </h3>
+      <p className="text-gray-400">
+        Empresarios reportan <strong>aumento del 12%</strong> en ventas tras integrarse 
+        al directorio digital, mejorando su visibilidad en la comunidad.
+      </p>
+    </div>
+  </div>
 
           <div className="mt-10">
             <Link href= "/news">
