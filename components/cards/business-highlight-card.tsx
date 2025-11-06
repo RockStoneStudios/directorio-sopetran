@@ -2,6 +2,7 @@
 
 import { BusinessState } from "@/utils/types/business";
 import { Clock, Globe, Mail, Phone, MapPin } from "lucide-react";
+import { IoLogoWhatsapp } from "react-icons/io5";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { useLayoutEffect, useRef, useState } from "react";
@@ -78,6 +79,46 @@ export default function BusinessHighlightCard({
   const [pulsingIcon, setPulsingIcon] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
+  // Función para crear efecto de partículas
+  const createParticleEffect = (element: HTMLElement, color: string) => {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    for (let i = 0; i < 22; i++) {
+      const particle = document.createElement('div');
+      particle.style.position = 'fixed';
+      particle.style.width = '5px';
+      particle.style.height = '5px';
+      particle.style.background = color;
+      particle.style.borderRadius = '50%';
+      particle.style.pointerEvents = 'none';
+      particle.style.zIndex = '10001';
+      particle.style.left = `${centerX}px`;
+      particle.style.top = `${centerY}px`;
+      particle.style.boxShadow = `0 0 6px ${color}`;
+
+      document.body.appendChild(particle);
+
+      const angle = (i / 8) * Math.PI * 2;
+      const distance = 22 + Math.random() * 30;
+      
+      gsap.to(particle, {
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        opacity: 0,
+        scale: 0,
+        duration: 0.6 + Math.random() * 0.3,
+        ease: "power2.out",
+        onComplete: () => {
+          if (document.body.contains(particle)) {
+            document.body.removeChild(particle);
+          }
+        }
+      });
+    }
+  };
+
   const handleCopy = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
     toast.success(`${field} copiado al portapapeles`);
@@ -114,52 +155,40 @@ export default function BusinessHighlightCard({
     window.open(url, "_blank");
   };
 
-  // 🆕 Función para abrir Nequi con deep linking
+  // Función para abrir Nequi con deep linking
   const openNequiApp = (phoneNumber: string) => {
-    // Copiar número primero
     handleCopy(phoneNumber, "Número de Nequi");
     
-    // Esperar un poco para que el usuario vea el toast
     setTimeout(() => {
-      // Deep link de Nequi
       const nequiDeepLink = `nequi://`;
-      
-      // Intentar abrir la app
       const startTime = Date.now();
       window.location.href = nequiDeepLink;
       
-      // Fallback: Si la app no se abre en 2 segundos, abrir Play Store o App Store
       setTimeout(() => {
         const elapsed = Date.now() - startTime;
         
-        // Si pasaron más de 2 segundos, probablemente la app no está instalada
         if (elapsed < 2500) {
-          // Detectar sistema operativo
           const userAgent = navigator.userAgent || navigator.vendor;
           
           if (/android/i.test(userAgent)) {
-            // Android - Play Store
             window.open('https://play.google.com/store/apps/details?id=com.nequi.MobileApp', '_blank');
             toast.error('Nequi no está instalada. Abriendo Play Store...', {
               duration: 3000,
               icon: '📱'
             });
           } else if (/iPad|iPhone|iPod/.test(userAgent)) {
-            // iOS - App Store
             window.open('https://apps.apple.com/co/app/nequi-colombia/id1123440641', '_blank');
             toast.error('Nequi no está instalada. Abriendo App Store...', {
               duration: 3000,
               icon: '📱'
             });
           } else {
-            // Desktop o navegador que no detectamos
             toast.success('Número copiado. Abre Nequi en tu dispositivo móvil.', {
               duration: 3000,
               icon: '💜'
             });
           }
         } else {
-          // La app se abrió exitosamente
           toast.success('Abriendo Nequi... 💜', {
             duration: 2000
           });
@@ -168,21 +197,57 @@ export default function BusinessHighlightCard({
     }, 100);
   };
 
-// 🆕 Función SIMPLIFICADA - Solo copiar número de cuenta
-const openBancolombiaApp = (accountNumber: string) => {
-  handleCopy(accountNumber, "Número de cuenta Bancolombia 💛");
-  
-
-};
+  // Función para abrir Bancolombia con deep linking
+  const openBancolombiaApp = (accountNumber: string) => {
+    handleCopy(accountNumber, "Cuenta de Bancolombia");
+    
+    setTimeout(() => {
+      const bancolombiaDeepLink = `bancolombia://`;
+      const startTime = Date.now();
+      window.location.href = bancolombiaDeepLink;
+      
+      setTimeout(() => {
+        const elapsed = Date.now() - startTime;
+        
+        if (elapsed < 2500) {
+          const userAgent = navigator.userAgent || navigator.vendor;
+          
+          if (/android/i.test(userAgent)) {
+            window.open('https://play.google.com/store/apps/details?id=com.bancolombia.personas', '_blank');
+            toast.error('Bancolombia no está instalada. Abriendo Play Store...', {
+              duration: 3000,
+              icon: '📱'
+            });
+          } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+            window.open('https://apps.apple.com/co/app/bancolombia/id1446899970', '_blank');
+            toast.error('Bancolombia no está instalada. Abriendo App Store...', {
+              duration: 3000,
+              icon: '📱'
+            });
+          } else {
+            toast.success('Número copiado. Abre Bancolombia en tu dispositivo móvil.', {
+              duration: 3000,
+              icon: '💛'
+            });
+          }
+        } else {
+          toast.success('Abriendo Bancolombia... 💛', {
+            duration: 2000
+          });
+        }
+      }, 2000);
+    }, 100);
+  };
 
   const isBasicosCategory = business?.category?.toLowerCase() === 'basicos';
 
-  // Mapeo de íconos - ACTUALIZADO con las nuevas funciones
+  // 🎯 Mapeo de íconos con ícono dinámico según categoría
   const iconConfig = [
     { 
       type: 'phone', 
       color: 'green',
-      icon: Phone,
+      particleColor: '#25D366',
+      icon: isBasicosCategory ? Phone : IoLogoWhatsapp,
       data: business.phone,
       action: (e: React.MouseEvent) => {
         if (business.phone) {
@@ -199,6 +264,7 @@ const openBancolombiaApp = (accountNumber: string) => {
     { 
       type: 'address', 
       color: 'cyan',
+      particleColor: '#06B6D4',
       icon: MapPin,
       data: business.address,
       action: (e: React.MouseEvent) => {
@@ -213,6 +279,7 @@ const openBancolombiaApp = (accountNumber: string) => {
     { 
       type: 'hours', 
       color: 'yellow',
+      particleColor: '#EAB308',
       icon: Clock,
       data: business.hours,
       action: (e: React.MouseEvent) => {
@@ -224,6 +291,7 @@ const openBancolombiaApp = (accountNumber: string) => {
     { 
       type: 'email', 
       color: 'red',
+      particleColor: '#EF4444',
       icon: Mail,
       data: business.email,
       action: (e: React.MouseEvent) => {
@@ -236,6 +304,7 @@ const openBancolombiaApp = (accountNumber: string) => {
     { 
       type: 'website', 
       color: 'blue',
+      particleColor: '#3B82F6',
       icon: Globe,
       data: business.website,
       action: (e: React.MouseEvent) => {
@@ -248,10 +317,10 @@ const openBancolombiaApp = (accountNumber: string) => {
         }
       }
     },
-    // 🆕 NEQUI CON DEEP LINKING
     { 
       type: 'nequi', 
       color: 'purple',
+      particleColor: '#A855F7',
       icon: NequiIcon,
       data: business.nequi,
       action: (e: React.MouseEvent) => {
@@ -262,10 +331,10 @@ const openBancolombiaApp = (accountNumber: string) => {
         }
       }
     },
-    // 🆕 BANCOLOMBIA CON DEEP LINKING
     { 
       type: 'bancolombia', 
       color: 'white',
+      particleColor: '#FFD700',
       icon: BancolombiaIcon,
       data: business.bancolombia,
       action: (e: React.MouseEvent) => {
@@ -319,17 +388,17 @@ const openBancolombiaApp = (accountNumber: string) => {
         } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
       },
       white: {
-        container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
-          isPulsing
-            ? 'border-yellow-600 dark:border-yellow-500/80 bg-white dark:bg-white/90 shadow-[0_0_20px_#FFD700] scale-125'
-            : 'border-yellow-400 dark:border-yellow-400/50 bg-white dark:bg-white/80 shadow-[0_0_8px_#FFD700]'
-        } hover:shadow-[0_0_12px_#FFD700] dark:hover:shadow-[0_0_25px_#FFD700] hover:scale-110 hover:border-yellow-600 dark:hover:border-yellow-500/60`,
-        button: `rounded-full w-10 h-10 bg-transparent ${
-          isPulsing
-            ? 'text-yellow-600 dark:text-yellow-500 hover:text-yellow-700 dark:hover:text-yellow-400'
-            : 'text-yellow-500 dark:text-yellow-600 hover:text-yellow-600 dark:hover:text-yellow-400'
-        } hover:bg-yellow-100 dark:hover:bg-yellow-200/20`
-      },
+  container: `border rounded-full backdrop-blur-md transition-all duration-300 ${
+    isPulsing
+      ? 'border-yellow-400 dark:border-yellow-500/80 bg-yellow-100 dark:bg-yellow-900/40 shadow-[0_0_20px_#FACC15] scale-125'  // 👈 Mantiene amarillo en pulso
+      : 'border-white/60 dark:border-white/50 bg-white/40 dark:bg-white/60 shadow-[0_0_8px_#FFFFFF,0_0_16px_#FFFFFF40]'  // 👈 Blanco en estado normal
+  } hover:shadow-[0_0_15px_#FFFFFF,0_0_25px_#FFFFFF60] dark:hover:shadow-[0_0_20px_#FFFFFF,0_0_35px_#FFFFFF80] hover:scale-110 hover:border-white dark:hover:border-white/70`,  // 👈 Blanco en hover
+  button: `rounded-full w-10 h-10 bg-transparent ${
+    isPulsing
+      ? 'text-yellow-600 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300'  // 👈 Amarillo en pulso
+      : 'text-white/90 dark:text-white hover:text-white dark:hover:text-white'  // 👈 Blanco en estado normal y hover
+  } hover:bg-white/20 dark:hover:bg-white/30`
+},
       red: {
         container: `border rounded-full backdrop-blur-md transition-all duration-300 bg-gray-800/20 dark:bg-transparent ${
           isPulsing 
@@ -422,6 +491,12 @@ const openBancolombiaApp = (accountNumber: string) => {
           yoyo: true,
           repeat: 1
         });
+
+        // 🔥 AGREGAR PARTÍCULAS DURANTE EL PULSO ALEATORIO
+        const config = iconConfig[randomIndex];
+        if (config && config.particleColor) {
+          createParticleEffect(pulsingIcon, config.particleColor);
+        }
       }
 
       setTimeout(() => {
@@ -466,7 +541,7 @@ const openBancolombiaApp = (accountNumber: string) => {
           if (icon.type === 'phone') {
             return isBasicosCategory 
               ? `Llamar: ${business.phone}`
-              : `Llamar o escribir por WhatsApp: ${business.phone}`;
+              : `WhatsApp: ${business.phone}`;
           }
           return icon.type === 'address' ? `Ver ubicación en Google Maps: ${business.address}` :
                  icon.type === 'hours' ? `Horario: ${business.hours}` :
@@ -491,7 +566,12 @@ const openBancolombiaApp = (accountNumber: string) => {
               title={getTitle()}
               type="button"
             >
-              <IconComponent className="size-4" />
+              {/* 📱 ICONO DE WHATSAPP MÁS GRANDE */}
+              {icon.type === 'phone' && !isBasicosCategory ? (
+                <IconComponent className="size-5" /> // 👈 Tamaño más grande para WhatsApp
+              ) : (
+                <IconComponent className="size-4" />
+              )}
             </Button>
           </div>
         );
