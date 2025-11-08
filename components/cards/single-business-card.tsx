@@ -12,6 +12,8 @@ import gsap from "gsap";
 
 export default function SingleBusinessPage({ business }: { business: BusinessState }) {
   const hoursRef = useRef<HTMLParagraphElement>(null);
+  const instagramRef = useRef<HTMLAnchorElement>(null);
+  const facebookRef = useRef<HTMLAnchorElement>(null);
 
   useLayoutEffect(() => {
     if (!hoursRef.current || !business?.hours) return;
@@ -48,6 +50,7 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
   }, [business?.hours]);
 
   useEffect(() => {
+    // Animación para el texto "Síguenos"
     gsap.to("#sigueme-text", {
       scale: 1.2,
       duration: 1.5,
@@ -55,6 +58,50 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
       yoyo: true,
       ease: "power1.inOut"
     });
+
+    // Función para crear efecto de neón aleatorio
+    const createRandomNeonEffect = (element: HTMLElement | null, color: string) => {
+      if (!element) return;
+
+      const timeline = gsap.timeline({ repeat: -1, repeatDelay: Math.random() * 3 + 2 });
+      
+      // Estados aleatorios para el efecto de neón
+      const effects = [
+        { scale: 1.1, filter: `drop-shadow(0 0 5px ${color}) brightness(1.3)` },
+        { scale: 1.15, filter: `drop-shadow(0 0 8px ${color}) brightness(1.5)` },
+        { scale: 1.2, filter: `drop-shadow(0 0 12px ${color}) brightness(1.8)` },
+        { scale: 1.1, filter: `drop-shadow(0 0 6px ${color}) brightness(1.4)` }
+      ];
+
+      // Agregar animaciones aleatorias
+      effects.forEach((effect, index) => {
+        timeline.to(element, {
+          ...effect,
+          duration: 0.8 + Math.random() * 0.7,
+          ease: "sine.inOut",
+          delay: index === 0 ? 0 : Math.random() * 1
+        });
+      });
+
+      return timeline;
+    };
+
+    // Aplicar efectos a los iconos
+    const instagramTimeline = createRandomNeonEffect(
+      instagramRef.current, 
+      '#E1306C' // Color rosa de Instagram
+    );
+    
+    const facebookTimeline = createRandomNeonEffect(
+      facebookRef.current, 
+      '#1877F2' // Color azul de Facebook
+    );
+
+    // Cleanup function
+    return () => {
+      instagramTimeline?.kill();
+      facebookTimeline?.kill();
+    };
   }, []);
 
   return (
@@ -110,7 +157,6 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
         {/* Descripción */}
         <DescriptionCard description={business?.description} />
 
-
         {/* Redes sociales */}
         {(business?.instagram || business?.facebook) && (
           <div className="flex flex-col items-center pt-4 border-t">
@@ -121,20 +167,28 @@ export default function SingleBusinessPage({ business }: { business: BusinessSta
             <div className="flex space-x-4">
               {business?.instagram && (
                 <a
+                  ref={instagramRef}
                   href={business.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-pink-600 text-xl transition-transform duration-200 hover:scale-110"
+                  className="text-pink-600 text-xl transition-all duration-350"
+                  style={{
+                    filter: 'brightness(1)'
+                  }}
                 >
                   <IoLogoInstagram />
                 </a>
               )}
               {business?.facebook && (
                 <a
+                  ref={facebookRef}
                   href={business.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 text-xl transition-transform duration-200 hover:scale-110"
+                  className="text-blue-500 text-xl transition-all duration-200"
+                  style={{
+                    filter: 'brightness(1)'
+                  }}
                 >
                   <FaFacebookSquare />
                 </a>

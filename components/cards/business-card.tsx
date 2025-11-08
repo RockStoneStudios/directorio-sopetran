@@ -9,10 +9,14 @@ import { isBusinessOpen } from "@/helper/Helper";
 import { IoLogoInstagram } from "react-icons/io5";
 import { FaFacebookSquare } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const BusinessCard = ({ business }: { business: BusinessState }) => {
   const open = business?.hours ? isBusinessOpen(business.hours) : false;
   const router = useRouter();
+  const instagramRef = useRef<HTMLAnchorElement>(null);
+  const facebookRef = useRef<HTMLAnchorElement>(null);
 
   const {
     openDescriptionModal,
@@ -22,6 +26,52 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
     isDashboardPage,
     togglePublished,
   } = useBusiness();
+
+  useEffect(() => {
+    // Función para crear efecto de neón aleatorio
+    const createRandomNeonEffect = (element: HTMLElement | null, color: string) => {
+      if (!element) return;
+
+      const timeline = gsap.timeline({ repeat: -1, repeatDelay: Math.random() * 3 + 2 });
+      
+      // Estados aleatorios para el efecto de neón
+      const effects = [
+        { scale: 1.1, filter: `drop-shadow(0 0 5px ${color}) brightness(1.3)` },
+        { scale: 1.15, filter: `drop-shadow(0 0 8px ${color}) brightness(1.5)` },
+        { scale: 1.2, filter: `drop-shadow(0 0 12px ${color}) brightness(1.8)` },
+        { scale: 1.1, filter: `drop-shadow(0 0 6px ${color}) brightness(1.4)` }
+      ];
+
+      // Agregar animaciones aleatorias
+      effects.forEach((effect, index) => {
+        timeline.to(element, {
+          ...effect,
+          duration: 0.8 + Math.random() * 0.7,
+          ease: "sine.inOut",
+          delay: index === 0 ? 0 : Math.random() * 1
+        });
+      });
+
+      return timeline;
+    };
+
+    // Aplicar efectos a los iconos
+    const instagramTimeline = createRandomNeonEffect(
+      instagramRef.current, 
+      '#E1306C' // Color rosa de Instagram
+    );
+    
+    const facebookTimeline = createRandomNeonEffect(
+      facebookRef.current, 
+      '#1877F2' // Color azul de Facebook
+    );
+
+    // Cleanup function
+    return () => {
+      instagramTimeline?.kill();
+      facebookTimeline?.kill();
+    };
+  }, []);
 
   // Función para manejar el click en la card
   const handleCardClick = () => {
@@ -132,20 +182,28 @@ const BusinessCard = ({ business }: { business: BusinessState }) => {
         <div className="flex justify-end space-x-4 pt-3 mt-auto border-t" onClick={handleLinkClick}>
           {business?.instagram && (
             <a
+              ref={instagramRef}
               href={business.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-pink-600 text-xl hover:scale-110 transition-transform"
+              className="text-pink-600 text-base transition-all duration-300"
+              style={{
+                filter: 'brightness(1)'
+              }}
             >
               <IoLogoInstagram />
             </a>
           )}
           {business?.facebook && (
             <a
+              ref={facebookRef}
               href={business.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 text-xl hover:scale-110 transition-transform"
+              className="text-blue-600 text-base transition-all duration-300"
+              style={{
+                filter: 'brightness(1)'
+              }}
             >
               <FaFacebookSquare />
             </a>
