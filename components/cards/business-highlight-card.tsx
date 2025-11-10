@@ -139,11 +139,17 @@ export default function BusinessHighlightCard({
     handleCopy(text, field);
   };
 
-  const openWhatsApp = (phone: string) => {
-    setTimeout(() => {
-      window.open(`https://wa.me/57${phone}`, "_blank");
-    }, 80);
-  };
+ const openWhatsApp = (phone: string) => {
+  const cleanPhone = phone.replace(/\D/g, ''); // Limpia el teléfono de caracteres no numéricos
+  const whatsappUrl = `https://wa.me/57${cleanPhone}`;
+  
+  // Abre WhatsApp inmediatamente
+  window.open(whatsappUrl, "_blank");
+  
+  
+ 
+};
+
 
   const makePhoneCall = (phone: string) => {
     setTimeout(() => {
