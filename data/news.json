@@ -1,7 +1,21 @@
 {
   "news": [
     {
-      "id": "1",
+      
+       "id": "1",
+       "slug": "Casa-de-la-cultura",
+       "title": "Adiós, Ecos de Bambuco y Cumbia",
+       "content": "La Casa de la Cultura de Sopetrán ya no canta. Donde antes los clarinetes dibujaban melodías en el aire y los bombos retumbaban con la fuerza de los bambucos, ahora solo quedan vigas rotas que se inclinan como dedos acusadores al cielo. Las paredes, que guardaron risas de niños con pinceles en mano y pasos firmes de parejas girando al ritmo de las cumbias, se han derrumbado en silencio. El polvo cubre los bancos donde una vez se sentaron abuelas tejiendo sueños en manualidades, y el viento arrastra hojas secas por el salón que olía a café y a sudor de ensayos. Ya no habrá más tardes en que los platillos marcaran el compás de un festival, ni noches en que la cumbia nos hiciera olvidar la lluvia. Los ecos de los clarinetes, bombos y platillos suenan por última vez en nuestra memoria y se pierden para siempre entre los escombros. En este rincón de Antioquia, donde la música era puente entre generaciones y el arte un refugio para el alma, hoy solo queda un hueco que nadie llenará. El silencio pesa más que cualquier  porque lleva consigo los sueños de quienes crecieron entre esas paredes. Y mientras el polvo se posa sobre lo que alguna vez fue un templo del espíritu, parece que el tiempo mismo se detiene a mirar con tristeza. Las ventanas, rio ni canto, reflejan un pueblo que se despide de su memoria. Tal vez algún día nuevas voces se atrevan a reconstruir lo perdido, pero nunca volverán los mismos sonidos, ni los mismos rostros.Sopetrán pierde su alma de arte, y nosotros, un pedazo de infancia que nunca volverá.",
+       "category": "Sopetran Hoy",
+       "date": "2025-11-13T14:02:00",
+       "author": "Omar Ortiz",
+       "readTime": "2 min tiempo de lectura",
+       "image": "/images/noticias_sopetran.png",
+       "excerpt": "La Casa de la Cultura de Sopetrán ya no canta. Donde antes los clarinetes dibujaban melodías en el aire y los bombos retumbaban con la fuerza de los bambucos",
+       "tags": ["Casa de la Cultura", "Cultura", "Sopetrán"],
+       "featured": true
+     },{
+      "id": "2",
       "slug": "poema-protesta-el-escarnecedor",
       "title": "Poema protesta El escarnecedor",
       "content": "<p>La vida de esta casona se resiste a derrumbarse, sus alientos ya pausados anuncian extinción.</p><p>En las pulsaciones de la biblioteca no corre sangre ni letras, porque después de la humareda hubo silencio absoluto. ¿Dónde quedaron tus fuerzas, oh, bahareque? ¿Dónde están las doncellas limpiando tus anaqueles?</p><p>Pasa el tiempo burlándose de sus dinteles; tus zaguanes son estiércol, los rincones fétidos guardan moscos; ¿Tienes esperanza aún estando muerta?</p><p>Lágrimas secas están en tus puertas, porque la gente dice: Muerta está, no vale la pena.</p><p>Ve y atestigua contra el destino el puñal que te hirió</p><p>Ve y dicta sentencia al que tu vida acabó</p><p>No pases por alto ningún error</p><p>Ve y dile que aún agonizando estás</p><p>Dile que nunca más volverás.</p>",
@@ -15,7 +29,7 @@
       "featured": true
     },
     {
-      "id": "2",
+      "id": "3",
       "slug": "deepseek-v3-supera-gpt4o-sopetran",
       "title": "DeepSeek V3 Supera a GPT-4o: Sopetrán se Prepara para Integrar IA China y Analizar Ventas Locales",
       "content": "<p>¡El mundo de la IA está temblando! En noviembre de 2025, el modelo chino DeepSeek V3 (de la startup DeepSeek AI) ha dejado atrás a los titanes estadounidenses como OpenAI's GPT-4o, Google's Gemini 2.5 Pro y Anthropic's Claude 3.5 Sonnet.</p><p><strong>1. Eficiencia Brutal: Mismo Poder, 90% Menos Dinero</strong></p><p>DeepSeek V3 se entrenó con solo $5.6 millones y 6 meses de tiempo. GPT-4o necesitó cientos de millones y años. Gracias a su arquitectura MoE (Mixture of Experts), solo activa 37 mil millones de parámetros por consulta de un total de 671 mil millones, siendo 4 veces más eficiente. El costo por millón de tokens es $0.14 frente a $5 de GPT-4o. Ideal para países emergentes como Colombia.</p><p><strong>2. Rendimiento Superior en Benchmarks</strong></p><p>LMSYS Arena: DeepSeek V3 (1,385) supera a GPT-4o (1,372). En MMLU-Pro obtiene 88.7% frente a 87.2% de GPT-4o. También domina en MATH-500 y GPQA. Es más rápido, económico y preciso en tareas de texto y lógica.</p><p><strong>3. Open Source y Accesibilidad</strong></p><p>DeepSeek V3 es 100% open-source (licencia MIT), libre de usar y modificar, a diferencia de GPT-4o o Gemini, que son cerrados y costosos. Esto democratiza el acceso a la IA, permitiendo que startups y desarrolladores en Latinoamérica la adapten con datos locales.</p>",
@@ -29,7 +43,14 @@
       "featured": true
     }
   ],
+  
   "categories": [
+     {
+      "id": "actualidad",
+      "name": "Sopetran Hoy",
+      "count": 1,
+      "color": "from-green-600 to-red-600"
+    },
     {
       "id": "ia",
       "name": "Inteligencia Artificial",
