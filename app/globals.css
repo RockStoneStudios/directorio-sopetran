@@ -88,3 +88,12 @@
  border: none !important;
  border-radius: 0 !important;
 }
+
+@layer utilities {
+  /* Espacio para el navbar inferior en móvil */
+  @media (max-width: 768px) {
+    body {
+      padding-bottom: 5rem;
+    }
+  }
+}

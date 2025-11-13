@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import TopNav from "@/components/nav/top-nav";
+import FloatingNavBar from "@/components/footer/botton-navbar";
 import { ThemeProvider } from "../context/theme";
 import { ClerkProvider } from "@clerk/nextjs";
 import { BusinessProvider } from "@/context/business";
 import Script from "next/script";
+import FloatingRadioPlayer from "@/components/footer/floating-radio-player";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -70,13 +72,11 @@ export default function RootLayout({
           <link rel="canonical" href="https://www.directoriosopetran.com" />
           {/* ✅ Refuerzo manual (Next.js a veces lo ignora) */}
           <meta name="robots" content="index,follow" />
-      
-        
           <meta name="google-site-verification" content="tu-codigo-de-verificacion" />
         </head>
 
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 min-h-screen pb-20`}
         >
           <ThemeProvider
             attribute="class"
@@ -95,8 +95,14 @@ export default function RootLayout({
                 <TopNav />
               </header>
 
-              <main className="mt-20 md:mt-10 relative">{children}</main>
+              <main className="mt-20 md:mt-10 relative min-h-screen pb-20 md:pb-0">
+                {children}
+              </main>
+
+              {/* ✅ Navegación flotante inferior */}
             </BusinessProvider>
+              {/* <FloatingNavBar />
+               <FloatingRadioPlayer /> */}
 
             {/* ✅ Datos estructurados JSON-LD */}
             <Script

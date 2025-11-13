@@ -12,6 +12,7 @@ import {
   Cpu,
 } from "lucide-react";
 
+
 export default function LandingPage() {
   return (
     <div className="relative mt-5 min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
@@ -230,6 +231,7 @@ export default function LandingPage() {
                 Agrega tu Negocio <ArrowRight className="ml-2" />
               </Button>
             </Link>
+            
           </div>
         </div>
       </section>

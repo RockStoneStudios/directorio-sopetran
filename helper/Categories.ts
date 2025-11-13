@@ -13,6 +13,12 @@ export const categories: Category[] = [
     color: "bg-slate-50 text-slate-700 border-slate-200"
   },
   {
+    id: "farmacia",
+    name: "Farmacias",
+    icon: "/categories/Farmacias.png",
+    color: "bg-slate-50 text-slate-700 border-slate-200"
+  },
+  {
     id: "comidas-rapidas",
     name: "Comidas Rapidas",
     icon: "/categories/rapida.png",
