@@ -29,7 +29,7 @@ export default function BottomBar() {
     { icon: Home, label: "Inicio", href: "/" },
     { icon: Building, label: "Negocios", href: "/businesses" },
     { icon: Search, label: "Buscar", href: "/search" },
-     { icon: Newspaper, label: "Noticias", href: "/news" },
+    { icon: Newspaper, label: "Noticias", href: "/news" },
   ];
 
   useEffect(() => {
@@ -43,8 +43,8 @@ export default function BottomBar() {
 
   if (!isMobile) return null;
 
-  // Calcular posición exacta del bump para cada ícono (3 botones)
-  const iconWidth = viewportWidth / 3;
+  // Calcular posición exacta del bump para cada ícono (4 botones)
+  const iconWidth = viewportWidth / 4;
   const centerPosition = iconWidth * activeIndex + (iconWidth / 2);
 
   return (
@@ -63,6 +63,15 @@ export default function BottomBar() {
               <stop offset="0%" stopColor="#1a1a1a" stopOpacity="0.98" />
               <stop offset="100%" stopColor="#0a0a0a" stopOpacity="0.95" />
             </linearGradient>
+            
+            {/* Filtro de glow para el texto */}
+            <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
           </defs>
           
           <path
@@ -109,7 +118,7 @@ export default function BottomBar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setActiveIndex(index)}
-                className="relative flex flex-col items-center gap-1.5 min-w-[80px] group z-10"
+                className="relative flex flex-col items-center gap-1.5 min-w-[60px] group z-10"
                 aria-label={item.label}
               >
                 <div className={`
@@ -137,11 +146,12 @@ export default function BottomBar() {
                   )}
                 </div>
 
+                {/* LABEL CON EFECTO NEÓN BLANCO */}
                 <span className={`
-                  text-[11px] font-medium transition-all duration-700 ease-out
+                  text-[11px] font-bold transition-all duration-700 ease-out
                   ${isActive 
-                    ? 'text-blue-400 scale-105 opacity-100' 
-                    : 'text-gray-500 opacity-70 group-hover:text-gray-400 group-hover:opacity-100'
+                    ? 'text-white scale-105 opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] filter-glow' 
+                    : 'text-gray-300 opacity-80 group-hover:text-gray-200 group-hover:opacity-100 group-hover:font-semibold'
                   }
                 `}>
                   {item.label}
@@ -152,9 +162,20 @@ export default function BottomBar() {
         </div>
       </div>
 
+      {/* Estilos para el efecto glow */}
       <style jsx>{`
         .pb-safe {
           padding-bottom: env(safe-area-inset-bottom);
+        }
+        .filter-glow {
+          filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7)) 
+                  drop-shadow(0 0 10px rgba(255, 255, 255, 0.4))
+                  drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+        }
+        
+        /* Efecto de brillo suave para hover */
+        .group:hover .text-gray-300 {
+          text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
         }
       `}</style>
     </nav>
