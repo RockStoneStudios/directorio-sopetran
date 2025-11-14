@@ -151,7 +151,7 @@ export default function BottomBar() {
                   text-[11px] font-bold transition-all duration-700 ease-out
                   ${isActive 
                     ? 'text-white scale-105 opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] filter-glow' 
-                    : 'text-gray-300 opacity-80 group-hover:text-gray-200 group-hover:opacity-100 group-hover:font-semibold'
+                    : 'text-gray-200 opacity-80 group-hover:text-gray-200 group-hover:opacity-100 group-hover:font-semibold'
                   }
                 `}>
                   {item.label}
