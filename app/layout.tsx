@@ -7,7 +7,8 @@ import { ThemeProvider } from "../context/theme";
 import { ClerkProvider } from "@clerk/nextjs";
 import { BusinessProvider } from "@/context/business";
 import Script from "next/script";
-import FloatingRadioPlayer from "@/components/footer/floating-radio-player";
+import RadioPlayerWrapper from "@/components/radio/radio-player-wrapper";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -101,8 +102,8 @@ export default function RootLayout({
 
               {/* ✅ Navegación flotante inferior */}
             </BusinessProvider>
-              {/* <FloatingNavBar />
-               <FloatingRadioPlayer /> */}
+              <FloatingNavBar />
+               <RadioPlayerWrapper />
 
             {/* ✅ Datos estructurados JSON-LD */}
             <Script
