@@ -181,7 +181,8 @@ export default function FloatingRadioPlayer() {
 
           {isPlaying && (
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 rounded-full border border-cyan-400/22 animate-ping" />
+              {/* Cambiado de cyan a verde */}
+              <div className="absolute inset-0 rounded-full border border-green-400/50 animate-ping" />
             </div>
           )}
         </div>
@@ -390,8 +391,8 @@ export default function FloatingRadioPlayer() {
             filter: drop-shadow(0 0 1px rgba(34, 211, 238, 0.43));
           }
           50% {
-            filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.58))
-                    drop-shadow(0 0 6px rgba(168, 85, 247, 0.29));
+            filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.68))
+                    drop-shadow(0 0 6px rgba(168, 85, 247, 0.39));
           }
         }
 
