@@ -1,7 +1,7 @@
 // app/news/[slug]/page.tsx
 'use client';
 
-import { Calendar, User, Clock, Share2, TrendingUp, Zap, Award, BarChart3 } from "lucide-react";
+import { Calendar, User, Clock, Share2, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TimeSincePublication } from "@/components/timer/timer-count";
 import newsData from '@/data/news.json';
@@ -23,6 +23,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
   const [mounted, setMounted] = useState(false);
   const authorTextRef = useRef<HTMLSpanElement>(null);
   const authorContainerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   
   // Evitar hidratación
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
     const textElement = authorTextRef.current;
     const containerElement = authorContainerRef.current;
     
-    // Limpiar el contenido existente - USANDO textContent en lugar de innerHTML
+    // Limpiar el contenido existente
     textElement.textContent = '';
     
     // Crear un span para cada letra
@@ -88,6 +89,76 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
     };
   }, [mounted, news?.author]);
 
+  // Aplicar estilos al contenido HTML
+  useEffect(() => {
+    if (!contentRef.current || !news?.content) return;
+
+    const applyStyles = () => {
+      const content = contentRef.current;
+      if (!content) return;
+
+      // Aplicar estilos a todos los párrafos
+      const paragraphs = content.querySelectorAll('p');
+      paragraphs.forEach((p, index) => {
+        p.className = 'mb-6 leading-relaxed text-justify text-gray-800 dark:text-gray-200 text-lg';
+        
+        // Primer párrafo con estilo especial
+        if (index === 0) {
+          p.className += ' text-xl font-medium text-gray-900 dark:text-white first-letter:text-6xl first-letter:font-bold first-letter:float-left first-letter:mr-2 first-letter:mt-2 first-letter:text-blue-600 dark:first-letter:text-blue-400';
+        }
+      });
+
+      // Aplicar estilos a los encabezados
+      const h2Elements = content.querySelectorAll('h2');
+      h2Elements.forEach(h2 => {
+        h2.className = 'text-3xl font-bold mt-10 mb-4 text-gray-900 dark:text-white border-b-2 border-blue-600 dark:border-blue-400 pb-2';
+      });
+
+      const h3Elements = content.querySelectorAll('h3');
+      h3Elements.forEach(h3 => {
+        h3.className = 'text-2xl font-semibold mt-8 mb-3 text-gray-800 dark:text-gray-100 border-l-4 border-blue-500 dark:border-blue-400 pl-3';
+      });
+
+      // Aplicar estilos a blockquotes
+      const blockquotes = content.querySelectorAll('blockquote');
+      blockquotes.forEach(blockquote => {
+        blockquote.className = 'border-l-4 border-blue-600 dark:border-blue-400 px-6 py-4 my-6 italic text-xl text-gray-700 dark:text-gray-300 bg-blue-50 dark:bg-blue-900/20 rounded-r-lg shadow-sm';
+      });
+
+      // Aplicar estilos a listas
+      const lists = content.querySelectorAll('ul, ol');
+      lists.forEach(list => {
+        list.className = 'my-6 pl-8 space-y-2';
+      });
+
+      const listItems = content.querySelectorAll('li');
+      listItems.forEach(li => {
+        li.className = 'text-gray-700 dark:text-gray-300 text-lg leading-relaxed';
+      });
+
+      // Aplicar estilos a elementos strong
+      const strongElements = content.querySelectorAll('strong');
+      strongElements.forEach(strong => {
+        strong.className = 'font-bold text-gray-900 dark:text-white';
+      });
+
+      // Aplicar estilos a enlaces
+      const links = content.querySelectorAll('a');
+      links.forEach(link => {
+        link.className = 'text-blue-600 dark:text-blue-400 underline font-semibold hover:text-blue-800 dark:hover:text-blue-300 transition-colors';
+      });
+
+      // Aplicar estilos a elementos hr
+      const hrElements = content.querySelectorAll('hr');
+      hrElements.forEach(hr => {
+        hr.className = 'my-8 border-t-2 border-gray-800 dark:border-blue-400';
+      });
+    };
+
+    // Aplicar estilos después de un pequeño delay para asegurar que el contenido esté renderizado
+    setTimeout(applyStyles, 100);
+  }, [news?.content]);
+
   // Si no encuentra la noticia, mostrar 404
   if (!news) {
     return (
@@ -133,7 +204,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
     <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Encabezado */}
-        <header className="mb-8 border-b pb-6">
+        <header className="mb-8 border-b border-gray-200 dark:border-gray-800 pb-6">
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
             <span className={`bg-gradient-to-r ${categoryData?.color || 'from-gray-600 to-gray-800'} text-white px-3 py-1 rounded-full font-medium flex items-center gap-2`}>
               <BarChart3 className="w-4 h-4" />
@@ -145,7 +216,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
             </div>
             <div 
               ref={authorContainerRef}
-              className="flex items-center gap-1 text-cyan-500 font-medium transition-all duration-300"
+              className="flex items-center gap-1 text-cyan-600 dark:text-cyan-500 font-medium transition-all duration-300"
             >
               <User className="w-4 h-4" />
               Por <span ref={authorTextRef} className="font-bold ml-1"></span>
@@ -164,14 +235,18 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
             <Button 
               variant="outline" 
               size="sm" 
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
               onClick={handleShare}
               disabled={!mounted}
             >
               <Share2 className="w-4 h-4" />
               {copied ? "¡Copiado!" : "Compartir"}
             </Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center gap-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
               <BarChart3 className="w-4 h-4" />
               Ver Análisis
             </Button>
@@ -212,23 +287,27 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
           </div>
         </div>
 
+        {/* Línea divisoria antes del contenido */}
+        <hr className="my-8 border-t-2 border-gray-800 dark:border-blue-400" />
+
         {/* Contenido con diseño mejorado */}
-        <article className="prose prose-xl dark:prose-invert max-w-none mb-12">
+        <article className="max-w-none mb-12">
           {/* Primer párrafo destacado */}
-          <div className="text-xl lg:text-2xl font-serif text-gray-800 dark:text-gray-200 leading-relaxed mb-8 pl-6 border-l-4 border-blue-500 italic bg-blue-50/50 dark:bg-blue-900/20 py-4 rounded-r-lg">
+          <div className="text-xl lg:text-2xl font-serif text-gray-800 dark:text-gray-200 leading-relaxed mb-8 pl-6 border-l-4 border-blue-500 italic bg-blue-50 dark:bg-blue-900/20 py-4 rounded-r-lg">
             {news.excerpt}
           </div>
 
-          {/* Contenido principal con estilos mejorados */}
+          {/* Contenido principal con estilos Tailwind */}
           <div 
-            className="article-content text-gray-700 dark:text-gray-300 leading-relaxed text-lg space-y-6"
+            ref={contentRef}
+            className="space-y-6"
             dangerouslySetInnerHTML={{ __html: news.content || '' }}
           />
 
           {/* Tags */}
           {news.tags && news.tags.length > 0 && (
-            <div className="mt-10 pt-6 border-t">
-              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+            <div className="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
+              <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                 Etiquetas relacionadas:
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -245,98 +324,11 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
           )}
         </article>
 
-        {/* Estilos CSS adicionales para el contenido */}
-        <style jsx>{`
-          .article-content :global(p) {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            text-align: justify;
-          }
-          
-          .article-content :global(p:first-of-type)::first-letter {
-            font-size: 3.5rem;
-            font-weight: bold;
-            float: left;
-            line-height: 1;
-            margin-right: 0.5rem;
-            color: #3b82f6;
-          }
-
-          .article-content :global(h2) {
-            font-size: 1.875rem;
-            font-weight: bold;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #1f2937;
-            border-bottom: 2px solid #3b82f6;
-            padding-bottom: 0.5rem;
-          }
-
-          .article-content :global(h3) {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: #374151;
-          }
-
-          .article-content :global(blockquote) {
-            border-left: 4px solid #3b82f6;
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            font-style: italic;
-            font-size: 1.25rem;
-            color: #4b5563;
-            background: #f3f4f6;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-          }
-
-          .article-content :global(ul),
-          .article-content :global(ol) {
-            margin: 1.5rem 0;
-            padding-left: 2rem;
-          }
-
-          .article-content :global(li) {
-            margin-bottom: 0.75rem;
-            line-height: 1.7;
-          }
-
-          .article-content :global(strong) {
-            color: #1f2937;
-            font-weight: 700;
-          }
-
-          .article-content :global(a) {
-            color: #3b82f6;
-            text-decoration: underline;
-            transition: color 0.2s;
-          }
-
-          .article-content :global(a:hover) {
-            color: #2563eb;
-          }
-
-          @media (prefers-color-scheme: dark) {
-            .article-content :global(h2) {
-              color: #f9fafb;
-            }
-            .article-content :global(h3) {
-              color: #e5e7eb;
-            }
-            .article-content :global(blockquote) {
-              background: #1f2937;
-              color: #d1d5db;
-            }
-            .article-content :global(strong) {
-              color: #f9fafb;
-            }
-          }
-        `}</style>
+        {/* Línea divisoria antes de noticias relacionadas */}
+        <hr className="my-8 border-t-2 border-gray-800 dark:border-blue-400" />
 
         {/* Noticias relacionadas por categoría */}
-        <section className="mt-12 pt-8 border-t">
+        <section className="mt-12 pt-8">
           <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-6">
             Más sobre {news.category}
           </h3>
@@ -348,7 +340,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
                 <a 
                   key={relatedNews.id} 
                   href={`/news/${relatedNews.slug}`}
-                  className="p-4 border rounded-lg hover:shadow-md transition-shadow cursor-pointer block"
+                  className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow cursor-pointer block bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800"
                 >
                   <h4 className="font-bold mb-2 text-gray-900 dark:text-white">{relatedNews.title}</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{relatedNews.excerpt}</p>
@@ -361,8 +353,11 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
           </div>
         </section>
 
+        {/* Línea divisoria antes de la sección de Facebook */}
+        <hr className="my-8 border-t-2 border-gray-800 dark:border-blue-400" />
+
         {/* Sección "Sígueme" con Facebook */}
-        <section className="mt-12 pt-8 border-t">
+        <section className="mt-12 pt-8">
           <div className="flex flex-col items-center text-center">
             <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4">
               Sígueme en Facebook
