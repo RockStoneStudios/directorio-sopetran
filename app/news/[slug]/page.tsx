@@ -31,37 +31,40 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
 
   // Efecto de neón letra por letra
   useEffect(() => {
-    if (!mounted || !authorTextRef.current || !authorContainerRef.current) return;
+    if (!mounted || !authorTextRef.current || !authorContainerRef.current || !news?.author) return;
 
-    const authorName = news?.author || "";
+    const authorName = news.author;
     const letters = authorName.split('');
+    const textElement = authorTextRef.current;
+    const containerElement = authorContainerRef.current;
     
-    // Limpiar el contenido existente
-    authorTextRef.current.innerHTML = '';
+    // Limpiar el contenido existente - USANDO textContent en lugar de innerHTML
+    textElement.textContent = '';
     
     // Crear un span para cada letra
-    letters.forEach((letter, index) => {
+    letters.forEach((letter) => {
       const span = document.createElement('span');
       span.textContent = letter === ' ' ? '\u00A0' : letter;
       span.className = 'inline-block transition-all duration-300';
       span.style.opacity = '0.7';
       span.style.filter = 'brightness(1)';
-      authorTextRef.current?.appendChild(span);
+      textElement.appendChild(span);
     });
 
     // Animación GSAP para el efecto de neón
     const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
     
     // Efecto de recorrido letra por letra
-    letters.forEach((_, index) => {
-      tl.to(authorTextRef.current?.children[index] || {}, {
+    const children = Array.from(textElement.children) as HTMLElement[];
+    children.forEach((child) => {
+      tl.to(child, {
         duration: 0.1,
         opacity: 1,
         scale: 1.2,
         filter: 'brightness(2) drop-shadow(0 0 8px #00ffff)',
         ease: 'power2.out'
       })
-      .to(authorTextRef.current?.children[index] || {}, {
+      .to(child, {
         duration: 0.2,
         opacity: 0.7,
         scale: 1,
@@ -72,7 +75,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
     });
 
     // Efecto de respiración suave para todo el texto
-    gsap.to(authorContainerRef.current, {
+    gsap.to(containerElement, {
       duration: 3,
       textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff',
       ease: 'sine.inOut',
@@ -209,13 +212,128 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
           </div>
         </div>
 
-        {/* Contenido */}
-        <article className="prose prose-lg dark:prose-invert max-w-none">
+        {/* Contenido con diseño mejorado */}
+        <article className="prose prose-xl dark:prose-invert max-w-none mb-12">
+          {/* Primer párrafo destacado */}
+          <div className="text-xl lg:text-2xl font-serif text-gray-800 dark:text-gray-200 leading-relaxed mb-8 pl-6 border-l-4 border-blue-500 italic bg-blue-50/50 dark:bg-blue-900/20 py-4 rounded-r-lg">
+            {news.excerpt}
+          </div>
+
+          {/* Contenido principal con estilos mejorados */}
           <div 
-            className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg"
-            dangerouslySetInnerHTML={{ __html: news.content }}
+            className="article-content text-gray-700 dark:text-gray-300 leading-relaxed text-lg space-y-6"
+            dangerouslySetInnerHTML={{ __html: news.content || '' }}
           />
+
+          {/* Tags */}
+          {news.tags && news.tags.length > 0 && (
+            <div className="mt-10 pt-6 border-t">
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+                Etiquetas relacionadas:
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {news.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </article>
+
+        {/* Estilos CSS adicionales para el contenido */}
+        <style jsx>{`
+          .article-content :global(p) {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            text-align: justify;
+          }
+          
+          .article-content :global(p:first-of-type)::first-letter {
+            font-size: 3.5rem;
+            font-weight: bold;
+            float: left;
+            line-height: 1;
+            margin-right: 0.5rem;
+            color: #3b82f6;
+          }
+
+          .article-content :global(h2) {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 0.5rem;
+          }
+
+          .article-content :global(h3) {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #374151;
+          }
+
+          .article-content :global(blockquote) {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: #4b5563;
+            background: #f3f4f6;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+          }
+
+          .article-content :global(ul),
+          .article-content :global(ol) {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+          }
+
+          .article-content :global(li) {
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+          }
+
+          .article-content :global(strong) {
+            color: #1f2937;
+            font-weight: 700;
+          }
+
+          .article-content :global(a) {
+            color: #3b82f6;
+            text-decoration: underline;
+            transition: color 0.2s;
+          }
+
+          .article-content :global(a:hover) {
+            color: #2563eb;
+          }
+
+          @media (prefers-color-scheme: dark) {
+            .article-content :global(h2) {
+              color: #f9fafb;
+            }
+            .article-content :global(h3) {
+              color: #e5e7eb;
+            }
+            .article-content :global(blockquote) {
+              background: #1f2937;
+              color: #d1d5db;
+            }
+            .article-content :global(strong) {
+              color: #f9fafb;
+            }
+          }
+        `}</style>
 
         {/* Noticias relacionadas por categoría */}
         <section className="mt-12 pt-8 border-t">
@@ -253,7 +371,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
               Mantente al día con más noticias y actualizaciones sobre Sopetrán
             </p>
             <a
-              href="https://www.facebook.com/santiago.bustamante.9809"
+              href="https://www.facebook.com/profile.php?id=61582100796538"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors duration-200 font-medium"
@@ -262,7 +380,7 @@ export default function NewsDetailPage({ params }: { params: { slug: string } })
               Seguir en Facebook
             </a>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-              @santiago.bustamante.9809
+              Directorio Sopetran
             </p>
           </div>
         </section>

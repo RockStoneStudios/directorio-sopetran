@@ -45,20 +45,21 @@
       "tags": ["Narrativo", "Reflexivo", "Poema", "Casa de la Cultura"],
       "featured": true
     },
+   
     {
-      "id": "4",
-      "slug": "deepseek-v3-supera-gpt4o-sopetran",
-      "title": "DeepSeek V3 Supera a GPT-4o: Sopetrán se Prepara para Integrar IA China y Analizar Ventas Locales",
-      "content": "<p>¡El mundo de la IA está temblando! En noviembre de 2025, el modelo chino DeepSeek V3 (de la startup DeepSeek AI) ha dejado atrás a los titanes estadounidenses como OpenAI's GPT-4o, Google's Gemini 2.5 Pro y Anthropic's Claude 3.5 Sonnet.</p><p><strong>1. Eficiencia Brutal: Mismo Poder, 90% Menos Dinero</strong></p><p>DeepSeek V3 se entrenó con solo $5.6 millones y 6 meses de tiempo. GPT-4o necesitó cientos de millones y años. Gracias a su arquitectura MoE (Mixture of Experts), solo activa 37 mil millones de parámetros por consulta de un total de 671 mil millones, siendo 4 veces más eficiente. El costo por millón de tokens es $0.14 frente a $5 de GPT-4o. Ideal para países emergentes como Colombia.</p><p><strong>2. Rendimiento Superior en Benchmarks</strong></p><p>LMSYS Arena: DeepSeek V3 (1,385) supera a GPT-4o (1,372). En MMLU-Pro obtiene 88.7% frente a 87.2% de GPT-4o. También domina en MATH-500 y GPQA. Es más rápido, económico y preciso en tareas de texto y lógica.</p><p><strong>3. Open Source y Accesibilidad</strong></p><p>DeepSeek V3 es 100% open-source (licencia MIT), libre de usar y modificar, a diferencia de GPT-4o o Gemini, que son cerrados y costosos. Esto democratiza el acceso a la IA, permitiendo que startups y desarrolladores en Latinoamérica la adapten con datos locales.</p>",
-      "category": "Inteligencia Artificial",
-      "date": "2025-11-05T10:15:00",
-      "author": "Omar Ortiz",
-      "readTime": "2 min tiempo de lectura",
-      "image": "/images/deepseek.jpeg",
-      "excerpt": "El modelo chino DeepSeek V3 alcanza el primer lugar mundial mientras Sopetrán prepara su integración para análisis de ventas locales.",
-      "tags": ["IA", "Tecnología", "Comercio", "DeepSeek"],
-      "featured": true
-    }
+  "id": "4",
+  "slug": "final_paisa",
+  "title": "¡Final Paisa 2025: Nacional vs. Medellín por la Copa!",
+  "content": "<h2>Una Final Histórica para Antioquia</h2><p>Antioquia volverá a vivir una fiesta deportiva en una final. Esta ocasión la Copa Colombia nos va a juntar a los dos equipos mejores del semestre: el <strong>Deportivo Independiente Medellín</strong> y el <strong>Atlético Nacional</strong>, que es el máximo ganador de esta competición.</p><h3>El Espectáculo Está Garantizado</h3><p>Se disfrutará de un espectáculo porque el decir es que vamos a disfrutar una final paisa. Ya está garantizado el espectáculo, el color, el folclor y todas esas cosas. Estamos a la expectativa del horario oficial de la Dimayor.</p><blockquote>Antioquia tiene ya ombia. Falta ver de qué color será la Copa del 2025.</blockquote><h3>Dos Equipos, Un Solo Objetivo</h3><p>Felices los dos porque el destino nos juntó. Va a ser un partidazo porque el fútbol y la premiación lo ameritan. Esta final promete ser uno de los eventos deportivos más importantes del año en Colombia.</p><h2>Datos del Encuentro</h2><ul><li><strong>Equipos:</strong> Atlético Nacional vs. Independiente Medellín</li><li><strong>Competición:</strong> Final Copa Colombia 2025</li><li><strong>Importancia:</strong> Clásico paisa por el título</li><li><strong>Expectativa:</strong> Miles de aficionados en el estadio</li></ul><p>Sin duda, será una noche para recordar en la historia del fútbol colombiano. ¡Que gane el mejor!</p>",
+  "category": "Deportes",
+  "date": "2025-11-16T20:28:00",
+  "author": "Duvan Vargas Garcia",
+  "readTime": "2 min tiempo de lectura",
+  "image": "/images/atle.png",
+  "excerpt": "Antioquia volverá a vivir una fiesta deportiva histórica. La Copa Colombia juntará al Deportivo Independiente Medellín y al Atlético Nacional en una final que promete color, folclor y un espectáculo inolvidable.",
+  "tags": ["Deporte", "Antioquia", "Atletico Nacional", "Independiente Medellin", "Copa Colombia"],
+  "featured": true
+}
   ],
   
   "categories": [
@@ -68,17 +69,19 @@
       "count": 1,
       "color": "from-green-600 to-red-600"
     },
-    {
-      "id": "ia",
-      "name": "Inteligencia Artificial",
-      "count": 1,
-      "color": "from-green-600 to-blue-600"
-    },
+    
     {
       "id": "narrativo",
       "name": "Narrativo Reflexivo",
       "count": 1,
       "color": "from-blue-600 to-purple-600"
+    },
+      {
+      "id": "Deportes",
+      "name": "Deportes",
+      "count": 1,
+      "color": "from-green-600 to-red-600"
     }
+
   ]
 }
