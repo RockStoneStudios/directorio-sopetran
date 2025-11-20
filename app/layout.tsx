@@ -9,7 +9,6 @@ import { BusinessProvider } from "@/context/business";
 import Script from "next/script";
 import RadioPlayerWrapper from "@/components/radio/radio-player-wrapper";
 
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -22,31 +21,48 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-// ✅ SEO Metadata
+// ✅ SEO Metadata MEJORADO
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.directoriosopetran.com"),
-  title: "Directorio Sopetrán - Comercio Local",
+  title: {
+    default: "Directorio Sopetrán - Negocios Locales en Antioquia",
+    template: "%s | Directorio Sopetrán"
+  },
   description:
-    "Directorio digital para el comercio unido de Sopetrán. Encuentra negocios locales, servicios y promociones en tu municipio.",
+    "Descubre los mejores negocios locales en Sopetrán, Antioquia. Restaurantes, tiendas, servicios y más. Directorio digital actualizado con información de contacto, horarios y ubicación.",
   keywords: [
     "Sopetrán",
-    "comercio local",
-    "negocios",
-    "directorio",
+    "comercio local Sopetrán",
+    "negocios Sopetrán",
+    "directorio empresarial",
     "Antioquia",
-    "turismo",
+    "turismo Sopetrán",
+    "restaurantes Sopetrán",
+    "servicios Sopetrán",
+    "guía comercial",
+    "empresas locales"
   ],
+  authors: [{ name: "Directorio Sopetrán" }],
+  creator: "Directorio Sopetrán",
+  publisher: "Directorio Sopetrán",
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   openGraph: {
-    title: "Directorio Sopetrán - Comercio Local",
-    description: "Encuentra los mejores negocios y servicios en Sopetrán",
     type: "website",
-    locale: "es_ES",
+    locale: "es_CO",
     url: "https://www.directoriosopetran.com",
     siteName: "Directorio Sopetrán",
+    title: "Directorio Sopetrán - Negocios Locales en Antioquia",
+    description: "Encuentra los mejores negocios, restaurantes y servicios en Sopetrán. Directorio digital completo con toda la información que necesitas.",
     images: [
       {
         url: "https://www.directoriosopetran.com/images/preview.jpg",
@@ -56,9 +72,19 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Directorio Sopetrán - Negocios Locales',
+    description: 'Descubre negocios locales en Sopetrán, Antioquia',
+    images: ['https://www.directoriosopetran.com/images/preview.jpg'],
+  },
   alternates: {
     canonical: "https://www.directoriosopetran.com",
   },
+  verification: {
+    google: 'tu-codigo-de-verificacion', // Reemplaza con tu código real
+  },
+  category: 'business',
 };
 
 export default function RootLayout({
@@ -71,9 +97,10 @@ export default function RootLayout({
       <html lang="es" suppressHydrationWarning>
         <head>
           <link rel="canonical" href="https://www.directoriosopetran.com" />
-          {/* ✅ Refuerzo manual (Next.js a veces lo ignora) */}
-          <meta name="robots" content="index,follow" />
-          <meta name="google-site-verification" content="tu-codigo-de-verificacion" />
+          {/* Favicon mejorado */}
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <meta name="theme-color" content="#3b82f6" />
         </head>
 
         <body
@@ -99,33 +126,58 @@ export default function RootLayout({
               <main className="mt-20 md:mt-10 relative min-h-screen pb-20 md:pb-0">
                 {children}
               </main>
-
-              {/* ✅ Navegación flotante inferior */}
             </BusinessProvider>
-              <FloatingNavBar />
-               <RadioPlayerWrapper />
+            
+            <FloatingNavBar />
+            <RadioPlayerWrapper />
 
-            {/* ✅ Datos estructurados JSON-LD */}
+            {/* ✅ Datos estructurados JSON-LD MEJORADO */}
             <Script
-              id="structured-data"
+              id="structured-data-organization"
               type="application/ld+json"
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
-                  "@type": "LocalBusiness",
+                  "@type": "Organization",
                   "name": "Directorio Sopetrán",
-                  "image":
-                    "https://www.directoriosopetran.com/images/preview.jpg",
-                  "description":
-                    "Directorio digital para el comercio unido de Sopetrán, Antioquia.",
                   "url": "https://www.directoriosopetran.com",
+                  "logo": "https://www.directoriosopetran.com/images/logo.png",
+                  "description": "Directorio digital del comercio local de Sopetrán, Antioquia. Encuentra negocios, servicios y más.",
                   "address": {
                     "@type": "PostalAddress",
                     "addressLocality": "Sopetrán",
                     "addressRegion": "Antioquia",
-                    "addressCountry": "Colombia",
+                    "addressCountry": "CO",
                   },
+                  "sameAs": [
+                    "https://www.facebook.com/profile.php?id=61582100796538"
+                  ],
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "Customer Service",
+                    "availableLanguage": "Spanish"
+                  }
+                }),
+              }}
+            />
+
+            {/* Website Schema */}
+            <Script
+              id="structured-data-website"
+              type="application/ld+json"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "WebSite",
+                  "name": "Directorio Sopetrán",
+                  "url": "https://www.directoriosopetran.com",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://www.directoriosopetran.com/search?query={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
                 }),
               }}
             />
