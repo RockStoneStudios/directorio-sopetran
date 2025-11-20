@@ -13,6 +13,21 @@ import {
 } from "lucide-react";
 
 
+export const dynamic = "force-dynamic"; // No permitir versión estática
+
+export const metadata = {
+  title: "Directorio Sopetrán | Negocios, Noticias y Servicios Locales",
+  description:
+    "Encuentra negocios, restaurantes, servicios locales, noticias y comercios de Sopetrán en un solo lugar. Directorio Sopetrán conecta la comunidad con tecnología e IA.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://www.directoriosopetran.com",
+  },
+};
+
 export default function LandingPage() {
   return (
     <div className="relative mt-5 min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
