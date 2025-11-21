@@ -1,17 +1,22 @@
-// components/radio/radio-player-wrapper.tsx
-'use client';
-
 import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Radio } from 'lucide-react';
 
 export default function FloatingRadioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(0.7);
+  const [volume, setVolume] = useState(0.85);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [showMessage, setShowMessage] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
   const dialRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowMessage(false);
+    }, 3200);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -39,7 +44,6 @@ export default function FloatingRadioPlayer() {
     }
   };
 
-  // FUNCIONES CORREGIDAS - Control táctil del dial
   const handleTouchStart = (e: React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -84,7 +88,6 @@ export default function FloatingRadioPlayer() {
     setVolume(newVolume);
   };
 
-  // FUNCIONES CORREGIDAS - Control con mouse
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -160,9 +163,17 @@ export default function FloatingRadioPlayer() {
         className="fixed bottom-28 right-4 z-[9999] md:bottom-8"
         onContextMenu={(e) => e.preventDefault()}
       >
+        {/* Mensaje temporal */}
+        {showMessage && (
+          <div className="absolute bottom-16 right-0 bg-gradient-to-r from-cyan-500/90 to-purple-500/90 backdrop-blur-md rounded-lg px-4 py-2 shadow-xl border border-cyan-400/30 animate-fade-in-out whitespace-nowrap">
+            <p className="text-white text-sm font-bold tracking-wide">
+              🎧 Escucha aquí Sopetrán Stereo
+            </p>
+          </div>
+        )}
+
         {/* Botón principal futurista */}
         <div className="relative group">
-          {/* Efecto neón sutil - REDUCIDO 28% */}
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/43 to-purple-500/43 rounded-full blur-md opacity-50 group-hover:opacity-65 transition-opacity" />
           
           <button
@@ -181,28 +192,22 @@ export default function FloatingRadioPlayer() {
 
           {isPlaying && (
             <div className="absolute inset-0 pointer-events-none">
-              {/* Cambiado de cyan a verde */}
               <div className="absolute inset-0 rounded-full border border-green-400/50 animate-ping" />
             </div>
           )}
         </div>
 
-        {/* Panel expandido futurista compacto CON EFECTO NEÓN REDUCIDO 28% */}
+        {/* Panel expandido futurista compacto */}
         {isExpanded && (
           <div 
             className="absolute bottom-14 -right-1 bg-gray-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-cyan-400/22 p-3 w-56 animate-slide-up-futurist neon-glow"
             onMouseDown={(e) => e.stopPropagation()}
             onTouchStart={(e) => e.stopPropagation()}
           >
-            {/* Efecto de borde neón REDUCIDO 28% */}
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/14 via-purple-500/11 to-cyan-500/14 blur-sm -z-10 neon-inner" />
-            
-            {/* Efecto de resplandor exterior NEÓN REDUCIDO 28% */}
             <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-cyan-400/29 via-purple-500/22 to-cyan-400/29 blur-lg opacity-43 -z-20 animate-pulse-slow" />
             
-            {/* Contenido del panel */}
             <div className="relative z-10">
-              {/* Header ultra compacto */}
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-6 h-6 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-400/22 neon-icon">
                   <Radio className="w-3 h-3 text-white" />
@@ -215,7 +220,6 @@ export default function FloatingRadioPlayer() {
                 </div>
               </div>
 
-              {/* Dial futurista compacto */}
               <div className="mb-3">
                 <div className="text-center mb-2">
                   <p className="text-cyan-300 text-[10px] uppercase tracking-widest font-mono mb-1">
@@ -226,7 +230,6 @@ export default function FloatingRadioPlayer() {
                   </p>
                 </div>
 
-                {/* Dial interactivo futurista */}
                 <div className="relative flex justify-center items-center">
                   <div 
                     ref={dialRef}
@@ -237,13 +240,9 @@ export default function FloatingRadioPlayer() {
                     onTouchEnd={handleTouchEnd}
                     style={{ touchAction: 'none', userSelect: 'none' }}
                   >
-                    {/* Fondo del dial con gradiente sutil */}
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-800 to-gray-900" />
-                    
-                    {/* Marcas del dial futuristas */}
                     <div className="absolute inset-1 rounded-full border border-cyan-400/14" />
                     
-                    {/* Líneas guía con efecto neón REDUCIDO */}
                     {[0, 90, 180, 270].map((angle) => (
                       <div
                         key={angle}
@@ -257,7 +256,6 @@ export default function FloatingRadioPlayer() {
                       />
                     ))}
                     
-                    {/* Perilla indicadora futurista CON NEÓN REDUCIDO */}
                     <div
                       className="absolute w-4 h-4 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full border border-cyan-300 shadow-lg cursor-grab active:cursor-grabbing z-10 neon-knob"
                       style={{
@@ -270,16 +268,13 @@ export default function FloatingRadioPlayer() {
                       onDragStart={(e) => e.preventDefault()}
                     >
                       <div className="absolute inset-[2px] bg-cyan-300/20 rounded-full" />
-                      {/* Efecto de resplandor en la perilla REDUCIDO */}
                       <div className="absolute inset-0 rounded-full bg-cyan-400/14 blur-[1px]" />
                     </div>
                     
-                    {/* Punto central con glow mejorado REDUCIDO */}
                     <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-cyan-400 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-cyan-400/43" />
                   </div>
                 </div>
 
-                {/* Indicador de uso minimalista */}
                 <div className="text-center mt-1">
                   <p className="text-cyan-400/60 text-[10px] font-mono">
                     GIRAR PARA VOLUMEN
@@ -287,9 +282,7 @@ export default function FloatingRadioPlayer() {
                 </div>
               </div>
 
-              {/* Controles inferiores futuristas */}
               <div className="flex gap-2">
-                {/* Botón mute futurista CON NEÓN REDUCIDO */}
                 <button
                   onClick={toggleMute}
                   className={`flex-1 rounded-lg p-2 transition-all duration-300 flex flex-col items-center justify-center border neon-button ${
@@ -308,7 +301,6 @@ export default function FloatingRadioPlayer() {
                   </span>
                 </button>
 
-                {/* Botón play/pause futurista CON NEÓN REDUCIDO */}
                 <button
                   onClick={togglePlay}
                   className={`flex-1 rounded-lg p-2 transition-all duration-300 flex items-center justify-center gap-1 border neon-button ${
@@ -331,7 +323,6 @@ export default function FloatingRadioPlayer() {
                 </button>
               </div>
 
-              {/* Footer futurista */}
               <div className="text-center mt-2 pt-2 border-t border-cyan-400/14">
                 <p className="text-cyan-400/80 text-[11px] font-mono uppercase tracking-widest neon-text">
                   24/7 • SOPETRÁN
@@ -342,7 +333,6 @@ export default function FloatingRadioPlayer() {
         )}
       </div>
 
-      {/* Estilos mejorados con efectos neón REDUCIDOS 28% */}
       <style jsx>{`
         @keyframes slide-up-futurist {
           from {
@@ -355,6 +345,44 @@ export default function FloatingRadioPlayer() {
           }
         }
 
+   @keyframes fade-in-out {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(1);
+      }
+      10% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      15% {
+        opacity: 1;
+        transform: translateY(0) scale(1.18);
+      }
+      30% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      45% {
+        opacity: 1;
+        transform: translateY(0) scale(1.15);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      75% {
+        opacity: 1;
+        transform: translateY(0) scale(1.09);
+      }
+      90% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-5px) scale(1);
+      }
+    }
         @keyframes pulse-glow {
           0%, 100% {
             opacity: 0.43;
@@ -400,38 +428,36 @@ export default function FloatingRadioPlayer() {
           animation: slide-up-futurist 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
+        .animate-fade-in-out {
+          animation: fade-in-out 2.1s ease-in-out forwards;
+        }
+
         .animate-pulse-slow {
           animation: pulse-glow 3s ease-in-out infinite;
         }
 
-        /* Efecto neón principal para el panel - REDUCIDO 28% */
         .neon-glow {
           animation: subtle-glow 4s ease-in-out infinite;
           border: 1px solid rgba(34, 211, 238, 0.29) !important;
         }
 
-        /* Efecto neón interno - REDUCIDO 28% */
         .neon-inner {
           animation: inner-glow 3s ease-in-out infinite;
         }
 
-        /* Efecto neón para la perilla del dial - REDUCIDO 28% */
         .neon-knob {
           animation: knob-glow 2s ease-in-out infinite;
         }
 
-        /* Efecto neón para textos importantes - REDUCIDO 28% */
         .neon-text {
           text-shadow: 0 0 7px rgba(34, 211, 238, 0.36),
                       0 0 14px rgba(34, 211, 238, 0.22);
         }
 
-        /* Efecto neón para ícono principal - REDUCIDO 28% */
         .neon-icon {
           filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.43));
         }
 
-        /* Efecto neón para botones - REDUCIDO 28% */
         .neon-button {
           transition: all 0.3s ease;
           box-shadow: 0 0 7px rgba(34, 211, 238, 0.14);
@@ -442,7 +468,6 @@ export default function FloatingRadioPlayer() {
                      0 0 18px rgba(34, 211, 238, 0.14);
         }
 
-        /* Contenedor del dial con efecto sutil - REDUCIDO 28% */
         .dial-container {
           box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.5),
                      0 0 11px rgba(34, 211, 238, 0.14);
