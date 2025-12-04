@@ -11,6 +11,7 @@ import { Toaster } from 'react-hot-toast';
 import AddBusinessButton from '../buttons/add-business-buttons';
 import SearchButton from '../buttons/search-buttons';
 import AnimatedNegociosLink from './animations/animated-negocios'; // 👈 IMPORTAR AQUÍ
+import WeatherWidget from '../Weather/WeatherWidget';
 
 export default async function TopNav() {
   
@@ -40,6 +41,7 @@ export default async function TopNav() {
         </div>
 
         <div className='flex flex-grow items-center justify-end gap-1'>
+          <WeatherWidget/>
           {/* 🎯 REEMPLAZADO: Link Negocios con animaciones */}
           <AnimatedNegociosLink />
 

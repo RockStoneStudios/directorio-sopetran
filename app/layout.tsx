@@ -8,6 +8,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { BusinessProvider } from "@/context/business";
 import Script from "next/script";
 import RadioPlayerWrapper from "@/components/radio/radio-player-wrapper";
+import WeatherWidget from "@/components/Weather/WeatherWidget";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -121,6 +122,7 @@ export default function RootLayout({
             <BusinessProvider>
               <header className="fixed top-0 left-0 right-0 z-50 opacity-90">
                 <TopNav />
+               
               </header>
 
               <main className="mt-20 md:mt-10 relative min-h-screen pb-20 md:pb-0">
